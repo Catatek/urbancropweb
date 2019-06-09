@@ -1,68 +1,66 @@
-// import {
-//   sendingRequest,
-//   receivedResponse,
-//   createAction,
-// } from '../../redux_util';
-// import { storeAsyncValues, getAuthToken } from '../../services/asyncStorage';
-// import {
-//   postLogin,
-//   postForgotPassword,
-//   postResetPassword,
-//   getProfile,
-//   postSignup,
-//   postActivateuser,
-//   postProfile,
-//   postFarmDetails,
-//   getCode,
-//   postAvatar,
-//   getFarm,
-// } from '../../services/api';
-// import {
-//   USER_LOGIN,
-//   USER_LOGOUT,
-//   FETCH_PROFILE,
-//   CHECK_USER_LOGIN,
-//   USER_SIGNUP,
-//   ACTIVATE_USER,
-//   UPDATE_PROFILE,
-//   RESEND_CODE,
-//   FORGOT_PASSWORD,
-//   RESET_PASSWORD,
-//   UPDATE_AVATAR,
-//   UPDATE_FARM,
-//   FETCH_FARM,
-// } from '../types/auth';
-// import { Constants } from 'expo';
+import {
+  sendingRequest,
+  receivedResponse,
+  createAction
+} from "../../redux_util";
+import {
+  postLogin
+  // postForgotPassword,
+  // postResetPassword,
+  // getProfile,
+  // postSignup,
+  // postActivateuser,
+  // postProfile,
+  // postFarmDetails,
+  // getCode,
+  // postAvatar,
+  // getFarm,
+} from "../../services/api";
+import {
+  USER_LOGIN
+  // USER_LOGOUT,
+  // FETCH_PROFILE,
+  // CHECK_USER_LOGIN,
+  // USER_SIGNUP,
+  // ACTIVATE_USER,
+  // UPDATE_PROFILE,
+  // RESEND_CODE,
+  // FORGOT_PASSWORD,
+  // RESET_PASSWORD,
+  // UPDATE_AVATAR,
+  // UPDATE_FARM,
+  // FETCH_FARM,
+} from "../types/auth";
 
-// const userLoginRequest = createAction(USER_LOGIN.PENDING);
-// const userLoginFailed = createAction(USER_LOGIN.FAILED, 'error');
-// const userLoginSuccess = createAction(
-//   USER_LOGIN.SUCCESS,
-//   // 'userInfo',
-//   // 'authToken',
-//   // 'message',
-// );
-// export const userLogin = ({ data }) => async dispatch => {
-//   dispatch(userLoginRequest());
-//   const installationId = Constants.installationId;
-//   try {
-//     const installationId = Constants.installationId;
-//     const res = await postLogin(data);
-//     const token = res.data.authorization;
-//     const role = res.data.role;
-//     await storeAsyncValues({ token, role, installationId });
-//     return Promise.resolve(
-//       dispatch(
-//         userLoginSuccess(),
-//         // res.data.user,
-//         // res.data.authorization,
-//         // res.data.message,
-//       ),
-//     );
-//   } catch (error) {
-//     return Promise.reject(dispatch(userLoginFailed(error)));
-//   }
-// };
+const userLoginRequest = createAction(USER_LOGIN.PENDING);
+const userLoginFailed = createAction(USER_LOGIN.FAILED, "error");
+const userLoginSuccess = createAction(
+  USER_LOGIN.SUCCESS,
+  "userInfo"
+  // 'authToken',
+  // 'message',
+);
+export const userLogin = data => async dispatch => {
+  console.log(data);
+
+  dispatch(userLoginRequest());
+  try {
+    const res = await postLogin(data);
+    // const token = res.data.authorization;
+    console.log(res);
+
+    return Promise.resolve(
+      dispatch(
+        userLoginSuccess()
+        // res.data.user,
+        // res.data.authorization,
+        // res.data.message,
+      )
+    );
+  } catch (error) {
+    return Promise.reject(dispatch(userLoginFailed(error)));
+  }
+};
 
 // const userLogoutSuccess = createAction(USER_LOGOUT.SUCCESS);
 // export const userLogout = () => async dispatch => {
