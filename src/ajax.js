@@ -3,7 +3,7 @@ import axios from "axios";
 import store from "./store";
 import { push } from "react-router-redux";
 
-export const client = axios.create({ baseURL: `http://localhost:3000/api` });
+export const client = axios.create({ baseURL: `http://localhost:3001/api` });
 // Request interceptor
 client.interceptors.request.use(
   function(config) {
@@ -32,4 +32,4 @@ client.interceptors.response.use(
 
 export default client;
 
-export const rawClient = axios.create({ baseURL: `http://localhost:3000/api` });
+export const rawClient = axios.create({ baseURL: `http://localhost:3001/api` });

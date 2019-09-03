@@ -36,9 +36,9 @@ const userLoginRequest = createAction(USER_LOGIN.PENDING);
 const userLoginFailed = createAction(USER_LOGIN.FAILED, "error");
 const userLoginSuccess = createAction(
   USER_LOGIN.SUCCESS,
-  "userInfo"
-  // 'authToken',
-  // 'message',
+  "authToken",
+  "role",
+  "message"
 );
 export const userLogin = data => async dispatch => {
   console.log(data);
@@ -51,7 +51,11 @@ export const userLogin = data => async dispatch => {
 
     return Promise.resolve(
       dispatch(
-        userLoginSuccess()
+        userLoginSuccess(
+          res.data.authorization || "",
+          res.data.role,
+          "Login Successful"
+        )
         // res.data.user,
         // res.data.authorization,
         // res.data.message,
