@@ -1,34 +1,34 @@
-// import {
-//   sendingRequest,
-//   receivedResponse,
-//   createAction,
-// } from '../../redux_util';
-// import {
-//   FETCH_ITEMS,
-//   FETCH_ITEM,
-//   FETCH_MARKETS,
-//   FETCH_FARM_ITEMS,
-//   POST_FARM_ITEM,
-//   FETCH_CART,
-//   POST_ITEM_TO_CART,
-//   DELETE_ITEM_FROM_CART,
-//   DELETE_ITEM_BY_ID,
-//   UPDATE_FARM_ITEM,
-//   UPDATE_ITEM_IN_CART,
-// } from '../types/data';
-// import {
-//   getItems,
-//   getItem,
-//   getMarkets,
-//   getFarmItems,
-//   postFarmItem,
-//   getCart,
-//   postItemToCart,
-//   deleteItemFromCart,
-//   deleteItemById,
-//   putFarmItem,
-//   putItemInCart,
-// } from '../../services/api';
+import {
+  sendingRequest,
+  receivedResponse,
+  createAction
+} from "../../redux_util";
+import {
+  FETCH_ITEMS,
+  FETCH_ITEM,
+  FETCH_MARKETS,
+  FETCH_FARM_ITEMS,
+  POST_FARM_ITEM,
+  FETCH_CART,
+  POST_ITEM_TO_CART,
+  DELETE_ITEM_FROM_CART,
+  DELETE_ITEM_BY_ID,
+  UPDATE_FARM_ITEM,
+  UPDATE_ITEM_IN_CART
+} from "../types/data";
+import {
+  getItems,
+  getItem,
+  getMarkets,
+  getFarmItems,
+  postFarmItem,
+  getCart,
+  postItemToCart,
+  deleteItemFromCart,
+  deleteItemById,
+  putFarmItem,
+  putItemInCart
+} from "../../services/api";
 
 // // GET ITEMS
 // const fetchItemsPending = createAction(FETCH_ITEMS.PENDING);
@@ -169,19 +169,20 @@
 //   }
 // };
 
-// // MARKETS
-// const fetchMarketsPending = createAction(FETCH_MARKETS.PENDING);
-// const fetchMarketsSuccess = createAction(FETCH_MARKETS.SUCCESS, 'markets');
-// const fetchMarketsFailed = createAction(FETCH_MARKETS.FAILED, 'error');
-// export const fetchMarkets = data => async dispatch => {
-//   dispatch(fetchMarketsPending());
-//   try {
-//     const res = await getMarkets(data);
-//     return dispatch(fetchMarketsSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(fetchMarketsFailed(error));
-//   }
-// };
+// MARKETS
+const fetchMarketsPending = createAction(FETCH_MARKETS.PENDING);
+const fetchMarketsSuccess = createAction(FETCH_MARKETS.SUCCESS, "markets");
+const fetchMarketsFailed = createAction(FETCH_MARKETS.FAILED, "error");
+export const fetchMarkets = data => async dispatch => {
+  dispatch(fetchMarketsPending());
+  try {
+    const res = await getMarkets(data);
+    return dispatch(fetchMarketsSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchMarketsFailed(error));
+  }
+};
+
 // // DELETE ITEM
 
 // const removeItemByIdPending = createAction(DELETE_ITEM_BY_ID.PENDING);

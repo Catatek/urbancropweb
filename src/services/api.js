@@ -108,11 +108,11 @@ export const postLogin = data =>
 //     url: `/get/items/${data}`,
 //   });
 
-// export const getMarkets = data =>
-//   client.request({
-//     method: 'GET',
-//     url: `/get/markets/${data}`,
-//   });
+export const getMarkets = data =>
+  client.request({
+    method: "GET",
+    url: `/get/markets/${data}`
+  });
 
 // export const getItem = data =>
 //   client.request({
