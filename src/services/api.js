@@ -114,11 +114,11 @@ export const getMarkets = data =>
     url: `/get/markets/${data}`
   });
 
-// export const getItem = data =>
-//   client.request({
-//     method: 'GET',
-//     url: `/get/item/${data}`,
-//   });
+export const getItem = data =>
+  client.request({
+    method: "GET",
+    url: `/get/item/${data}`
+  });
 
 // export const postFarmItem = (data, farm) =>
 //   client.request({
@@ -134,18 +134,18 @@ export const getMarkets = data =>
 //     data,
 //   });
 
-// export const getCart = () =>
-//   client.request({
-//     method: 'GET',
-//     url: `/get/cart`,
-//   });
+export const getCart = () =>
+  client.request({
+    method: "GET",
+    url: `/get/cart`
+  });
 
-// export const postItemToCart = (item, data) =>
-//   client.request({
-//     method: 'POST',
-//     url: `/add/cart/${item}`,
-//     data,
-//   });
+export const postItemToCart = (item, data) =>
+  client.request({
+    method: "POST",
+    url: `/add/cart/${item}`,
+    data
+  });
 
 // export const putItemInCart = (item, data) =>
 //   client.request({

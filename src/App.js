@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "./screens/Login/Login";
 import Markets from "./screens/Markets/Markets";
 import Market from "./screens/Market/Market";
+import Listing from "./screens/Listing/Listing";
 
 function isAuthenticated() {
   return localStorage.getItem("authorization");
@@ -56,6 +57,7 @@ class Router extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/markets" component={Markets} />
             <Route path="/market/:id" component={Market} />
+            <Route path="/product/:id" component={Listing} />
             {/* <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/settings" component={Settings} />
             <PrivateRoute path="/updates" component={ProductUpdates} /> */}

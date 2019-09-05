@@ -45,18 +45,18 @@ export const fetchItems = data => async dispatch => {
   }
 };
 
-// const fetchItemPending = createAction(FETCH_ITEM.PENDING);
-// const fetchItemSuccess = createAction(FETCH_ITEM.SUCCESS, 'item');
-// const fetchItemFailed = createAction(FETCH_ITEM.FAILED, 'error');
-// export const fetchItem = data => async dispatch => {
-//   dispatch(fetchItemPending());
-//   try {
-//     const res = await getItem(data);
-//     return dispatch(fetchItemSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(fetchItemFailed(error));
-//   }
-// };
+const fetchItemPending = createAction(FETCH_ITEM.PENDING);
+const fetchItemSuccess = createAction(FETCH_ITEM.SUCCESS, "item");
+const fetchItemFailed = createAction(FETCH_ITEM.FAILED, "error");
+export const fetchItem = data => async dispatch => {
+  dispatch(fetchItemPending());
+  try {
+    const res = await getItem(data);
+    return dispatch(fetchItemSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchItemFailed(error));
+  }
+};
 
 // const fetchFarmItemsPending = createAction(FETCH_FARM_ITEMS.PENDING);
 // const fetchFarmItemsSuccess = createAction(
@@ -106,31 +106,31 @@ export const fetchItems = data => async dispatch => {
 
 // // CART
 
-// const fetchCartPending = createAction(FETCH_CART.PENDING);
-// const fetchCartSuccess = createAction(FETCH_CART.SUCCESS, 'cart');
-// const fetchCartFailed = createAction(FETCH_CART.FAILED, 'error');
-// export const fetchCart = () => async dispatch => {
-//   dispatch(fetchCartPending());
-//   try {
-//     const res = await getCart();
-//     return dispatch(fetchCartSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(fetchCartFailed(error));
-//   }
-// };
+const fetchCartPending = createAction(FETCH_CART.PENDING);
+const fetchCartSuccess = createAction(FETCH_CART.SUCCESS, "cart");
+const fetchCartFailed = createAction(FETCH_CART.FAILED, "error");
+export const fetchCart = () => async dispatch => {
+  dispatch(fetchCartPending());
+  try {
+    const res = await getCart();
+    return dispatch(fetchCartSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchCartFailed(error));
+  }
+};
 
-// const addItemToCartPending = createAction(POST_ITEM_TO_CART.PENDING);
-// const addItemToCartSuccess = createAction(POST_ITEM_TO_CART.SUCCESS, 'cart');
-// const addItemToCartFailed = createAction(POST_ITEM_TO_CART.FAILED, 'error');
-// export const addItemToCart = (item, data) => async dispatch => {
-//   dispatch(addItemToCartPending());
-//   try {
-//     const res = await postItemToCart(item, data);
-//     return dispatch(addItemToCartSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(addItemToCartFailed(error));
-//   }
-// };
+const addItemToCartPending = createAction(POST_ITEM_TO_CART.PENDING);
+const addItemToCartSuccess = createAction(POST_ITEM_TO_CART.SUCCESS, "cart");
+const addItemToCartFailed = createAction(POST_ITEM_TO_CART.FAILED, "error");
+export const addItemToCart = (item, data) => async dispatch => {
+  dispatch(addItemToCartPending());
+  try {
+    const res = await postItemToCart(item, data);
+    return dispatch(addItemToCartSuccess(res.data));
+  } catch (error) {
+    return dispatch(addItemToCartFailed(error));
+  }
+};
 
 // const updateItemInCartPending = createAction(UPDATE_ITEM_IN_CART.PENDING);
 // const updateItemInCartSuccess = createAction(

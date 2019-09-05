@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import logo from "../assets/logo.svg";
 import basket from "../assets/basket.svg";
 import { Nav, Button } from "../theme";
+import { fetchCart } from "../store/actions/data";
+
+import { createStructuredSelector } from "reselect";
 
 const Wrapper = styled.div`
   background: #fff;
@@ -42,7 +45,11 @@ const Icon = styled.img`
   height: 21px;
 `;
 
-export class Navigation extends Component {
+class Navigation extends Component {
+  componentDidMount() {
+    const { fetchCart } = this.props;
+    fetchCart();
+  }
   render() {
     return (
       <Wrapper>
@@ -60,3 +67,10 @@ export class Navigation extends Component {
     );
   }
 }
+
+export default connect(
+  createStructuredSelector({
+    // farmerId: state => getUserFarmId(state)
+  }),
+  { fetchCart }
+)(Navigation);

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchMarkets } from "../../store/actions/data";
-import { Navigation, Market, SearchBar } from "../../shared-components";
+import { Market, SearchBar } from "../../shared-components";
+import Navigation from "../../shared-components/Navigation";
 import splash from "../../assets/markets_splash.jpg";
 import explore from "../../assets/explore.svg";
 import { Title, Text } from "../../theme";
@@ -66,8 +67,6 @@ class Markets extends Component {
   };
 
   handleChange = query => {
-    console.log(query);
-
     this.setState({ query }, () => {
       this.filterMarkets(query);
     });
@@ -87,11 +86,9 @@ class Markets extends Component {
   };
 
   render() {
-    const { markets } = this.props;
     const { query } = this.state;
     const searchMarkets = this.filterMarkets(query);
-    const marketCount = this.calcQuantity(markets.size);
-    // console.log(query);
+    const marketCount = this.calcQuantity(searchMarkets.length);
 
     return (
       <div>
