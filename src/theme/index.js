@@ -5,8 +5,26 @@ export const Title = styled.h1`
   font-size: 34px;
   font-weight: 600;
   text-align: center;
-  color: #ffffff;
+  color: ${props => (props.white ? "#fff" : "#000")};
   font-family: "Ubuntu", sans-serif;
+  margin: ${props => props.margin || ".5em 0"};
+`;
+
+export const Text = styled.p`
+  font-size: 14px;
+  font-family: "Ubuntu", sans-serif;
+  line-height: 1.43;
+  font-weight: 400;
+  color: #838383;
+  margin: ${props => props.margin || ".5em 0"}
+    ${props =>
+      props.smalltitle &&
+      css`
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.25;
+        color: #000000;
+      `};
 `;
 
 export const Nav = styled(Link)`

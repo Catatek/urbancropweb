@@ -1,7 +1,7 @@
-// import { createStructuredSelector } from 'reselect';
-// import { List, Map } from 'immutable';
+import { createStructuredSelector } from "reselect";
+import { List, Map } from "immutable";
 
-// export const getMarkets = state => state.data.get('markets', List());
+export const getMarkets = state => state.getIn(["data", "markets"], List());
 // export const getItems = state => state.data.get('items', List());
 
 // export const getItemName = state =>
@@ -49,8 +49,6 @@
 // export const getBasket = state => state.data.get('cart', List());
 // export const getInventory = state => state.data.get('farmItems', List());
 
-// export const dataSelector = createStructuredSelector({
-//   markets: getMarkets,
-//   items: getItems,
-//   itemName: getItemName,
-// });
+export const dataSelector = createStructuredSelector({
+  markets: getMarkets
+});

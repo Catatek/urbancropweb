@@ -31,18 +31,19 @@ import {
 } from "../../services/api";
 
 // // GET ITEMS
-// const fetchItemsPending = createAction(FETCH_ITEMS.PENDING);
-// const fetchItemsSuccess = createAction(FETCH_ITEMS.SUCCESS, 'items');
-// const fetchItemsFailed = createAction(FETCH_ITEMS.FAILED, 'error');
-// export const fetchItems = data => async dispatch => {
-//   dispatch(fetchItemsPending());
-//   try {
-//     const res = await getItems(data);
-//     return dispatch(fetchItemsSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(fetchItemsFailed(error));
-//   }
-// };
+
+const fetchItemsPending = createAction(FETCH_ITEMS.PENDING);
+const fetchItemsSuccess = createAction(FETCH_ITEMS.SUCCESS, "items");
+const fetchItemsFailed = createAction(FETCH_ITEMS.FAILED, "error");
+export const fetchItems = data => async dispatch => {
+  dispatch(fetchItemsPending());
+  try {
+    const res = await getItems(data);
+    return dispatch(fetchItemsSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchItemsFailed(error));
+  }
+};
 
 // const fetchItemPending = createAction(FETCH_ITEM.PENDING);
 // const fetchItemSuccess = createAction(FETCH_ITEM.SUCCESS, 'item');

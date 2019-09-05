@@ -96,11 +96,11 @@ export const postLogin = data =>
 //     url: `/exist/${params.email}`,
 //   });
 
-// export const getItems = data =>
-//   client.request({
-//     method: 'GET',
-//     url: `/get/items/market/${data}`,
-//   });
+export const getItems = data =>
+  client.request({
+    method: "GET",
+    url: `/get/items/market/${data}`
+  });
 
 // export const getFarmItems = data =>
 //   client.request({
