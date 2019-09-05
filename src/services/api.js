@@ -21,11 +21,11 @@ export const postLogin = data =>
 //     data,
 //   });
 
-// export const getProfile = () =>
-//   client.request({
-//     method: 'GET',
-//     url: '/get/profile',
-//   });
+export const getProfile = () =>
+  client.request({
+    method: "GET",
+    url: "/get/profile"
+  });
 
 // // update profile data
 // export const postProfile = data =>
@@ -208,3 +208,15 @@ export const postItemToCart = (item, data) =>
 //       code,
 //     },
 //   });
+
+export const getConsumerOrder = () =>
+  client.request({
+    method: "GET",
+    url: `/orders/consumer/current`
+  });
+
+export const getPastConsumerOrders = () =>
+  client.request({
+    method: "GET",
+    url: `/orders/consumer/past`
+  });

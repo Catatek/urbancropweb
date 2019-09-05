@@ -4,10 +4,10 @@ import {
   createAction
 } from "../../redux_util";
 import {
-  postLogin
+  postLogin,
   // postForgotPassword,
   // postResetPassword,
-  // getProfile,
+  getProfile
   // postSignup,
   // postActivateuser,
   // postProfile,
@@ -17,9 +17,9 @@ import {
   // getFarm,
 } from "../../services/api";
 import {
-  USER_LOGIN
+  USER_LOGIN,
   // USER_LOGOUT,
-  // FETCH_PROFILE,
+  FETCH_PROFILE
   // CHECK_USER_LOGIN,
   // USER_SIGNUP,
   // ACTIVATE_USER,
@@ -71,16 +71,18 @@ export const userLogin = data => async dispatch => {
 //   return dispatch(userLogoutSuccess());
 // };
 
-// const fetchProfileSuccess = createAction(FETCH_PROFILE.SUCCESS, 'userInfo');
-// export const fetchProfile = () => async dispatch => {
-//   dispatch(sendingRequest('FETCH_PROFILE.PENDING'));
-//   try {
-//     const res = await getProfile();
-//     return dispatch(fetchProfileSuccess(res.data));
-//   } catch (err) {
-//     return dispatch(receivedResponse('FETCH_PROFILE.FAILED', err));
-//   }
-// };
+// FETCH PROFILE
+
+const fetchProfileSuccess = createAction(FETCH_PROFILE.SUCCESS, "userInfo");
+export const fetchProfile = () => async dispatch => {
+  dispatch(sendingRequest("FETCH_PROFILE.PENDING"));
+  try {
+    const res = await getProfile();
+    return dispatch(fetchProfileSuccess(res.data));
+  } catch (err) {
+    return dispatch(receivedResponse("FETCH_PROFILE.FAILED", err));
+  }
+};
 
 // const checkUserLoginSuccess = createAction(CHECK_USER_LOGIN.SUCCESS, 'token');
 // const checkUserLoginPending = createAction(CHECK_USER_LOGIN.PENDING);

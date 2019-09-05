@@ -8,7 +8,9 @@ import {
   DELETE_ITEM_FROM_CART,
   POST_ITEM_TO_CART,
   UPDATE_FARM_ITEM,
-  FETCH_FARM
+  FETCH_FARM,
+  FETCH_CONSUMER_ORDER,
+  FETCH_PAST_CONSUMER_ORDERS
 } from "../types/data";
 
 export default (state = Map(), { type, ...action }) => {
@@ -34,7 +36,15 @@ export default (state = Map(), { type, ...action }) => {
     case DELETE_ITEM_FROM_CART.SUCCESS:
       state = state.set("cart", fromJS(action.cart.cart));
       return state;
-
+    case FETCH_CONSUMER_ORDER.SUCCESS:
+      state = state.set("consumerOrder", fromJS(action.consumerOrder.orders));
+      return state;
+    case FETCH_PAST_CONSUMER_ORDERS.SUCCESS:
+      state = state.set(
+        "consumerPastOrders",
+        fromJS(action.consumerPastOrders.orders)
+      );
+      return state;
     default:
       return state;
   }

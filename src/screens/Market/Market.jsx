@@ -33,14 +33,17 @@ const Div = styled.div`
   margin-top: 1em;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  max-width: 1300px;
 `;
 
 const Grid = styled.div`
   display: grid;
   width: 85%;
-  grid-gap: 25px;
+  grid-gap: 25px 75px;
+  max-width: 1300px;
   margin: 1em auto 0 auto;
-  grid-template-columns: repeat(auto-fit, minmax(275px, 400px));
+  grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
   grid-auto-rows: auto;
   @media (max-width: 920px) {
     grid-auto-rows: auto;

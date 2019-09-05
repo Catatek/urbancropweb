@@ -27,6 +27,7 @@ const Icon = styled.img`
 
 const Div = styled.div`
   width: 85%;
+  max-width: 1300px;
   margin: 1.5em auto;
   display: flex;
   justify-content: space-between;
@@ -36,6 +37,7 @@ const Div = styled.div`
 const Grid = styled.div`
   display: grid;
   width: 85%;
+  max-width: 1300px;
   margin: 1em auto 0 auto;
   grid-template-columns: repeat(auto-fit, minmax(275px, 475px));
   grid-auto-rows: auto;

@@ -2,7 +2,7 @@ import { createActionType } from "../../redux_util";
 
 export const USER_LOGIN = createActionType("USER_LOGIN");
 // export const USER_LOGOUT = createActionType('USER_LOGOUT');
-// export const FETCH_PROFILE = createActionType('FETCH_PROFILE');
+export const FETCH_PROFILE = createActionType("FETCH_PROFILE");
 // export const CHECK_USER_LOGIN = createActionType('CHECK_USER_LOGIN');
 // export const USER_SIGNUP = createActionType('USER_SIGNUP');
 // export const ACTIVATE_USER = createActionType('ACTIVATE_USER');

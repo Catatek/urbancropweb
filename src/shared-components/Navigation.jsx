@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import logo from "../assets/logo.svg";
-import basket from "../assets/basket.svg";
-import { Nav, Button } from "../theme";
+import basketIcon from "../assets/basket.svg";
+import { Nav, Button, Text } from "../theme";
 import { fetchCart } from "../store/actions/data";
-
-import { createStructuredSelector } from "reselect";
+import { fetchProfile } from "../store/actions/auth";
+import { dataSelector } from "../store/selectors/data";
+import { Link, withRouter } from "react-router-dom";
 
 const Wrapper = styled.div`
   background: #fff;
   height: 80px;
   margin: 0 auto;
-  max-width: 85%;
+  width: 85%;
+  max-width: 1300px;
   padding: 0 1em;
   display: flex;
   align-items: center;
@@ -45,12 +47,67 @@ const Icon = styled.img`
   height: 21px;
 `;
 
+function BasketIcon({ basketCount }) {
+  return (
+    <div
+      style={{
+        width: 30,
+        height: 30,
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+    >
+      <Icon src={basketIcon} />
+      {basketCount > 0 && (
+        <div
+          style={{
+            position: "absolute",
+            right: -12,
+            top: -8,
+            backgroundColor: "#F75D19",
+            borderRadius: 100,
+            width: 20,
+            height: 20,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>
+            {basketCount}
+          </Text>
+        </div>
+      )}
+    </div>
+  );
+}
+
 class Navigation extends Component {
   componentDidMount() {
-    const { fetchCart } = this.props;
+    const { fetchCart, fetchProfile } = this.props;
+    fetchProfile();
     fetchCart();
   }
+  componentWillReceiveProps(props) {}
+
+  authUser = () => {
+    let auth;
+    const token = localStorage.getItem("authorization");
+    if (token) {
+      auth = true;
+    } else {
+      auth = false;
+    }
+    return auth;
+  };
+
   render() {
+    const { basket, history } = this.props;
+
+    const basketCount = basket.size;
+    const isAuthed = this.authUser();
     return (
       <Wrapper>
         <Image src={logo} />
@@ -58,19 +115,27 @@ class Navigation extends Component {
         <Div>
           <Nav to="/">Explore</Nav>
           <Nav to="/vendors">Farm</Nav>
-          <Nav to="/vendors">Orders</Nav>
-          <Nav to="/markets">Profile</Nav>
-          <Button nav>Sign in</Button>
-          <Icon src={basket} />
+          <Nav to="/orders">Orders</Nav>
+          <Nav to="/profile">Profile</Nav>
+          {!isAuthed && (
+            <Button nav onClick={() => history.push("/login")}>
+              Sign in
+            </Button>
+          )}
+          {isAuthed && (
+            <Link to="/basket">
+              <BasketIcon basketCount={basketCount} />
+            </Link>
+          )}
         </Div>
       </Wrapper>
     );
   }
 }
 
-export default connect(
-  createStructuredSelector({
-    // farmerId: state => getUserFarmId(state)
-  }),
-  { fetchCart }
-)(Navigation);
+export default withRouter(
+  connect(
+    dataSelector,
+    { fetchCart, fetchProfile }
+  )(Navigation)
+);

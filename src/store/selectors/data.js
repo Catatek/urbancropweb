@@ -47,11 +47,21 @@ export const getItem = state => state.getIn(["data", "item"], Map());
 // export const getFarmerLastName = state =>
 //   state.data.getIn(['item', 'farm', 'farmer', 'lastName'], '');
 
-// export const getBasket = state => state.data.get('cart', List());
+export const getBasket = state => state.getIn(["data", "cart"], List());
 // export const getInventory = state => state.data.get('farmItems', List());
+
+// CONSUMERS
+
+export const getCurrentOrder = state =>
+  state.getIn(["data", "consumerOrder"], "");
+export const getPastConsumerOrders = state =>
+  state.getIn(["data", "consumerPastOrders"], List());
 
 export const dataSelector = createStructuredSelector({
   markets: getMarkets,
   items: getItems,
-  item: getItem
+  item: getItem,
+  basket: getBasket,
+  consumerOrder: getCurrentOrder,
+  pastConsumerOrders: getPastConsumerOrders
 });

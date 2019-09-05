@@ -30,7 +30,9 @@ export class AddToBasket extends Component {
       count,
       handleAddItem,
       itemId,
-      type
+      type,
+      isAuthed,
+      history
     } = this.props;
     return (
       <Wrapper>
@@ -48,7 +50,11 @@ export class AddToBasket extends Component {
         {type !== "basket" && (
           <Button
             style={{ marginLeft: 16, borderRadius: 10 }}
-            onClick={() => handleAddItem(itemId, count)}
+            onClick={() =>
+              isAuthed
+                ? handleAddItem(itemId, count)
+                : history.pushState("/login")
+            }
           >
             <StyledIcon src={basket} />
           </Button>

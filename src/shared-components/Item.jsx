@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   transition: 500ms;
   @media (min-width: 920px) {
     &:hover {
-      transform: translateY(-5px);
+      transform: translateY(-2px);
     }
   }
 `;
@@ -81,6 +81,17 @@ class Item extends Component {
     });
   };
 
+  authUser = () => {
+    let auth;
+    const token = localStorage.getItem("authorization");
+    if (token) {
+      auth = true;
+    } else {
+      auth = false;
+    }
+    return auth;
+  };
+
   // authFarmer = () => {
   //   const { farmId, farmerId } = this.props;
   //   if (farmerId) {
@@ -104,8 +115,8 @@ class Item extends Component {
       unit,
       farmName
     } = this.props;
-
     const { count } = this.state;
+    const isAuthed = this.authUser();
     return (
       <Wrapper>
         <Link to={{ pathname: `/product/${itemId}`, state: { itemName } }}>
@@ -158,6 +169,7 @@ class Item extends Component {
             count={count}
             increment={this.increment}
             decrement={this.decrement}
+            isAuthed={isAuthed}
             itemId={itemId}
             handleAddItem={this.handleAddItem}
           />

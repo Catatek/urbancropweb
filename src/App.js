@@ -4,6 +4,9 @@ import Login from "./screens/Login/Login";
 import Markets from "./screens/Markets/Markets";
 import Market from "./screens/Market/Market";
 import Listing from "./screens/Listing/Listing";
+import Orders from "./screens/Orders/Orders";
+import Profile from "./screens/Profile/Profile";
+import Basket from "./screens/Basket/Basket";
 
 function isAuthenticated() {
   return localStorage.getItem("authorization");
@@ -58,6 +61,9 @@ class Router extends Component {
             <Route exact path="/markets" component={Markets} />
             <Route path="/market/:id" component={Market} />
             <Route path="/product/:id" component={Listing} />
+            <Route path="/orders" component={Orders} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/basket" component={Basket} />
             {/* <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/settings" component={Settings} />
             <PrivateRoute path="/updates" component={ProductUpdates} /> */}

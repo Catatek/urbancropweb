@@ -14,7 +14,9 @@ import {
   DELETE_ITEM_FROM_CART,
   DELETE_ITEM_BY_ID,
   UPDATE_FARM_ITEM,
-  UPDATE_ITEM_IN_CART
+  UPDATE_ITEM_IN_CART,
+  FETCH_CONSUMER_ORDER,
+  FETCH_PAST_CONSUMER_ORDERS
 } from "../types/data";
 import {
   getItems,
@@ -27,7 +29,9 @@ import {
   deleteItemFromCart,
   deleteItemById,
   putFarmItem,
-  putItemInCart
+  putItemInCart,
+  getConsumerOrder,
+  getPastConsumerOrders
 } from "../../services/api";
 
 // // GET ITEMS
@@ -198,3 +202,45 @@ export const fetchMarkets = data => async dispatch => {
 //     return dispatch(removeItemByIdFailed(error));
 //   }
 // };
+
+// ORDERS
+
+const fetchConsumerOrderPending = createAction(FETCH_CONSUMER_ORDER.PENDING);
+const fetchConsumerOrderSuccess = createAction(
+  FETCH_CONSUMER_ORDER.SUCCESS,
+  "consumerOrder"
+);
+const fetchConsumerOrderFailed = createAction(
+  FETCH_CONSUMER_ORDER.FAILED,
+  "error"
+);
+export const fetchConsumerOrder = () => async dispatch => {
+  dispatch(fetchConsumerOrderPending());
+  try {
+    const res = await getConsumerOrder();
+    return dispatch(fetchConsumerOrderSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchConsumerOrderFailed(error));
+  }
+};
+
+const fetchPastConsumerOrdersPending = createAction(
+  FETCH_PAST_CONSUMER_ORDERS.PENDING
+);
+const fetchPastConsumerOrdersSuccess = createAction(
+  FETCH_PAST_CONSUMER_ORDERS.SUCCESS,
+  "consumerPastOrders"
+);
+const fetchPastConsumerOrdersFailed = createAction(
+  FETCH_PAST_CONSUMER_ORDERS.FAILED,
+  "error"
+);
+export const fetchPastConsumerOrders = () => async dispatch => {
+  dispatch(fetchPastConsumerOrdersPending());
+  try {
+    const res = await getPastConsumerOrders();
+    return dispatch(fetchPastConsumerOrdersSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchPastConsumerOrdersFailed(error));
+  }
+};
