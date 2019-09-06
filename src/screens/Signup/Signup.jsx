@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 import logoWhite from "../../assets/logo_white.svg";
 
 const Wrapper = styled.div`
@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: auto;
 `;
 
 const Logo = styled.img`
@@ -18,17 +19,17 @@ const Logo = styled.img`
   margin-bottom: 1em;
 `;
 
-class Login extends Component {
+class Signup extends Component {
   render() {
     const { history, location } = this.props;
 
     return (
       <Wrapper>
         <Logo src={logoWhite} />
-        <LoginForm history={history} addToBasketState={location} />
+        <SignupForm history={history} addToBasketState={location} />
       </Wrapper>
     );
   }
 }
 
-export default Login;
+export default Signup;

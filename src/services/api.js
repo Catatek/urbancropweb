@@ -61,12 +61,12 @@ export const getProfile = () =>
 //     url: `/email/${data}/activation`,
 //   });
 
-// export const postSignup = data =>
-//   rawClient.request({
-//     method: 'POST',
-//     url: '/signup',
-//     data,
-//   });
+export const postSignup = data =>
+  rawClient.request({
+    method: "POST",
+    url: "/signup",
+    data
+  });
 
 // export const postActivateuser = data =>
 //   rawClient.request({

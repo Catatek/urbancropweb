@@ -7,27 +7,28 @@ import Listing from "./screens/Listing/Listing";
 import Orders from "./screens/Orders/Orders";
 import Profile from "./screens/Profile/Profile";
 import Basket from "./screens/Basket/Basket";
+import Signup from "./screens/Signup/Signup";
 
 function isAuthenticated() {
   return localStorage.getItem("authorization");
 }
 
-// function PrivateRoute({ component: Component, ...rest }) {
-//   return (
-//     <Route
-//       {...rest}
-//       render={props =>
-//         isAuthenticated() ? (
-//           <Component {...props} />
-//         ) : (
-//           <Redirect
-//             to={{ pathname: "/login", state: { from: props.location } }}
-//           />
-//         )
-//       }
-//     />
-//   );
-// }
+function PrivateRoute({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        isAuthenticated() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        )
+      }
+    />
+  );
+}
 // function DefaultRoute({ component: Component, ...rest }) {
 //   return (
 //     <Route
@@ -58,12 +59,14 @@ class Router extends Component {
             /> */}
             <Route exact path="/" component={Markets} />
             <Route exact path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
             <Route exact path="/markets" component={Markets} />
             <Route path="/market/:id" component={Market} />
             <Route path="/product/:id" component={Listing} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/basket" component={Basket} />
+            <PrivateRoute path="/orders" component={Orders} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/basket" component={Basket} />
+
             {/* <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/settings" component={Settings} />
             <PrivateRoute path="/updates" component={ProductUpdates} /> */}

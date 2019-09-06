@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { Formik } from "formik";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { userLogin } from "../../store/actions/auth";
+import { userSignup } from "../../store/actions/auth";
 import { Title, Text, Button } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 440px;
-  height: 480px;
+  height: auto;
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(152, 152, 152, 0.2);
   background-color: #ffffff;
@@ -27,29 +27,26 @@ const StyledTextInput = styled(TextField)({
   borderColor: "red"
 });
 
-class LoginForm extends Component {
+class SignupForm extends Component {
   render() {
-    const { userLogin, history, addToBasketState } = this.props;
+    const { userSignup, history } = this.props;
     return (
       <Wrapper>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{
+            firstName: "",
+            lastName: "",
+            email: "",
+            mobile: "",
+            password: "",
+            role: "consumer"
+          }}
           onSubmit={values => {
-            userLogin({ email: values.email, password: values.password }).then(
+            userSignup({ email: values.email, password: values.password }).then(
               action => {
                 localStorage.setItem("authorization", action.authToken);
-                localStorage.setItem("role", action.role);
-                if (addToBasketState.state) {
-                  history.push({
-                    pathname: `/market/${addToBasketState.state.marketId}`,
-                    state: {
-                      addToBasketState: addToBasketState.state,
-                      marketName: addToBasketState.state.marketName
-                    }
-                  });
-                } else {
-                  history.push("/");
-                }
+                localStorage.setItem("role", "consumer");
+                history.push("/markets");
               }
             );
           }}
@@ -61,8 +58,34 @@ class LoginForm extends Component {
             errors
           }) => (
             <Form onSubmit={handleSubmit}>
-              <Title margin="1em 0 0 0">Welcome back!</Title>
-              <Text>Sign in to continue</Text>
+              <Title margin="1em 0 0 0">Create account</Title>
+              <Text>Join the community today</Text>
+              <TextField
+                label="First Name"
+                value={values.firstName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                margin="normal"
+                name="firstName"
+              />
+
+              <TextField
+                label="Last Name"
+                value={values.lastName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                margin="normal"
+                name="lastName"
+              />
+
+              <TextField
+                label="Phone"
+                value={values.mobile}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                margin="normal"
+                name="mobile"
+              />
               <TextField
                 label="Email"
                 value={values.email}
@@ -82,17 +105,18 @@ class LoginForm extends Component {
                 type="password"
               />
               <Button signin type="submit">
-                Sign in
+                Create account
               </Button>
               <div
                 style={{
                   display: "flex",
                   marginTop: "20px",
-                  justifyContent: "center"
+                  justifyContent: "center",
+                  marginBottom: "16px"
                 }}
               >
-                <Link to="/signup">
-                  <Text orange>Don't have an account? Sign up</Text>
+                <Link to="/login">
+                  <Text orange>Already have an account? Login</Text>
                 </Link>
               </div>
             </Form>
@@ -104,5 +128,5 @@ class LoginForm extends Component {
 }
 export default connect(
   null,
-  { userLogin }
-)(LoginForm);
+  { userSignup }
+)(SignupForm);

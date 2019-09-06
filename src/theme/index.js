@@ -36,14 +36,14 @@ export const Text = styled.p`
 export const Label = styled.label`
   color: #000;
   font-size: 16px;
-  font-family: "Ubuntu", sans-serif;
+  font-family: "proxima-nova", sans-serif;
 `;
 
 export const Nav = styled(Link)`
   color: #a3a3a3;
   font-size: 15px;
   margin-right: ${props => (props.right ? "0" : "2.25em")};
-  font-family: "Ubuntu", sans-serif;
+  font-family: "proxima-nova", sans-serif;
   font-weight: 600;
   text-decoration: none;
   padding: 0.25em 0;
@@ -67,7 +67,7 @@ export const Button = styled.button`
   font-weight: 600;
   outline: none;
   border: none;
-  font-family: "Ubuntu", sans-serif;
+  font-family: "proxima-nova", sans-serif;
   margin-right: 2.25em;
   transition: 500ms;
   &:hover {

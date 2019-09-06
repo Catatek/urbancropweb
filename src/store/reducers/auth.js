@@ -2,9 +2,9 @@ import { Map, fromJS } from "immutable";
 import {
   USER_LOGIN,
   //   USER_LOGOUT_SUCCESS,
-  FETCH_PROFILE
+  FETCH_PROFILE,
   //   CHECK_USER_LOGIN,
-  //   USER_SIGNUP,
+  USER_SIGNUP
   //   UPDATE_PROFILE,
   //   UPDATE_AVATAR,
   //   UPDATE_FARM,
@@ -17,6 +17,9 @@ export default (state = Map(), { type, ...action }) => {
       state = state.set("authToken", action.authToken);
       return state;
     case FETCH_PROFILE.SUCCESS:
+      state = state.set("info", fromJS(action.userInfo));
+      return state;
+    case USER_SIGNUP.SUCCESS:
       state = state.set("info", fromJS(action.userInfo));
       return state;
     default:

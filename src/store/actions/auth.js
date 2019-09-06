@@ -7,8 +7,8 @@ import {
   postLogin,
   // postForgotPassword,
   // postResetPassword,
-  getProfile
-  // postSignup,
+  getProfile,
+  postSignup
   // postActivateuser,
   // postProfile,
   // postFarmDetails,
@@ -19,9 +19,9 @@ import {
 import {
   USER_LOGIN,
   // USER_LOGOUT,
-  FETCH_PROFILE
+  FETCH_PROFILE,
   // CHECK_USER_LOGIN,
-  // USER_SIGNUP,
+  USER_SIGNUP
   // ACTIVATE_USER,
   // UPDATE_PROFILE,
   // RESEND_CODE,
@@ -41,8 +41,6 @@ const userLoginSuccess = createAction(
   "message"
 );
 export const userLogin = data => async dispatch => {
-  console.log(data);
-
   dispatch(userLoginRequest());
   try {
     const res = await postLogin(data);
@@ -56,9 +54,6 @@ export const userLogin = data => async dispatch => {
           res.data.role,
           "Login Successful"
         )
-        // res.data.user,
-        // res.data.authorization,
-        // res.data.message,
       )
     );
   } catch (error) {
@@ -141,25 +136,32 @@ export const fetchProfile = () => async dispatch => {
 // // };
 
 // // SIGN UP
-// const userSignupSuccess = createAction(
-//   USER_SIGNUP.SUCCESS,
-//   'userInfo',
-//   'message',
-// );
-// const userSignupFailed = createAction(USER_SIGNUP.FAILED, 'error');
-// const userSignupPending = createAction(USER_SIGNUP.PENDING);
-// export const userSignup = data => async dispatch => {
-//   dispatch(userSignupPending());
-//   try {
-//     const res = await postSignup(data);
-//     const token = res.headers['authorization'];
-//     const role = 'consumer';
-//     await storeAsyncValues(token, role);
-//     return dispatch(userSignupSuccess(res.data, 'Signup Successful'));
-//   } catch (error) {
-//     return dispatch(userSignupFailed(error));
-//   }
-// };
+
+const userSignupSuccess = createAction(
+  USER_SIGNUP.SUCCESS,
+  "authToken",
+  "userInfo",
+  "role",
+  "message"
+);
+const userSignupFailed = createAction(USER_SIGNUP.FAILED, "error");
+const userSignupPending = createAction(USER_SIGNUP.PENDING);
+export const userSignup = data => async dispatch => {
+  dispatch(userSignupPending());
+  try {
+    const res = await postSignup(data);
+    return dispatch(
+      userSignupSuccess(
+        res.headers["authorization"],
+        res.data,
+        "consumer",
+        "Signup Successful"
+      )
+    );
+  } catch (error) {
+    return dispatch(userSignupFailed(error));
+  }
+};
 
 // // // ACTIVATE ACCOUNT
 // // const activateUserSuccess = createAction(
