@@ -20,10 +20,12 @@ const Logo = styled.img`
 
 class Login extends Component {
   render() {
+    const { history, location } = this.props;
+
     return (
       <Wrapper>
         <Logo src={logoWhite} />
-        <LoginForm history={this.props.history} />
+        <LoginForm history={history} addToBasketState={location} />
       </Wrapper>
     );
   }

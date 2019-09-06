@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { fetchItems } from "../../store/actions/data";
+import { fetchItems, addItemToCart } from "../../store/actions/data";
 import Navigation from "../../shared-components/Navigation";
 import Item from "../../shared-components/Item";
 import { SearchBar } from "../../shared-components/index";
@@ -57,11 +57,21 @@ class Market extends Component {
   };
 
   componentDidMount() {
-    const { fetchItems } = this.props;
+    const { fetchItems, location, addItemToCart } = this.props;
+    const addToBasketState = location.state && location.state.addToBasketState;
     const marketId = this.props.match.params.id;
     fetchItems(marketId).then(() => {
       this.setState({ isFetchingMarkets: false });
     });
+    if (addToBasketState) {
+      let data = {
+        itemQuantity: addToBasketState.count
+      };
+      let sku = addToBasketState.itemId;
+      addItemToCart(sku, data).then(() => {
+        console.log("HERE");
+      });
+    }
   }
 
   calcQuantity = quantity => {
@@ -98,8 +108,10 @@ class Market extends Component {
   render() {
     const { query } = this.state;
     const marketName = this.props.location.state.marketName;
+    const marketId = this.props.match.params.id;
     const searchProducts = this.filterProducts(query);
     const productCount = this.calcQuantity(searchProducts.length);
+    console.log(this.props.location);
 
     return (
       <div>
@@ -124,7 +136,7 @@ class Market extends Component {
               return (
                 <Item
                   key={index}
-                  marketName={key.get("marketName", "")}
+                  marketName={marketName}
                   unit={key.getIn(["item", "unit"])}
                   quantity={key.getIn(["item", "quantity"])}
                   cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
@@ -136,6 +148,8 @@ class Market extends Component {
                   navigation={this.props.navigation}
                   farmName={key.getIn(["farm", "farmName"], "")}
                   farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
                 />
               );
             })}
@@ -147,5 +161,5 @@ class Market extends Component {
 
 export default connect(
   dataSelector,
-  { fetchItems }
+  { fetchItems, addItemToCart }
 )(Market);

@@ -32,7 +32,9 @@ export class AddToBasket extends Component {
       itemId,
       type,
       isAuthed,
-      history
+      history,
+      marketId,
+      marketName
     } = this.props;
     return (
       <Wrapper>
@@ -40,9 +42,7 @@ export class AddToBasket extends Component {
           <Button circle onClick={decrement}>
             -
           </Button>
-
           <StyledCountText>{count || 0}</StyledCountText>
-
           <Button circle onClick={increment}>
             +
           </Button>
@@ -53,7 +53,10 @@ export class AddToBasket extends Component {
             onClick={() =>
               isAuthed
                 ? handleAddItem(itemId, count)
-                : history.pushState("/login")
+                : history.push({
+                    pathname: "/login",
+                    state: { itemId, count, marketId, marketName }
+                  })
             }
           >
             <StyledIcon src={basket} />

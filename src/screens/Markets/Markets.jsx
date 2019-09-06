@@ -55,6 +55,7 @@ class Markets extends Component {
   componentDidMount() {
     const { fetchMarkets } = this.props;
     const latlong = "33.7382644468085,-84.3446149148936";
+
     fetchMarkets(latlong).then(() => {
       this.setState({ isFetchingMarkets: false });
     });
@@ -91,7 +92,6 @@ class Markets extends Component {
     const { query } = this.state;
     const searchMarkets = this.filterMarkets(query);
     const marketCount = this.calcQuantity(searchMarkets.length);
-
     return (
       <div>
         <Navigation />

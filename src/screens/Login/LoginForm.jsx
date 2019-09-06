@@ -28,7 +28,7 @@ const StyledTextInput = styled(TextField)({
 
 class LoginForm extends Component {
   render() {
-    const { userLogin, history } = this.props;
+    const { userLogin, history, addToBasketState } = this.props;
     return (
       <Wrapper>
         <Formik
@@ -38,7 +38,17 @@ class LoginForm extends Component {
               action => {
                 localStorage.setItem("authorization", action.authToken);
                 localStorage.setItem("role", action.role);
-                history.push("/");
+                if (addToBasketState.state) {
+                  history.push({
+                    pathname: `/market/${addToBasketState.state.marketId}`,
+                    state: {
+                      addToBasketState: addToBasketState.state,
+                      marketName: addToBasketState.state.marketName
+                    }
+                  });
+                } else {
+                  history.push("/");
+                }
               }
             );
           }}

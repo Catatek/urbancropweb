@@ -108,12 +108,14 @@ class Item extends Component {
   render() {
     const {
       images,
-      navigation,
       cost,
       itemName,
       itemId,
       unit,
-      farmName
+      farmName,
+      history,
+      marketId,
+      marketName
     } = this.props;
     const { count } = this.state;
     const isAuthed = this.authUser();
@@ -172,6 +174,9 @@ class Item extends Component {
             isAuthed={isAuthed}
             itemId={itemId}
             handleAddItem={this.handleAddItem}
+            history={history}
+            marketId={marketId}
+            marketName={marketName}
           />
           {/* )} */}
         </StyledColumn>
