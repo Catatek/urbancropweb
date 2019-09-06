@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 export const Title = styled.h1`
   font-size: 34px;
   font-weight: 600;
-  text-align: center;
   color: ${props => (props.white ? "#fff" : "#000")};
-  font-family: "Ubuntu", sans-serif;
+  font-family: "proxima-nova", sans-serif;
   margin: ${props => props.margin || ".5em 0"};
 `;
 
 export const Text = styled.p`
   font-size: 14px;
-  font-family: "Ubuntu", sans-serif;
+  font-family: "proxima-nova", sans-serif;
+  font-weight: 400;
   line-height: 1.43;
   font-weight: 400;
   color: #838383;
@@ -88,6 +88,17 @@ export const Button = styled.button`
       &:hover {
         background-color: #dbdbe6;
       }
+    `}
+  ${props =>
+    props.signin &&
+    css`
+      width: 100%;
+      height: 48px;
+      border-radius: 4px;
+      background-color: #f75d19;
+      color: #fff;
+      margin-right: 0;
+      margin-top: 40px;
     `}
 `;
 

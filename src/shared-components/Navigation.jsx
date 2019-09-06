@@ -95,26 +95,29 @@ class Navigation extends Component {
   authUser = () => {
     let auth;
     const token = localStorage.getItem("authorization");
+    const role = localStorage.getItem("role") || "";
     if (token) {
       auth = true;
     } else {
       auth = false;
     }
-    return auth;
+    return { auth, role };
   };
 
   render() {
     const { basket, history } = this.props;
 
     const basketCount = basket.size;
-    const isAuthed = this.authUser();
+    const isAuthed = this.authUser().auth;
+    const role = this.authUser().role;
+    console.log(role);
+
     return (
       <Wrapper>
         <Image src={logo} />
-
         <Div>
           <Nav to="/">Explore</Nav>
-          <Nav to="/vendors">Farm</Nav>
+          {role === "farmer" && <Nav to="/vendors">Farm</Nav>}
           <Nav to="/orders">Orders</Nav>
           <Nav to="/profile">Profile</Nav>
           {!isAuthed && (
