@@ -23,7 +23,7 @@ class Login extends Component {
     return (
       <Wrapper>
         <Logo src={logoWhite} />
-        <LoginForm />
+        <LoginForm history={this.props.history} />
       </Wrapper>
     );
   }

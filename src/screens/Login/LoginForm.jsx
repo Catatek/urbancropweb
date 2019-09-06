@@ -28,16 +28,19 @@ const StyledTextInput = styled(TextField)({
 
 class LoginForm extends Component {
   render() {
+    const { userLogin, history } = this.props;
     return (
       <Wrapper>
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={values => {
-            this.props
-              .userLogin({ email: values.email, password: values.password })
-              .then(() => {
-                console.log("HERE");
-              });
+            userLogin({ email: values.email, password: values.password }).then(
+              action => {
+                localStorage.setItem("authorization", action.authToken);
+                localStorage.setItem("role", action.role);
+                history.push("/");
+              }
+            );
           }}
           render={({
             handleChange,
