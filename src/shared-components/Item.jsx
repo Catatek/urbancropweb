@@ -121,7 +121,12 @@ class Item extends Component {
     const isAuthed = this.authUser();
     return (
       <Wrapper>
-        <Link to={{ pathname: `/product/${itemId}`, state: { itemName } }}>
+        <Link
+          to={{
+            pathname: `/product/${itemId}`,
+            state: { itemName, marketName }
+          }}
+        >
           <StyledImage src={images} />
         </Link>
         <StyledColumn>
