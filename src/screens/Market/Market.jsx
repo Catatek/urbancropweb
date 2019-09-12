@@ -111,7 +111,6 @@ class Market extends Component {
     const marketId = this.props.match.params.id;
     const searchProducts = this.filterProducts(query);
     const productCount = this.calcQuantity(searchProducts.length);
-    console.log(this.props.location);
 
     return (
       <div>
@@ -131,6 +130,204 @@ class Market extends Component {
           <SearchBar handleChange={this.handleChange} query={query} />
         </Div>
         <Grid>
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
+          {searchProducts &&
+            searchProducts.map((key, index) => {
+              return (
+                <Item
+                  key={index}
+                  marketName={marketName}
+                  unit={key.getIn(["item", "unit"])}
+                  quantity={key.getIn(["item", "quantity"])}
+                  cost={this.formatPrice(key.getIn(["item", "cost"], 0))}
+                  itemId={key.getIn(["item", "itemId"])}
+                  attributes={key.getIn(["item", "attributes"])}
+                  images={key.getIn(["item", "images", 0], 0)}
+                  itemName={key.getIn(["item", "itemName"], "")}
+                  category={key.getIn(["item", "category"], "")}
+                  navigation={this.props.navigation}
+                  farmName={key.getIn(["farm", "farmName"], "")}
+                  farmId={key.getIn(["farm", "farmId"], "")}
+                  history={this.props.history}
+                  marketId={marketId}
+                />
+              );
+            })}
           {searchProducts &&
             searchProducts.map((key, index) => {
               return (

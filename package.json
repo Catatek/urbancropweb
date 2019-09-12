@@ -12,6 +12,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-google-maps": "^9.4.5",
+    "react-lazyload": "^2.6.2",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
     "react-router-redux": "^4.0.8",

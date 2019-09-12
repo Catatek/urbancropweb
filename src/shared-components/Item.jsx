@@ -9,6 +9,7 @@ import { createStructuredSelector } from "reselect";
 import { Link } from "react-router-dom";
 // import { getFarmId } from '../store/selectors/data';
 // import { getUserFarmId } from '../store/selectors/auth';
+import LazyLoad from "react-lazyload";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -34,9 +35,35 @@ const StyledColumn = styled(Column)`
   width: 60%;
 `;
 
-const StyledRow = styled(Row)`
-  margin: 6px 0;
+const StyledPlaceHolder = styled.div`
+  margin-bottom: 10px;
+  margin-right: 16px;
+  height: 120px;
+  width: 120px;
+  border-radius: 10px;
 `;
+
+const StyledPlaceHolderLines = styled.div`
+  height: 20px;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 10px;
+`;
+
+// const StyledRow = styled(Row)`
+//   margin: 6px 0;
+// `;
+
+const PlaceHolder = () => (
+  <Wrapper>
+    <StyledPlaceHolder className="shimmer" />
+    <StyledColumn>
+      <StyledPlaceHolderLines className="shimmer" />
+      <StyledPlaceHolderLines className="shimmer" />
+      <StyledPlaceHolderLines className="shimmer" />
+    </StyledColumn>
+  </Wrapper>
+);
 
 class Item extends Component {
   state = {
@@ -120,20 +147,28 @@ class Item extends Component {
     const { count } = this.state;
     const isAuthed = this.authUser();
     return (
-      <Wrapper>
-        <Link
-          to={{
-            pathname: `/product/${itemId}`,
-            state: { itemName, marketName }
-          }}
-        >
-          <StyledImage src={images} />
-        </Link>
-        <StyledColumn>
-          <Link to={{ pathname: `/product/${itemId}`, state: { itemName } }}>
-            <Text smalltitle>{`${itemName} selected from ${farmName}`}</Text>
-            {/* <StyledRow> */}
-            {/* <FontAwesome
+      <LazyLoad
+        placeholder={<PlaceHolder />}
+        height={135}
+        throttle={500}
+        debounce={500}
+        offset={[-100, 0]}
+        once
+      >
+        <Wrapper>
+          <Link
+            to={{
+              pathname: `/product/${itemId}`,
+              state: { itemName, marketName }
+            }}
+          >
+            <StyledImage src={images} />
+          </Link>
+          <StyledColumn>
+            <Link to={{ pathname: `/product/${itemId}`, state: { itemName } }}>
+              <Text smalltitle>{`${itemName} selected from ${farmName}`}</Text>
+              {/* <StyledRow> */}
+              {/* <FontAwesome
               style={{ marginRight: 4 }}
               size={12}
               name="star"
@@ -163,29 +198,30 @@ class Item extends Component {
               name="star"
               color="#fbc513"
             /> */}
-            {/* </StyledRow> */}
+              {/* </StyledRow> */}
 
-            <Label>{`$${cost} / ${unit}`}</Label>
-            {/* {this.authFarmer() ? (
+              <Label>{`$${cost} / ${unit}`}</Label>
+              {/* {this.authFarmer() ? (
             <div style={{ marginTop: 2 }}>
               <Text>Click to manage your listing</Text>
             </div>
           ) : ( */}
-          </Link>
-          <AddToBasket
-            count={count}
-            increment={this.increment}
-            decrement={this.decrement}
-            isAuthed={isAuthed}
-            itemId={itemId}
-            handleAddItem={this.handleAddItem}
-            history={history}
-            marketId={marketId}
-            marketName={marketName}
-          />
-          {/* )} */}
-        </StyledColumn>
-      </Wrapper>
+            </Link>
+            <AddToBasket
+              count={count}
+              increment={this.increment}
+              decrement={this.decrement}
+              isAuthed={isAuthed}
+              itemId={itemId}
+              handleAddItem={this.handleAddItem}
+              history={history}
+              marketId={marketId}
+              marketName={marketName}
+            />
+            {/* )} */}
+          </StyledColumn>
+        </Wrapper>
+      </LazyLoad>
     );
   }
 }
