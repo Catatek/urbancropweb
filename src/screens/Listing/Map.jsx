@@ -10,11 +10,26 @@ const Map = withScriptjs(
   withGoogleMap(props => {
     return (
       <GoogleMap
-        disableDefaultUI
+        defaultOptions={{
+          fullscreenControl: false,
+          disableDefaultUI: true,
+          draggable: false,
+          draggableCursor: "default",
+          draggingCursor: "default",
+          gestureHandling: "none"
+        }}
         defaultZoom={11}
         defaultCenter={{ lat: props.lng, lng: props.lat }}
       >
-        <Circle defaultCenter={{ lat: props.lng, lng: props.lat }} />
+        <Circle
+          defaultOptions={{
+            fillColor: "rgba(248, 135, 71, 1)",
+            strokeColor: `rgba(248, 135, 71, 0)`,
+            draggable: false
+          }}
+          defaultRadius={2500}
+          defaultCenter={{ lat: props.lng, lng: props.lat }}
+        />
       </GoogleMap>
     );
   })
