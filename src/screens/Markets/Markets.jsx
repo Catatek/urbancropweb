@@ -2,28 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchMarkets } from "../../store/actions/data";
-import { Market, SearchBar } from "../../shared-components";
+import { Market, SearchBar, HeroImage } from "../../shared-components";
 import Navigation from "../../shared-components/Navigation";
-import splash from "../../assets/markets_splash.jpg";
-import explore from "../../assets/explore.svg";
 import { Title, Text, Button, Column } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
-
-const SplashImage = styled.div`
-  width: 100%;
-  height: 200px;
-  background: ${props => props.background};
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Icon = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-right: 1.5em;
-`;
 
 const Div = styled.div`
   width: 85%;
@@ -32,6 +14,15 @@ const Div = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 920px) {
+    width: 90%;
+  }
+`;
+
+const TitleDiv = styled.div`
+  @media (max-width: 780px) {
+    display: none;
+  }
 `;
 
 const Grid = styled.div`
@@ -44,7 +35,7 @@ const Grid = styled.div`
   grid-auto-rows: auto;
   @media (max-width: 920px) {
     grid-auto-rows: auto;
-    width: 100%;
+    width: 90%;
   }
 `;
 
@@ -96,15 +87,12 @@ class Markets extends Component {
     return (
       <div>
         <Navigation />
-        <SplashImage background={`url('${splash}')`}>
-          <Icon src={explore} />
-          <Title white>Explore Markets</Title>
-        </SplashImage>
+        <HeroImage title="Explore Markets" />
         <Div>
-          <div>
+          <TitleDiv>
             <Title margin=".25em 0 0 0 ">Markets</Title>
             <Text margin=".5em 0 0 0">{marketCount}</Text>
-          </div>
+          </TitleDiv>
           <SearchBar
             placeholder="Search Markets"
             handleChange={this.handleChange}

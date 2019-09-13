@@ -4,28 +4,10 @@ import { connect } from "react-redux";
 import { fetchItems, addItemToCart } from "../../store/actions/data";
 import Navigation from "../../shared-components/Navigation";
 import Item from "../../shared-components/Item";
-import { SearchBar } from "../../shared-components/index";
-import splash from "../../assets/markets_splash.jpg";
-import explore from "../../assets/explore.svg";
+import { SearchBar, HeroImage } from "../../shared-components/index";
 import { Title, Text } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
 import { Link } from "react-router-dom";
-
-const SplashImage = styled.div`
-  width: 100%;
-  height: 200px;
-  background: ${props => props.background};
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Icon = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-right: 1.5em;
-`;
 
 const Div = styled.div`
   width: 85%;
@@ -35,6 +17,15 @@ const Div = styled.div`
   justify-content: space-between;
   align-items: center;
   max-width: 1300px;
+  @media (max-width: 920px) {
+    width: 90%;
+  }
+`;
+
+const TitleDiv = styled.div`
+  @media (max-width: 780px) {
+    display: none;
+  }
 `;
 
 const Grid = styled.div`
@@ -47,7 +38,7 @@ const Grid = styled.div`
   grid-auto-rows: auto;
   @media (max-width: 920px) {
     grid-auto-rows: auto;
-    width: 100%;
+    width: 90%;
   }
 `;
 
@@ -115,18 +106,15 @@ class Market extends Component {
     return (
       <div>
         <Navigation />
-        <SplashImage background={`url('${splash}')`}>
-          <Icon src={explore} />
-          <Title white>{marketName}</Title>
-        </SplashImage>
+        <HeroImage title={marketName} />
         <Div>
-          <div>
+          <TitleDiv>
             <Link to="/">
               <Text orange margin=".5em 0 .25em 0">{`Explore Markets`}</Text>
             </Link>
             <Title margin="0">Products</Title>
             <Text margin=".5em 0 0 0">{productCount}</Text>
-          </div>
+          </TitleDiv>
           <SearchBar
             placeholder="Search Products"
             handleChange={this.handleChange}

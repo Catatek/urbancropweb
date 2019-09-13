@@ -1,4 +1,5 @@
 import { Market } from "./Market";
 import { SearchBar } from "./SearchBar";
+import { HeroImage } from "./HeroImage";
 
-export { Market, SearchBar };
+export { Market, SearchBar, HeroImage };

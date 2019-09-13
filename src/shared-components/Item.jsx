@@ -143,7 +143,8 @@ class Item extends Component {
       farmName,
       history,
       marketId,
-      marketName
+      marketName,
+      quantity
     } = this.props;
     const { count } = this.state;
     const isAuthed = this.authUser();
@@ -207,17 +208,21 @@ class Item extends Component {
             </div>
           ) : ( */}
             </Link>
-            <AddToBasket
-              count={count}
-              increment={this.increment}
-              decrement={this.decrement}
-              isAuthed={isAuthed}
-              itemId={itemId}
-              handleAddItem={this.handleAddItem}
-              history={history}
-              marketId={marketId}
-              marketName={marketName}
-            />
+            {quantity > 0 && (
+              <AddToBasket
+                count={count}
+                increment={this.increment}
+                decrement={this.decrement}
+                isAuthed={isAuthed}
+                itemId={itemId}
+                handleAddItem={this.handleAddItem}
+                history={history}
+                marketId={marketId}
+                marketName={marketName}
+                quantity={quantity}
+              />
+            )}
+            {quantity < 0 && <Text>Out of stock</Text>}
             {/* )} */}
           </StyledColumn>
         </Wrapper>

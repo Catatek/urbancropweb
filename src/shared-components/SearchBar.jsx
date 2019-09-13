@@ -28,6 +28,9 @@ const Div = styled.div`
   border-radius: 8px;
   border: 0px;
   background-color: rgba(142, 142, 147, 0.12);
+  @media (max-width: 780px) {
+    width: 100%;
+  }
 `;
 
 const StyledIcon = styled.img`

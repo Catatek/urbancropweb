@@ -7,6 +7,9 @@ export const Title = styled.h1`
   color: ${props => (props.white ? "#fff" : "#000")};
   font-family: "proxima-nova", sans-serif;
   margin: ${props => props.margin || ".5em 0"};
+  @media (max-width: 620px) {
+    font-size: 26px;
+  }
 `;
 
 export const Text = styled.p`
