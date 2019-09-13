@@ -24,9 +24,9 @@ const Icon = styled.img`
   }
 `;
 
-export const HeroImage = ({ title }) => (
+export const HeroImage = ({ title, icon }) => (
   <SplashImage background={`url('${splash}')`}>
-    <Icon src={explore} />
+    {icon && <Icon src={explore} />}
     <Title white>{title}</Title>
   </SplashImage>
 );

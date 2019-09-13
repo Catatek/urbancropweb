@@ -31,7 +31,7 @@ const Grid = styled.div`
   max-width: 1300px;
   margin: 1em auto 0 auto;
   grid-gap: 35px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
   grid-auto-rows: auto;
   @media (max-width: 920px) {
     grid-auto-rows: auto;
@@ -41,7 +41,8 @@ const Grid = styled.div`
 
 class Markets extends Component {
   state = {
-    query: ""
+    query: "",
+    isFetchingMarkets: true
   };
 
   componentDidMount() {
@@ -81,13 +82,13 @@ class Markets extends Component {
   };
 
   render() {
-    const { query } = this.state;
+    const { query, isFetchingMarkets } = this.state;
     const searchMarkets = this.filterMarkets(query);
     const marketCount = this.calcQuantity(searchMarkets.length);
     return (
       <div>
         <Navigation />
-        <HeroImage title="Explore Markets" />
+        <HeroImage title="Explore Markets" icon />
         <Div>
           <TitleDiv>
             <Title margin=".25em 0 0 0 ">Markets</Title>
@@ -112,52 +113,8 @@ class Markets extends Component {
                 />
               );
             })}
-          {searchMarkets &&
-            searchMarkets.map((key, index) => {
-              return (
-                <Market
-                  key={index}
-                  id={key.get("marketId", "")}
-                  img={key.getIn(["images", 0], "")}
-                  marketName={key.get("marketName", "")}
-                />
-              );
-            })}
-          {searchMarkets &&
-            searchMarkets.map((key, index) => {
-              return (
-                <Market
-                  key={index}
-                  id={key.get("marketId", "")}
-                  img={key.getIn(["images", 0], "")}
-                  marketName={key.get("marketName", "")}
-                />
-              );
-            })}
-          {searchMarkets &&
-            searchMarkets.map((key, index) => {
-              return (
-                <Market
-                  key={index}
-                  id={key.get("marketId", "")}
-                  img={key.getIn(["images", 0], "")}
-                  marketName={key.get("marketName", "")}
-                />
-              );
-            })}
-          {searchMarkets &&
-            searchMarkets.map((key, index) => {
-              return (
-                <Market
-                  key={index}
-                  id={key.get("marketId", "")}
-                  img={key.getIn(["images", 0], "")}
-                  marketName={key.get("marketName", "")}
-                />
-              );
-            })}
         </Grid>
-        <Column margin="4em auto" alignitems="center">
+        <Column margin="2em auto" alignitems="center">
           <Text>Expand your search area to discover more markets</Text>
           <Button marketsearch>Expand Search Area</Button>
         </Column>

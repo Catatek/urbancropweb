@@ -106,7 +106,7 @@ class Market extends Component {
     return (
       <div>
         <Navigation />
-        <HeroImage title={marketName} />
+        <HeroImage title={marketName} icon />
         <Div>
           <TitleDiv>
             <Link to="/">

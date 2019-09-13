@@ -166,31 +166,31 @@ export const postItemToCart = (item, data) =>
 //     url: `/delete/item/${id}/${farm}`,
 //   });
 
-// export const postCard = data =>
-//   client.request({
-//     method: 'POST',
-//     url: `/add/card`,
-//     data,
-//   });
+export const postCard = data =>
+  client.request({
+    method: "POST",
+    url: `/add/card`,
+    data
+  });
 
-// export const getCard = () =>
-//   client.request({
-//     method: 'GET',
-//     url: '/get/card',
-//   });
+export const getCard = () =>
+  client.request({
+    method: "GET",
+    url: "/get/card"
+  });
 
-// export const putCard = data =>
-//   client.request({
-//     method: 'PUT',
-//     url: '/update/card',
-//     data,
-//   });
+export const putCard = data =>
+  client.request({
+    method: "PUT",
+    url: "/update/card",
+    data
+  });
 
-// export const deleteCard = () =>
-//   client.request({
-//     method: 'DELETE',
-//     url: '/delete/card',
-//   });
+export const deleteCard = () =>
+  client.request({
+    method: "DELETE",
+    url: "/delete/card"
+  });
 
 // // ACH
 

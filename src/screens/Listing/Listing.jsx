@@ -24,12 +24,9 @@ const SplashImage = styled.div`
   @media (max-width: 920px) {
     width: 75%;
   }
-`;
-
-const Icon = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-right: 1.5em;
+  @media (max-width: 780px) {
+    width: 100%;
+  }
 `;
 
 const Div = styled.div`

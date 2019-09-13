@@ -6,27 +6,9 @@ import {
   fetchPastConsumerOrders
 } from "../../store/actions/data";
 import Navigation from "../../shared-components/Navigation";
-import Item from "../../shared-components/Item";
-import splash from "../../assets/markets_splash.jpg";
-import explore from "../../assets/explore.svg";
+import { HeroImage } from "../../shared-components";
 import { Title } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
-
-const SplashImage = styled.div`
-  width: 100%;
-  height: 200px;
-  background: ${props => props.background};
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Icon = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-right: 1.5em;
-`;
 
 const Div = styled.div`
   width: 85%;
@@ -62,14 +44,11 @@ class Orders extends Component {
 
   render() {
     const { consumerOrder, pastConsumerOrders } = this.props;
-    console.log(consumerOrder, pastConsumerOrders);
 
     return (
       <div>
         <Navigation />
-        <SplashImage background={`url('${splash}')`}>
-          <Title white>Orders</Title>
-        </SplashImage>
+        <HeroImage title="Orders" />
         <Div>
           <Title>Orders</Title>
         </Div>

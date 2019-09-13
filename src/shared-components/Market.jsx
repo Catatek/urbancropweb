@@ -22,6 +22,7 @@ const Image = styled.img`
   width: 100%;
   object-fit: contain;
   border-radius: 8px;
+  margin-bottom: 0.5em;
 `;
 
 export function Market({ img, id, marketName }) {
