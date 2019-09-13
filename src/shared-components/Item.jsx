@@ -28,6 +28,7 @@ const StyledImage = styled.img`
   margin-right: 16px;
   height: 120px;
   width: 120px;
+  object-fit: cover;
   border-radius: 10px;
 `;
 
@@ -151,15 +152,14 @@ class Item extends Component {
         placeholder={<PlaceHolder />}
         height={135}
         throttle={500}
-        debounce={500}
-        offset={[-100, 0]}
+        debounce={250}
         once
       >
         <Wrapper>
           <Link
             to={{
               pathname: `/product/${itemId}`,
-              state: { itemName, marketName }
+              state: { itemName, marketName, marketId }
             }}
           >
             <StyledImage src={images} />

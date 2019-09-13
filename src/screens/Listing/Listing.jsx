@@ -16,10 +16,14 @@ import Map from "./Map";
 
 const SplashImage = styled.div`
   width: 55%;
+  max-width: 1300px;
   height: 320px;
   border-radius: 4px;
   background: ${props => props.background};
   background-size: cover;
+  @media (max-width: 920px) {
+    width: 75%;
+  }
 `;
 
 const Icon = styled.img`
@@ -29,23 +33,16 @@ const Icon = styled.img`
 `;
 
 const Div = styled.div`
-  width: ${props => props.width || "45%"};
+  width: 45%;
+  max-width: 1300px;
+  max-width: 1100px;
   margin: 0 auto;
   margin-top: 1em;
   display: flex;
   justify-content: space-between;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  width: 85%;
-  grid-gap: 25px;
-  margin: 1em auto 0 auto;
-  grid-template-columns: repeat(auto-fit, minmax(275px, 400px));
-  grid-auto-rows: auto;
   @media (max-width: 920px) {
-    grid-auto-rows: auto;
-    width: 100%;
+    width: 75%;
+    flex-direction: column;
   }
 `;
 
@@ -58,6 +55,19 @@ const StyledRow = styled(Row)`
 const StyledImage = styled.img`
   width: 40px;
   height: 40px;
+`;
+
+const MapDiv = styled.div`
+  height: 370px;
+  width: 45%;
+  max-width: 1100px;
+  margin: 2em auto;
+  @media (max-width: 920px) {
+    width: 75%;
+  }
+  @media (max-width: 500px) {
+    height: 350px;
+  }
 `;
 
 function Attributes({ attributes }) {
@@ -131,6 +141,7 @@ class Listing extends Component {
 
   render() {
     const marketName = this.props.location.state.marketName;
+    const marketId = this.props.location.state.marketId;
     const itemName = this.props.location.state.itemName;
     const { item } = this.props;
     const { isFetchingItem } = this.state;
@@ -158,7 +169,7 @@ class Listing extends Component {
 
         <Div>
           <div>
-            <Link to={`/market/${marketName}`}>
+            <Link to={`/market/${marketId}`}>
               <Text
                 orange
                 margin=".5em 0 .25em 0"
@@ -185,16 +196,7 @@ class Listing extends Component {
           <Map
             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAe6xsQwAD0234Km-Dvf_fIXq5OlMVMuXA&v=3.exp&libraries=geometry,drawing,places"
             loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={
-              <div
-                style={{
-                  height: `370px`,
-                  width: "45%",
-                  margin: "0 auto",
-                  marginBottom: "2em"
-                }}
-              />
-            }
+            containerElement={<MapDiv />}
             mapElement={<div style={{ height: `100%` }} />}
             lat={lat}
             lng={lng}

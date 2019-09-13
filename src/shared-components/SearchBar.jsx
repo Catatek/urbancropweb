@@ -1,31 +1,52 @@
 import React from "react";
 import styled from "styled-components";
+import search from "../assets/search.svg";
 
 const Input = styled.input`
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 0px;
+  background-color: rgba(0, 0, 0, 0);
+  outline: 0;
+  font-family: "proxima-nova";
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.13;
+  letter-spacing: normal;
+  color: #000;
+`;
+
+const Div = styled.div`
+  padding-left: 0.5em;
+  display: flex;
+  align-items: center;
   width: 280px;
   height: 36px;
   border-radius: 8px;
   border: 0px;
   background-color: rgba(142, 142, 147, 0.12);
-  flex-direction: row;
-  padding-left: 0.5em;
-  outline: 0;
-  align-items: center;
 `;
 
-// const StyledIcon = styled(Ionicons)`
-//   margin: 0 10px;
-// `;
+const StyledIcon = styled.img`
+  margin: 0 10px;
+  width: 14px;
+  height: 14px;
+`;
 
-export function SearchBar({ handleChange, query }) {
-  console.log(query, "search");
-
+export function SearchBar({ handleChange, query, placeholder }) {
   return (
-    <Input
-      onChange={e => handleChange(e.target.value)}
-      placeholder="Search"
-      value={query}
-      name="query"
-    />
+    <Div>
+      <StyledIcon src={search} />
+      <Input
+        onChange={e => handleChange(e.target.value)}
+        placeholder={placeholder}
+        value={query}
+        name="query"
+        autoComplete="off"
+      />
+    </Div>
   );
 }

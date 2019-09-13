@@ -104,7 +104,11 @@ class Markets extends Component {
             <Title margin=".25em 0 0 0 ">Markets</Title>
             <Text margin=".5em 0 0 0">{marketCount}</Text>
           </div>
-          <SearchBar handleChange={this.handleChange} query={query} />
+          <SearchBar
+            placeholder="Search Markets"
+            handleChange={this.handleChange}
+            query={query}
+          />
         </Div>
 
         <Grid>
