@@ -20,10 +20,7 @@ const Wrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  background: ${props => props.background};
   object-fit: contain;
-  background-size: cover;
-  background-position: center;
   border-radius: 8px;
 `;
 

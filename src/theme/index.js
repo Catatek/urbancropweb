@@ -100,6 +100,24 @@ export const Button = styled.button`
       margin-right: 0;
       margin-top: 40px;
     `}
+    ${props =>
+      props.marketsearch &&
+      css`
+        width: 172px;
+        height: 34px;
+        border-radius: 17px;
+        border: solid 1px #f75d19;
+        background: #fff;
+        color: #f75d19;
+        margin-right: 0;
+        font-size: 14px;
+        margin-top: 12px;
+        &:hover {
+          background-color: #fff;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+            0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+      `}
 `;
 
 export const Row = styled.div`
@@ -115,4 +133,5 @@ export const Column = styled.div`
   width: ${props => props.width};
   justify-content: ${props => props.justifycontent};
   align-items: ${props => props.alignitems};
+  margin: ${props => props.margin};
 `;

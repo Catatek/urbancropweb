@@ -6,7 +6,7 @@ import { Market, SearchBar } from "../../shared-components";
 import Navigation from "../../shared-components/Navigation";
 import splash from "../../assets/markets_splash.jpg";
 import explore from "../../assets/explore.svg";
-import { Title, Text } from "../../theme";
+import { Title, Text, Button, Column } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
 
 const SplashImage = styled.div`
@@ -39,7 +39,8 @@ const Grid = styled.div`
   width: 85%;
   max-width: 1300px;
   margin: 1em auto 0 auto;
-  grid-template-columns: repeat(auto-fit, minmax(275px, 475px));
+  grid-gap: 35px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-auto-rows: auto;
   @media (max-width: 920px) {
     grid-auto-rows: auto;
@@ -123,7 +124,55 @@ class Markets extends Component {
                 />
               );
             })}
+          {searchMarkets &&
+            searchMarkets.map((key, index) => {
+              return (
+                <Market
+                  key={index}
+                  id={key.get("marketId", "")}
+                  img={key.getIn(["images", 0], "")}
+                  marketName={key.get("marketName", "")}
+                />
+              );
+            })}
+          {searchMarkets &&
+            searchMarkets.map((key, index) => {
+              return (
+                <Market
+                  key={index}
+                  id={key.get("marketId", "")}
+                  img={key.getIn(["images", 0], "")}
+                  marketName={key.get("marketName", "")}
+                />
+              );
+            })}
+          {searchMarkets &&
+            searchMarkets.map((key, index) => {
+              return (
+                <Market
+                  key={index}
+                  id={key.get("marketId", "")}
+                  img={key.getIn(["images", 0], "")}
+                  marketName={key.get("marketName", "")}
+                />
+              );
+            })}
+          {searchMarkets &&
+            searchMarkets.map((key, index) => {
+              return (
+                <Market
+                  key={index}
+                  id={key.get("marketId", "")}
+                  img={key.getIn(["images", 0], "")}
+                  marketName={key.get("marketName", "")}
+                />
+              );
+            })}
         </Grid>
+        <Column margin="4em auto" alignitems="center">
+          <Text>Expand your search area to discover more markets</Text>
+          <Button marketsearch>Expand Search Area</Button>
+        </Column>
       </div>
     );
   }
