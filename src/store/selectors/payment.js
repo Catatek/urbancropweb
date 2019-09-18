@@ -2,11 +2,12 @@
 
 // export const getCards = state => state.payment.get('card', Map());
 
-// export const getActive = state =>
-//   state.payment.getIn(['card', 'active'], false);
-// export const getLast4 = state => state.payment.getIn(['card', 'last4'], '');
-// export const getBrand = state => state.payment.getIn(['card', 'brand'], '');
-// export const getExpiry = state => state.payment.getIn(['card', 'expiry'], '');
+export const getActive = state =>
+  state.getIn(["payment", "card", "active"], false);
+export const getLast4 = state => state.getIn(["payment", "card", "last4"], "");
+export const getBrand = state => state.getIn(["payment", "card", "brand"], "");
+export const getExpiry = state =>
+  state.getIn(["payment", "card", "expiry"], "");
 
 // export const getIsFetchingCard = state =>
 //   state.payment.get('isFetchingCard', false);

@@ -12,6 +12,19 @@ export const Title = styled.h1`
   }
 `;
 
+export const Subtitle = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  color: #000000;
+  @media (max-width: 620px) {
+    font-size: 20px;
+  }
+`;
+
 export const Text = styled.p`
   font-size: 14px;
   font-family: "proxima-nova", sans-serif;
@@ -33,6 +46,15 @@ export const Text = styled.p`
     css`
       color: #f75d19;
       cursor: pointer;
+    `};
+  ${props =>
+    props.basketitem &&
+    css`
+      color: ${props =>
+        props.orange ? "#f75d19" : props.black ? "#000" : "#a3a3a3"};
+      font-size: 15px;
+      text-transform: ${props => (props.orange ? "capitalize" : "none")};
+      font-weight: 600;
     `};
 `;
 
@@ -121,6 +143,28 @@ export const Button = styled.button`
             0 3px 6px rgba(0, 0, 0, 0.23);
         }
       `}
+      ${props =>
+        props.basket &&
+        css`
+          width: 90px;
+          height: 32px;
+          border-radius: 10px;
+          background-color: #f75d19;
+          border: 0px;
+          align-items: center;
+          justify-content: center;
+        `}
+        ${props =>
+          props.delete &&
+          css`
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 48px;
+            border-radius: 4px;
+            border-color: #ff2d3c;
+            border-width: 1px;
+          `}
 `;
 
 export const Row = styled.div`

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
-import splash from "../assets/markets_splash.jpg";
+import marketsplash from "../assets/markets_splash.jpg";
+import basketsplash from "../assets/basket_splash.jpg";
 import explore from "../assets/explore.svg";
 import { Title } from "../theme";
 
@@ -24,9 +25,26 @@ const Icon = styled.img`
   }
 `;
 
-export const HeroImage = ({ title, icon }) => (
-  <SplashImage background={`url('${splash}')`}>
-    {icon && <Icon src={explore} />}
-    <Title white>{title}</Title>
-  </SplashImage>
-);
+export class HeroImage extends Component {
+  handleSplash = title => {
+    let splash = "";
+    switch (title) {
+      case "Basket":
+        splash = basketsplash;
+        break;
+      default:
+        splash = marketsplash;
+    }
+    return splash;
+  };
+  render() {
+    const { title, icon } = this.props;
+    const splashImage = this.handleSplash(title);
+    return (
+      <SplashImage background={`url('${splashImage}')`}>
+        {icon && <Icon src={explore} />}
+        <Title white>{title}</Title>
+      </SplashImage>
+    );
+  }
+}
