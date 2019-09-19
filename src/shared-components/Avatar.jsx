@@ -13,7 +13,7 @@ const Circle = styled.div`
   align-items: center;
   background: ${props => props.background};
   background-size: cover;
-  margin-right: 2.25em;
+  margin-right: 2em;
   border-radius: 50%;
   opacity: 0.75;
   outline: none;
@@ -73,7 +73,6 @@ class Avatar extends Component {
   render() {
     const initials = this.getInitials();
     const { avatar } = this.props;
-    console.log(avatar);
 
     return (
       <div>

@@ -14,6 +14,10 @@ import {
   DELETE_ITEM_FROM_CART,
   DELETE_ITEM_BY_ID,
   UPDATE_FARM_ITEM,
+  DELETE_FAVORITE,
+  POST_FAVORITE,
+  FETCH_FAVORITE,
+  FETCH_ALL_FAVORITES,
   UPDATE_ITEM_IN_CART,
   FETCH_CONSUMER_ORDER,
   FETCH_PAST_CONSUMER_ORDERS,
@@ -33,7 +37,11 @@ import {
   putItemInCart,
   getConsumerOrder,
   getPastConsumerOrders,
-  postOrder
+  postOrder,
+  postFavorite,
+  removeFavorite,
+  getFavorite,
+  getAllFavorites
 } from "../../services/api";
 
 // // GET ITEMS
@@ -257,5 +265,68 @@ export const fetchPastConsumerOrders = () => async dispatch => {
     return dispatch(fetchPastConsumerOrdersSuccess(res.data));
   } catch (error) {
     return dispatch(fetchPastConsumerOrdersFailed(error));
+  }
+};
+
+// FAVORITES
+
+const addFavoritePending = createAction(POST_FAVORITE.PENDING);
+const addFavoriteSuccess = createAction(POST_FAVORITE.SUCCESS, "favorites");
+const addFavoriteFailed = createAction(POST_FAVORITE.FAILED, "error");
+export const addFavorite = data => async dispatch => {
+  dispatch(addFavoritePending());
+  try {
+    const res = await postFavorite(data);
+    return dispatch(addFavoriteSuccess(res.data));
+  } catch (error) {
+    return dispatch(addFavoriteFailed(error));
+  }
+};
+
+const deleteFavoritePending = createAction(DELETE_FAVORITE.PENDING);
+const deleteFavoriteSuccess = createAction(
+  DELETE_FAVORITE.SUCCESS,
+  "favorites"
+);
+const deleteFavoriteFailed = createAction(DELETE_FAVORITE.FAILED, "error");
+export const deleteFavorite = data => async dispatch => {
+  dispatch(deleteFavoritePending());
+  try {
+    const res = await removeFavorite(data);
+    return dispatch(deleteFavoriteSuccess(res.data));
+  } catch (error) {
+    return dispatch(deleteFavoriteFailed(error));
+  }
+};
+
+const fetchFavoritePending = createAction(FETCH_FAVORITE.PENDING);
+const fetchFavoriteSuccess = createAction(FETCH_FAVORITE.SUCCESS, "favorites");
+const fetchFavoriteFailed = createAction(FETCH_FAVORITE.FAILED, "error");
+export const fetchFavorite = () => async dispatch => {
+  dispatch(fetchFavoritePending());
+  try {
+    const res = await getFavorite();
+    return dispatch(fetchFavoriteSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchFavoriteFailed(error));
+  }
+};
+
+const fetchAllFavoritesPending = createAction(FETCH_ALL_FAVORITES.PENDING);
+const fetchAllFavoritesSuccess = createAction(
+  FETCH_ALL_FAVORITES.SUCCESS,
+  "favorites"
+);
+const fetchAllFavoritesFailed = createAction(
+  FETCH_ALL_FAVORITES.FAILED,
+  "error"
+);
+export const fetchAllFavorites = () => async dispatch => {
+  dispatch(fetchAllFavoritesPending());
+  try {
+    const res = await getAllFavorites();
+    return dispatch(fetchAllFavoritesSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchAllFavoritesFailed(error));
   }
 };

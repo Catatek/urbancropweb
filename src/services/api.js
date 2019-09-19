@@ -192,6 +192,33 @@ export const deleteCard = () =>
     url: "/delete/card"
   });
 
+// FAVORITES
+
+export const postFavorite = data =>
+  client.request({
+    method: "POST",
+    url: "/add/favorite",
+    data
+  });
+
+export const getFavorite = () =>
+  client.request({
+    method: "GET",
+    url: "/get/favorites"
+  });
+
+export const removeFavorite = data =>
+  client.request({
+    method: "DELETE",
+    url: "/delete/favorite",
+    data
+  });
+
+export const getAllFavorites = () =>
+  client.request({
+    method: "GET",
+    url: "/get/favorite/items"
+  });
 // // ACH
 
 // export const getACHDetails = () =>

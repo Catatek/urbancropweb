@@ -49,6 +49,13 @@ const Icon = styled.img`
   height: 21px;
 `;
 
+const Line = styled.div`
+  width: 1px;
+  background-color: #f1f1f2
+  height: 40px;
+  margin-right: 2em;
+`;
+
 function BasketIcon({ basketCount }) {
   return (
     <div
@@ -144,22 +151,23 @@ class Navigation extends Component {
   getOptions = () => {
     return [
       {
+        label: "Profile",
+        link: "/profile",
+        onClick: this.onClickOption
+      },
+      {
         label: "Support",
         link: "/",
-        iconClassName: "fa fa-question-circle",
         onClick: this.onClickOption
       },
       {
         label: "Product Updates",
         link: "/updates",
-        iconClassName: "fas fa-exclamation-circle",
         onClick: this.onClickOption
       },
       {
         label: "Logout",
         link: "/",
-        color: "#f2451a",
-        iconClassName: "ace-icon fa fa-power-off",
         onClick: this.logout
       }
     ];
@@ -192,7 +200,7 @@ class Navigation extends Component {
           {/* {role === "farmer" && <Nav to="/vendors">Farm</Nav>} */}
 
           <Nav to="/orders">Orders</Nav>
-          {isAuthed && <Nav to="/">Favorites</Nav>}
+          {isAuthed && <Nav to="/favorites">Favorites</Nav>}
           {isAuthed && (
             <Avatar
               render={display => (
@@ -206,6 +214,7 @@ class Navigation extends Component {
               Sign in
             </Button>
           )}
+          <Line />
           {isAuthed && (
             <Link to="/basket">
               <BasketIcon basketCount={basketCount} />

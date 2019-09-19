@@ -2,74 +2,71 @@ import React from "react";
 import styled from "styled-components";
 import { Row, Column, Text } from "../theme/index";
 
-const Arrow = styled.div`
-  width: 0;
-  height: 0;
-  border-right: 7px solid transparent;
-  border-left: 7px solid transparent;
-  border-bottom: 7px solid #fff;
-  margin: 0 0 0 5em;
-  left: -0.2em;
-  bottom: 1.6em;
-  position: absolute;
-  z-index: 5;
-  transform: rotate(0.75turn);
-`;
-
-const Icon = styled.i`
-  color: #4d4d4d;
-  font-size: 1.1em;
-  margin: 0 0.75em;
-`;
-
 const Menu = styled.div`
   background: #fff;
-  border-radius: 3px;
   width: 200px;
-  min-height: 175px;
+  height: auto;
   position: absolute;
-  left: 5.5em;
-  bottom: 1.2em;
+  right: 12em;
+  top: 5em;
   display: flex;
   flex-direction: column;
   z-index: 2;
-  box-shadow: 0 2px 8px 0 rgba(34, 34, 34, 0.5);
+  @media (min-width: 980px) {
+    right: 8em;
+  }
+  @media (min-width: 1180px) {
+    right: 9em;
+  }
+  @media (min-width: 1280px) {
+    right: 10em;
+  }
+  @media (min-width: 1580px) {
+    right: 15em;
+  }
+  @media (min-width: 1680px) {
+    right: 17em;
+  }
+  @media (min-width: 1780px) {
+    right: 19em;
+  }
+  @media (min-width: 1880px) {
+    right: 21em;
+  }
+  @media (min-width: 1980px) {
+    right: 25em;
+  }
+  @media (min-width: 2080px) {
+    right: 28em;
+  }
 `;
 
 const StyledRow = styled(Row)`
   cursor: pointer;
   align-items: center;
-
-  padding: 0.3em 0;
+  padding: 0.25em 0.75em;
+  border-bottom: ${props => props.border && "0.5px solid #f1f1f2"};
   &:hover {
     background-color: #f7f7f7;
   }
 `;
 
-export default function DropdownModal({
-  display = false,
-  options = [{}],
-  userdetails,
-  initials,
-  notifications,
-  type
-}) {
+export default function DropdownModal({ display = false, options = [{}] }) {
   return (
     <div
       style={{
         display: display ? "block" : "none"
       }}
     >
-      <Arrow />
       <Menu>
         <Column padding=".5em 0">
           {options.map((key, index) => {
             return (
               <StyledRow
+                border={key.label !== "Logout"}
                 key={index}
                 onClick={() => key.onClick && key.onClick(key)}
               >
-                <Icon className={key.iconClassName} />
                 <Text color={key.color}>{key.label}</Text>
               </StyledRow>
             );
