@@ -10,7 +10,8 @@ import {
   UPDATE_FARM_ITEM,
   FETCH_FARM,
   FETCH_CONSUMER_ORDER,
-  FETCH_PAST_CONSUMER_ORDERS
+  FETCH_PAST_CONSUMER_ORDERS,
+  UPDATE_ITEM_IN_CART
 } from "../types/data";
 
 export default (state = Map(), { type, ...action }) => {
@@ -44,6 +45,9 @@ export default (state = Map(), { type, ...action }) => {
         "consumerPastOrders",
         fromJS(action.consumerPastOrders.orders)
       );
+      return state;
+    case UPDATE_ITEM_IN_CART.SUCCESS:
+      state = state.set("cart", fromJS(action.cart.cart));
       return state;
     default:
       return state;

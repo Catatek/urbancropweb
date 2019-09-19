@@ -16,7 +16,8 @@ import {
   UPDATE_FARM_ITEM,
   UPDATE_ITEM_IN_CART,
   FETCH_CONSUMER_ORDER,
-  FETCH_PAST_CONSUMER_ORDERS
+  FETCH_PAST_CONSUMER_ORDERS,
+  POST_ORDER
 } from "../types/data";
 import {
   getItems,
@@ -31,7 +32,8 @@ import {
   putFarmItem,
   putItemInCart,
   getConsumerOrder,
-  getPastConsumerOrders
+  getPastConsumerOrders,
+  postOrder
 } from "../../services/api";
 
 // // GET ITEMS
@@ -136,43 +138,56 @@ export const addItemToCart = (item, data) => async dispatch => {
   }
 };
 
-// const updateItemInCartPending = createAction(UPDATE_ITEM_IN_CART.PENDING);
-// const updateItemInCartSuccess = createAction(
-//   UPDATE_ITEM_IN_CART.SUCCESS,
-//   'cart',
-// );
-// const updateItemInCartFailed = createAction(
-//   UPDATE_ITEM_IN_CART.FAILED,
-//   'error',
-// );
-// export const updateItemInCart = (item, data) => async dispatch => {
-//   dispatch(updateItemInCartPending());
-//   try {
-//     const res = await putItemInCart(item, data);
-//     return dispatch(updateItemInCartSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(updateItemInCartFailed(error));
-//   }
-// };
+const updateItemInCartPending = createAction(UPDATE_ITEM_IN_CART.PENDING);
+const updateItemInCartSuccess = createAction(
+  UPDATE_ITEM_IN_CART.SUCCESS,
+  "cart"
+);
+const updateItemInCartFailed = createAction(
+  UPDATE_ITEM_IN_CART.FAILED,
+  "error"
+);
+export const updateItemInCart = (item, data) => async dispatch => {
+  dispatch(updateItemInCartPending());
+  try {
+    const res = await putItemInCart(item, data);
+    return dispatch(updateItemInCartSuccess(res.data));
+  } catch (error) {
+    return dispatch(updateItemInCartFailed(error));
+  }
+};
 
-// const removeItemFromCartPending = createAction(DELETE_ITEM_FROM_CART.PENDING);
-// const removeItemFromCartSuccess = createAction(
-//   DELETE_ITEM_FROM_CART.SUCCESS,
-//   'cart',
-// );
-// const removeItemFromCartFailed = createAction(
-//   DELETE_ITEM_FROM_CART.FAILED,
-//   'error',
-// );
-// export const removeItemFromCart = item => async dispatch => {
-//   dispatch(removeItemFromCartPending());
-//   try {
-//     const res = await deleteItemFromCart(item);
-//     return dispatch(removeItemFromCartSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(removeItemFromCartFailed(error));
-//   }
-// };
+const removeItemFromCartPending = createAction(DELETE_ITEM_FROM_CART.PENDING);
+const removeItemFromCartSuccess = createAction(
+  DELETE_ITEM_FROM_CART.SUCCESS,
+  "cart"
+);
+const removeItemFromCartFailed = createAction(
+  DELETE_ITEM_FROM_CART.FAILED,
+  "error"
+);
+export const removeItemFromCart = item => async dispatch => {
+  dispatch(removeItemFromCartPending());
+  try {
+    const res = await deleteItemFromCart(item);
+    return dispatch(removeItemFromCartSuccess(res.data));
+  } catch (error) {
+    return dispatch(removeItemFromCartFailed(error));
+  }
+};
+
+const createOrderPending = createAction(POST_ORDER.PENDING);
+const createOrderSuccess = createAction(POST_ORDER.SUCCESS, "orders");
+const createOrderFailed = createAction(POST_ORDER.FAILED, "error");
+export const createOrder = () => async dispatch => {
+  dispatch(createOrderPending());
+  try {
+    const res = await postOrder();
+    return dispatch(createOrderSuccess(res.data));
+  } catch (error) {
+    return dispatch(createOrderFailed(error));
+  }
+};
 
 // MARKETS
 const fetchMarketsPending = createAction(FETCH_MARKETS.PENDING);

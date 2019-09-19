@@ -147,18 +147,18 @@ export const postItemToCart = (item, data) =>
     data
   });
 
-// export const putItemInCart = (item, data) =>
-//   client.request({
-//     method: 'PUT',
-//     url: `/update/cart`,
-//     data,
-//   });
+export const putItemInCart = (item, data) =>
+  client.request({
+    method: "PUT",
+    url: `/update/cart/${item}`,
+    data
+  });
 
-// export const deleteItemFromCart = item =>
-//   client.request({
-//     method: 'DELETE',
-//     url: `/delete/cart/${item}`,
-//   });
+export const deleteItemFromCart = item =>
+  client.request({
+    method: "DELETE",
+    url: `/delete/cart/${item}`
+  });
 
 // export const deleteItemById = (id, farm) =>
 //   client.request({
@@ -219,4 +219,10 @@ export const getPastConsumerOrders = () =>
   client.request({
     method: "GET",
     url: `/orders/consumer/past`
+  });
+
+export const postOrder = () =>
+  client.request({
+    method: "POST",
+    url: "/create/order"
   });

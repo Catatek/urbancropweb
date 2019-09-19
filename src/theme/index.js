@@ -165,6 +165,19 @@ export const Button = styled.button`
             border-color: #ff2d3c;
             border-width: 1px;
           `}
+          ${props =>
+            props.checkout &&
+            css`
+              width: 280px;
+              height: 48px;
+              border-radius: 4px;
+              background-color: ${props => (props.active ? "#f75d19" : "#ccc")};
+              cursor: ${props => (props.active ? "pointer" : "default")};
+              &:hover {
+                background-color: ${props =>
+                  props.active ? "#f9804a" : "#ccc"};
+              }
+            `}
 `;
 
 export const Row = styled.div`

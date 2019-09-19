@@ -15,3 +15,4 @@ export const FETCH_CONSUMER_ORDER = createActionType("FETCH_CONSUMER_ORDER");
 export const FETCH_PAST_CONSUMER_ORDERS = createActionType(
   "FETCH_PAST_CONSUMER_ORDERS"
 );
+export const POST_ORDER = createActionType("POST_ORDER");

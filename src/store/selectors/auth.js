@@ -1,14 +1,16 @@
-// import { List, Map } from 'immutable';
+import { createStructuredSelector } from "reselect";
+import { List, Map } from "immutable";
 
 // // USER
 
-// export const getUserFirstName = state =>
-//   state.auth.getIn(['info', 'firstName'], '');
-// export const getUserLastName = state =>
-//   state.auth.getIn(['info', 'lastName'], '');
+export const getUserFirstName = state =>
+  state.getIn(["auth", "info", "firstName"], "");
+export const getUserLastName = state =>
+  state.getIn(["auth", "info", "lastName"], "");
 // export const getUserEmail = state => state.auth.getIn(['info', 'email'], '');
 // export const getUserRole = state => state.auth.getIn(['info', 'role'], '');
-// export const getUserAvatar = state => state.auth.getIn(['info', 'avatar'], '');
+export const getUserAvatar = state =>
+  state.getIn(["auth", "info", "avatar"], "");
 // export const getUserMobile = state => state.auth.getIn(['info', 'mobile'], '');
 
 // // FARM
@@ -39,3 +41,9 @@
 
 // export const getUserFarmLatLong = state =>
 //   state.auth.getIn(['info', 'farm', 'location', 'coordinates'], List());
+
+export const authSelector = createStructuredSelector({
+  firstName: getUserFirstName,
+  lastName: getUserLastName,
+  avatar: getUserAvatar
+});
