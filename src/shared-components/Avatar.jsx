@@ -76,14 +76,14 @@ class Avatar extends Component {
 
   render() {
     const initials = this.getInitials();
-    const { avatar, history, large, margin } = this.props;
+    const { avatar, handleClick, large, margin } = this.props;
 
     return (
       <div>
         <Circle
           margin={margin}
           large={large}
-          onClick={() => history.push("/profile")}
+          onClick={handleClick}
           // tabIndex="-1"
           // onBlur={this.handleBlur}
           background={avatar ? `url('${avatar}')` : "#fbc513"}

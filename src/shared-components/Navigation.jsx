@@ -206,7 +206,7 @@ class Navigation extends Component {
           {isAuthed && <Nav to="/favorites">Favorites</Nav>}
           {isAuthed && (
             <Avatar
-              history={history}
+              handleClick={() => history.push("/profile")}
               // onClick={() => history.push("/profile")}
               // render={display => (
               //   <DropdownModal options={this.getOptions()} display={display} />
@@ -219,7 +219,7 @@ class Navigation extends Component {
               Sign in
             </Button>
           )}
-          <Line />
+          {isAuthed && <Line />}
           {isAuthed && (
             <Link to="/basket">
               <BasketIcon basketCount={basketCount} />

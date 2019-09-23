@@ -40,13 +40,14 @@ class LoginForm extends Component {
                 localStorage.setItem("authorization", action.authToken);
                 localStorage.setItem("role", action.role);
                 if (addToBasketState.state) {
-                  history.push({
-                    pathname: `/market/${addToBasketState.state.marketId}`,
-                    state: {
-                      addToBasketState: addToBasketState.state,
-                      marketName: addToBasketState.state.marketName
-                    }
-                  });
+                  // history.push({
+                  //   pathname: `/market/${addToBasketState.state.marketId}`,
+                  //   state: {
+                  //     addToBasketState: addToBasketState.state,
+                  //     marketName: addToBasketState.state.marketName
+                  //   }
+                  // });
+                  history.push("/");
                 } else {
                   history.push("/");
                 }

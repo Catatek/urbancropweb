@@ -107,8 +107,10 @@ export const Button = styled.button`
   outline: none;
   border: none;
   font-family: "proxima-nova", sans-serif;
-  margin-right: ${props => props.marginright || "2.25em"};
   transition: 500ms;
+  @media (max-width: 780px) {
+    font-size: 12px;
+  }
   &:hover {
     background-color: #f9804a;
   }

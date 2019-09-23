@@ -108,6 +108,7 @@ class Profile extends Component {
   };
 
   handleLogout = () => {
+    this.props.history.push("/");
     localStorage.clear();
   };
 
