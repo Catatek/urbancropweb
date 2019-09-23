@@ -107,7 +107,7 @@ export const Button = styled.button`
   outline: none;
   border: none;
   font-family: "proxima-nova", sans-serif;
-  margin-right: 2.25em;
+  margin-right: ${props => props.marginright || "2.25em"};
   transition: 500ms;
   &:hover {
     background-color: #f9804a;
@@ -185,6 +185,7 @@ export const Button = styled.button`
               width: 280px;
               height: 48px;
               border-radius: 4px;
+              margin: ${props => props.margin};
               background-color: ${props => (props.active ? "#f75d19" : "#ccc")};
               cursor: ${props => (props.active ? "pointer" : "default")};
               &:hover {
@@ -199,6 +200,7 @@ export const Row = styled.div`
   width: ${props => props.width};
   justify-content: ${props => props.justifycontent};
   align-items: ${props => props.alignitems};
+  margin: ${props => props.margin};
 `;
 
 export const Column = styled.div`

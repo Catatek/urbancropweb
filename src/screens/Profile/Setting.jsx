@@ -28,13 +28,15 @@ const StyledRow = styled(Row)`
 export default function Setting({
   text,
   type,
-  link,
   toggleModal,
   handleLogout,
   icon,
   value,
   displayValue,
-  farmId
+  farmId,
+  form,
+  title,
+  history
 }) {
   if (type === "payout" && !farmId) {
     return null;
@@ -47,7 +49,9 @@ export default function Setting({
       onClick={
         type === "logout"
           ? handleLogout
-          : () => toggleModal("addcard", "Add Card")
+          : type === "payments"
+          ? () => history.push("/profile/payments")
+          : () => toggleModal(form, title)
       }
     >
       <StyledImage src={icon} />

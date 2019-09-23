@@ -21,10 +21,11 @@ const Div = styled.div`
   background: #fff;
   width: auto;
   height: auto;
-  padding: 1em;
-  border-radius: 4px;
+  padding: 1.5em 0;
+  border-radius: 8px;
   display: flex;
   margin: 0 auto;
+  min-width: 440px;
   flex-direction: column;
   @media (max-width: 780px) {
     width: 95%;
@@ -40,6 +41,10 @@ const Circle = styled.div`
   align-items: center;
   border-radius: 100%;
   cursor: pointer;
+  transition: 250ms;
+  &:hover {
+    background-color: #dfdfe2;
+  }
 `;
 
 export class Modal extends Component {
@@ -51,7 +56,12 @@ export class Modal extends Component {
     return (
       <Backdrop>
         <Div>
-          <Row width="100%" justifycontent="space-between" alignitems="center">
+          <Row
+            margin="0 auto"
+            width="85%"
+            justifycontent="space-between"
+            alignitems="center"
+          >
             <Subtitle>{title}</Subtitle>
             <Circle onClick={toggleModal}>
               <FaTimes size={14} color="#000" />

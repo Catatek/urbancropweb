@@ -8,9 +8,9 @@ import {
   // postForgotPassword,
   // postResetPassword,
   getProfile,
-  postSignup
+  postSignup,
   // postActivateuser,
-  // postProfile,
+  postProfile
   // postFarmDetails,
   // getCode,
   // postAvatar,
@@ -21,9 +21,9 @@ import {
   // USER_LOGOUT,
   FETCH_PROFILE,
   // CHECK_USER_LOGIN,
-  USER_SIGNUP
+  USER_SIGNUP,
   // ACTIVATE_USER,
-  // UPDATE_PROFILE,
+  UPDATE_PROFILE
   // RESEND_CODE,
   // FORGOT_PASSWORD,
   // RESET_PASSWORD,
@@ -182,18 +182,18 @@ export const userSignup = data => async dispatch => {
 // // };
 
 // // UPDATE PROFILE
-// const updateProfilePending = createAction(UPDATE_PROFILE.PENDING);
-// const updateProfileSuccess = createAction(UPDATE_PROFILE.SUCCESS, 'userInfo');
-// const updateProfileFailed = createAction(UPDATE_PROFILE.FAILED, 'error');
-// export const updateProfile = data => async dispatch => {
-//   dispatch(updateProfilePending());
-//   try {
-//     const res = await postProfile(data);
-//     return dispatch(updateProfileSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(updateProfileFailed(error));
-//   }
-// };
+const updateProfilePending = createAction(UPDATE_PROFILE.PENDING);
+const updateProfileSuccess = createAction(UPDATE_PROFILE.SUCCESS, "userInfo");
+const updateProfileFailed = createAction(UPDATE_PROFILE.FAILED, "error");
+export const updateProfile = data => async dispatch => {
+  dispatch(updateProfilePending());
+  try {
+    const res = await postProfile(data);
+    return dispatch(updateProfileSuccess(res.data));
+  } catch (error) {
+    return dispatch(updateProfileFailed(error));
+  }
+};
 
 // const updateAvatarPending = createAction(UPDATE_AVATAR.PENDING);
 // const updateAvatarSuccess = createAction(UPDATE_AVATAR.SUCCESS, 'userAvatar');

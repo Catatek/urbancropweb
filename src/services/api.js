@@ -28,12 +28,12 @@ export const getProfile = () =>
   });
 
 // // update profile data
-// export const postProfile = data =>
-//   client.request({
-//     method: 'PUT',
-//     url: '/update/profile',
-//     data,
-//   });
+export const postProfile = data =>
+  client.request({
+    method: "PUT",
+    url: "/update/profile",
+    data
+  });
 
 // export const postFarmDetails = (farmId, data) =>
 //   client.request({

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchCardsAction } from "../../store/actions/payment";
+import { updateProfile } from "../../store/actions/auth";
 import Navigation from "../../shared-components/Navigation";
 import { Title, Label, Column } from "../../theme";
 import { HeroImage, Modal } from "../../shared-components";
@@ -18,6 +19,9 @@ import BusinessAddress from "../../assets/businessAddressIcon.png";
 import Payments from "../../assets/payments.png";
 import Setting from "./Setting";
 import { authSelector } from "../../store/selectors/auth";
+import NameForm from "./NameForm";
+import EmailForm from "./EmailForm";
+import MobileForm from "./MobileForm";
 
 const Div = styled.div`
   width: 55%;
@@ -55,6 +59,7 @@ class Profile extends Component {
     type: "",
     title: ""
   };
+
   componentDidMount() {
     const { fetchCardsAction } = this.props;
     fetchCardsAction();
@@ -81,26 +86,37 @@ class Profile extends Component {
   };
 
   render() {
-    const { avatar, email, firstName, lastName, mobile } = this.props;
-
+    const {
+      avatar,
+      email,
+      firstName,
+      lastName,
+      mobile,
+      updateProfile,
+      history
+    } = this.props;
+    const { isOpen, type, title } = this.state;
     const values = [
       {
         text: "Name",
-        navigation: "UserDetails",
+        form: "nameform",
+        title: "Edit Name",
         type: "name",
         icon: Name,
         value: `${firstName} ${lastName}`
       },
       {
         text: "Email",
-        navigation: "UserDetails",
+        form: "emailform",
+        title: "Edit Email",
         type: "email",
         icon: Email,
         value: `${email}`
       },
       {
         text: "Phone",
-        navigation: "UserDetails",
+        form: "mobileform",
+        title: "Edit Phone",
         type: "phone",
         icon: Phone,
         value: `${mobile}`
@@ -144,7 +160,9 @@ class Profile extends Component {
 
       {
         text: "Payment Methods",
-        navigation: "Payments",
+        form: "addcard",
+        route: "/profile/payments",
+        title: "Add Card",
         type: "payments",
         icon: Payments
       },
@@ -165,7 +183,7 @@ class Profile extends Component {
 
     const profileOptions = values.slice(0, 3);
     const settingsOptions = values.slice(3, 6);
-    const { isOpen, type, title } = this.state;
+
     return (
       <div>
         <Navigation />
@@ -187,8 +205,9 @@ class Profile extends Component {
                   type={key.type}
                   toggleModal={this.toggleModal}
                   value={key.value}
-                  handleLogout={this.handleLogout}
                   displayValue={this.displayValue}
+                  form={key.form}
+                  title={key.title}
                 />
               );
             })}
@@ -207,6 +226,9 @@ class Profile extends Component {
                   value={key.value}
                   handleLogout={this.handleLogout}
                   displayValue={this.displayValue}
+                  form={key.form}
+                  title={key.title}
+                  history={history}
                 />
               );
             })}
@@ -214,6 +236,36 @@ class Profile extends Component {
         </Grid>
         <Modal title={title} show={isOpen} toggleModal={this.toggleModal}>
           {type === "addcard" && <AddCardForm />}
+          {type === "nameform" && (
+            <NameForm
+              updateProfile={updateProfile}
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              mobile={mobile}
+              toggleModal={this.toggleModal}
+            />
+          )}
+          {type === "emailform" && (
+            <EmailForm
+              updateProfile={updateProfile}
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              mobile={mobile}
+              toggleModal={this.toggleModal}
+            />
+          )}
+          {type === "mobileform" && (
+            <MobileForm
+              updateProfile={updateProfile}
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              mobile={mobile}
+              toggleModal={this.toggleModal}
+            />
+          )}
         </Modal>
       </div>
     );
@@ -222,5 +274,5 @@ class Profile extends Component {
 
 export default connect(
   authSelector,
-  { fetchCardsAction }
+  { fetchCardsAction, updateProfile }
 )(Profile);

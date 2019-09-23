@@ -6,6 +6,7 @@ import Market from "./screens/Market/Market";
 import Listing from "./screens/Listing/Listing";
 import Orders from "./screens/Orders/Orders";
 import Profile from "./screens/Profile/Profile";
+import Payments from "./screens/Payments/Payments";
 import Basket from "./screens/Basket/Basket";
 import Signup from "./screens/Signup/Signup";
 import Favorites from "./screens/Favorites/Favorites";
@@ -65,9 +66,10 @@ class Router extends Component {
             <Route path="/market/:id" component={Market} />
             <Route path="/product/:id" component={Listing} />
             <PrivateRoute path="/orders" component={Orders} />
-            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute path="/basket" component={Basket} />
             <PrivateRoute path="/favorites" component={Favorites} />
+            <PrivateRoute exact path="/profile/payments" component={Payments} />
 
             {/* <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/settings" component={Settings} />

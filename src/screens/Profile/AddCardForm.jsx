@@ -7,8 +7,17 @@ import {
   injectStripe
 } from "react-stripe-elements";
 import { addCardAction } from "../../store/actions/payment";
+import styled from "styled-components";
 
 import { connect } from "react-redux";
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 2em;
+`;
 
 const style = () => {
   return {
@@ -55,18 +64,16 @@ class Form extends Component {
   };
 
   render() {
+    const { active } = this.props;
     return (
-      <form
-        style={{ width: "400px", margin: "2.5em 0 0 0" }}
-        onSubmit={this.handleSubmit}
-      >
+      <StyledForm onSubmit={this.handleSubmit}>
         <CardElement {...style()} />
         <Row margin=".5em 0 0 0">
-          <Button style={{ marginTop: "2em" }} type="submit">
-            Add
+          <Button checkout active margin="1em 0 0 0" type="submit">
+            {active ? "Save" : "Add"}
           </Button>
         </Row>
-      </form>
+      </StyledForm>
     );
   }
 }
@@ -76,7 +83,7 @@ function AddCardForm(props) {
   return (
     <StripeProvider apiKey="pk_test_a5i7XL9ASV3LvZcLcLBofxvl">
       <Elements>
-        <CardForm addCardAction={props.addCardAction} />
+        <CardForm addCardAction={props.addCardAction} active={props.active} />
       </Elements>
     </StripeProvider>
   );
