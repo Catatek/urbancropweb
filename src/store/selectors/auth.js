@@ -7,11 +7,12 @@ export const getUserFirstName = state =>
   state.getIn(["auth", "info", "firstName"], "");
 export const getUserLastName = state =>
   state.getIn(["auth", "info", "lastName"], "");
-// export const getUserEmail = state => state.auth.getIn(['info', 'email'], '');
+export const getUserEmail = state => state.getIn(["auth", "info", "email"], "");
 // export const getUserRole = state => state.auth.getIn(['info', 'role'], '');
 export const getUserAvatar = state =>
   state.getIn(["auth", "info", "avatar"], "");
-// export const getUserMobile = state => state.auth.getIn(['info', 'mobile'], '');
+export const getUserMobile = state =>
+  state.getIn(["auth", "info", "mobile"], "");
 
 // // FARM
 
@@ -45,5 +46,7 @@ export const getUserAvatar = state =>
 export const authSelector = createStructuredSelector({
   firstName: getUserFirstName,
   lastName: getUserLastName,
-  avatar: getUserAvatar
+  avatar: getUserAvatar,
+  mobile: getUserMobile,
+  email: getUserEmail
 });

@@ -19,6 +19,12 @@ import { Link } from "react-router-dom";
 const Div = styled.div`
   width: 45%;
   margin: 2em auto;
+  @media (max-width: 920px) {
+    width: 75%;
+  }
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 class Basket extends Component {

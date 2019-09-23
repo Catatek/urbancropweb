@@ -57,7 +57,7 @@ class Form extends Component {
   render() {
     return (
       <form
-        style={{ width: "400px", margin: ".2em 0" }}
+        style={{ width: "400px", margin: "2.5em 0 0 0" }}
         onSubmit={this.handleSubmit}
       >
         <CardElement {...style()} />

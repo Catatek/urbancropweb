@@ -12,11 +12,13 @@ export const Title = styled.h1`
   }
 `;
 
-export const Subtitle = styled.h1`
+export const Subtitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   font-style: normal;
   font-stretch: normal;
+  font-family: "proxima-nova", sans-serif;
+  margin: 0;
   line-height: 1.25;
   letter-spacing: normal;
   color: #000000;
@@ -62,6 +64,18 @@ export const Label = styled.label`
   color: #000;
   font-size: 16px;
   font-family: "proxima-nova", sans-serif;
+  ${props =>
+    props.extrasmall &&
+    css`
+      font-size: 14px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.38;
+      letter-spacing: -0.08px;
+      color: #8e8e93;
+      text-transform: uppercase;
+    `};
 `;
 
 export const Nav = styled(Link)`
@@ -194,4 +208,5 @@ export const Column = styled.div`
   justify-content: ${props => props.justifycontent};
   align-items: ${props => props.alignitems};
   margin: ${props => props.margin};
+  align-content: ${props => props.aligncontent};
 `;
