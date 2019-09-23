@@ -89,7 +89,7 @@ export const Nav = styled(Link)`
   border-bottom: 3px solid transparent;
   padding: ${props => (props.right ? "0" : ".25em")};
   @media (max-width: 780px) {
-    font-size: 10px;
+    font-size: 12px;
     padding: 0;
     margin-right: 0;
   }

@@ -25,7 +25,7 @@ const AddCard = styled.div`
   width: 380px;
   height: 80px;
   border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+  border: solid 1px #f1f1f2;
   background-color: #ffffff;
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@ class Payments extends Component {
 
   componentWillReceiveProps(props) {}
 
-  toggleModal = (type, title) => {
+  toggleModal = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
 

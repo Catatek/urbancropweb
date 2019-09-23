@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { authSelector } from "../store/selectors/auth";
 
 const Circle = styled.div`
-  width: 32px;
-  height: 32px;
+  width: ${props => (props.large ? "52px" : "32px")};
+  height: ${props => (props.large ? "52px" : "32px")};
   display: flex;
   margin: 1em 0;
   justify-content: center;
@@ -14,6 +14,7 @@ const Circle = styled.div`
   background: ${props => props.background};
   background-size: cover;
   margin-right: 2em;
+  margin: ${props => props.margin};
   border-radius: 50%;
   opacity: 0.75;
   outline: none;
@@ -26,10 +27,13 @@ const Circle = styled.div`
     opacity: 1;
     cursor: pointer;
   }
+  @media (max-width: 780px) {
+    margin-right: ${props => (props.large ? ".75em" : "0")};
+  }
 `;
 
 const StyledText = styled(Text)`
-  font-size: 0.75em;
+  font-size: ${props => (props.large ? "18px" : "13px")};
   font-weight: 600;
   color: #fff;
 `;
@@ -72,20 +76,22 @@ class Avatar extends Component {
 
   render() {
     const initials = this.getInitials();
-    const { avatar } = this.props;
+    const { avatar, history, large, margin } = this.props;
 
     return (
       <div>
         <Circle
-          onClick={this.handleClick}
-          tabIndex="-1"
-          onBlur={this.handleBlur}
+          margin={margin}
+          large={large}
+          onClick={() => history.push("/profile")}
+          // tabIndex="-1"
+          // onBlur={this.handleBlur}
           background={avatar ? `url('${avatar}')` : "#fbc513"}
         >
-          {!avatar && <StyledText>{initials}</StyledText>}
+          {!avatar && <StyledText large={large}>{initials}</StyledText>}
         </Circle>
 
-        {this.props.render(this.state.displayDropdown)}
+        {/* {this.props.render(this.state.displayDropdown)} */}
       </div>
     );
   }

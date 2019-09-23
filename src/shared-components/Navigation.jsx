@@ -35,7 +35,7 @@ const Div = styled.div`
   justify-content: space-evenly;
   align-items: center;
   @media (max-width: 920px) {
-    margin-top: 2em;
+    margin-top: 0.5em;
     width: 100%;
   }
 `;
@@ -54,6 +54,9 @@ const Line = styled.div`
   background-color: #f1f1f2
   height: 40px;
   margin-right: 2em;
+  @media (max-width: 780px) {
+    margin-right: 0;
+  }
 `;
 
 function BasketIcon({ basketCount }) {
@@ -203,9 +206,11 @@ class Navigation extends Component {
           {isAuthed && <Nav to="/favorites">Favorites</Nav>}
           {isAuthed && (
             <Avatar
-              render={display => (
-                <DropdownModal options={this.getOptions()} display={display} />
-              )}
+              history={history}
+              // onClick={() => history.push("/profile")}
+              // render={display => (
+              //   <DropdownModal options={this.getOptions()} display={display} />
+              // )}
             />
           )}
 

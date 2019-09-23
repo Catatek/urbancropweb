@@ -19,10 +19,12 @@ const StyledSettingText = styled(Text)`
 const StyledRow = styled(Row)`
   height: 60px;
   align-items: center;
+  min-width: 280px;
   border-bottom: ${props =>
     props.border ? ".5px solid #d5d5d5" : ".5px solid transparent"};
   justify-content: space-between;
-  width: ${props => props.width || "90%"};
+  width: 100%;
+  cursor: pointer;
 `;
 
 export default function Setting({
@@ -44,7 +46,7 @@ export default function Setting({
   return (
     <Row
       style={{ cursor: "pointer" }}
-      width="360px"
+      width="100%"
       alignitems="center"
       onClick={
         type === "logout"
@@ -55,7 +57,7 @@ export default function Setting({
       }
     >
       <StyledImage src={icon} />
-      <StyledRow border>
+      <StyledRow border={type !== "logout"}>
         <Label setting>{text}</Label>
         <Row alignitems="center">
           <StyledSettingText>{value && displayValue(value)}</StyledSettingText>

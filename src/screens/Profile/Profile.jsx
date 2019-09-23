@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { fetchCardsAction } from "../../store/actions/payment";
 import { updateProfile } from "../../store/actions/auth";
 import Navigation from "../../shared-components/Navigation";
-import { Title, Label, Column } from "../../theme";
+import { Title, Label, Column, Text } from "../../theme";
 import { HeroImage, Modal } from "../../shared-components";
 import AddCardForm from "./AddCardForm";
 import Name from "../../assets/name.png";
@@ -22,6 +22,7 @@ import { authSelector } from "../../store/selectors/auth";
 import NameForm from "./NameForm";
 import EmailForm from "./EmailForm";
 import MobileForm from "./MobileForm";
+import Avatar from "../../shared-components/Avatar";
 
 const Div = styled.div`
   width: 55%;
@@ -37,21 +38,50 @@ const Div = styled.div`
 const Grid = styled.div`
   display: grid;
   width: 55%;
+  grid-gap: 50px;
   margin: 1em auto 0 auto;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: auto;
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
   @media (max-width: 920px) {
     grid-template-columns: repeat(1, 1fr);
-    width: 90%;
+    width: 100%;
   }
 `;
 
 const StyledColumn = styled(Column)`
   margin-bottom: 2em;
   @media (max-width: 920px) {
-    margin: 1em auto;
+    margin: 0 auto;
+    width: 90%;
   }
 `;
+
+const StyledNameCard = styled.div`
+  width: 100%;
+  height: 114px;
+  border-radius: 4px;
+  border: solid 1px #e3e3e3;
+  display: flex;
+  align-items: center;
+  margin: 1em 0 2em 0;
+`;
+
+function NameCard({ firstName, lastName, email }) {
+  return (
+    <StyledNameCard>
+      <Avatar margin="0 2em 0 1em" large />
+      <Column>
+        <Text margin="0" smalltitle>{`${firstName} ${lastName}`}</Text>
+        <Text margin="0" style={{ color: "#9b9b9b", fontSize: 16 }}>
+          {email}
+        </Text>
+      </Column>
+    </StyledNameCard>
+  );
+}
 
 class Profile extends Component {
   state = {
@@ -168,9 +198,9 @@ class Profile extends Component {
       },
 
       {
-        text: "Notifications",
-        navigation: "Notifications",
-        type: "notifications",
+        text: "Product Updates",
+        navigation: "Product Updates",
+        type: "Product Updates",
         icon: Notifications
       },
       {
@@ -191,7 +221,9 @@ class Profile extends Component {
         <Div>
           <Title>Profile</Title>
         </Div>
-
+        <Div>
+          <NameCard firstName={firstName} lastName={lastName} email={email} />
+        </Div>
         <Grid>
           <StyledColumn>
             <Label extrasmall>Profile</Label>
