@@ -255,7 +255,7 @@ export class BasketItem extends Component {
               />
               <Row alignitems="center">
                 <Button
-                  style={{ marginLeft: 6 }}
+                  style={{ marginLeft: 6, marginRight: 16 }}
                   onClick={() => this.handleUpdateItemInCart(itemId)}
                 >
                   Update

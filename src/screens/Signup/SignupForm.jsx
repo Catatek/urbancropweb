@@ -6,6 +6,7 @@ import { userSignup } from "../../store/actions/auth";
 import { Title, Text, Button } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
+import InputMask from "react-input-mask";
 
 const Wrapper = styled.div`
   width: 440px;
@@ -42,13 +43,11 @@ class SignupForm extends Component {
             role: "consumer"
           }}
           onSubmit={values => {
-            userSignup({ email: values.email, password: values.password }).then(
-              action => {
-                localStorage.setItem("authorization", action.authToken);
-                localStorage.setItem("role", "consumer");
-                history.push("/markets");
-              }
-            );
+            userSignup(values).then(action => {
+              localStorage.setItem("authorization", action.authToken);
+              localStorage.setItem("role", "consumer");
+              history.push("/markets");
+            });
           }}
           render={({
             handleChange,
@@ -78,14 +77,20 @@ class SignupForm extends Component {
                 name="lastName"
               />
 
-              <TextField
-                label="Phone"
+              <InputMask
+                mask="999-999-9999"
                 value={values.mobile}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                margin="normal"
-                name="mobile"
-              />
+              >
+                {() => (
+                  <TextField
+                    label="Phone Number"
+                    value={values.mobile}
+                    margin="normal"
+                    name="mobile"
+                  />
+                )}
+              </InputMask>
               <TextField
                 label="Email"
                 value={values.email}

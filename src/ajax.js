@@ -3,7 +3,9 @@ import axios from "axios";
 import store from "./store";
 import { push } from "react-router-redux";
 
-export const client = axios.create({ baseURL: `http://localhost:3001/api` });
+export const client = axios.create({
+  baseURL: `https://agile-beach-66113.herokuapp.com/api`
+});
 // Request interceptor
 client.interceptors.request.use(
   function(config) {
@@ -32,4 +34,6 @@ client.interceptors.response.use(
 
 export default client;
 
-export const rawClient = axios.create({ baseURL: `http://localhost:3001/api` });
+export const rawClient = axios.create({
+  baseURL: `https://agile-beach-66113.herokuapp.com/api`
+});

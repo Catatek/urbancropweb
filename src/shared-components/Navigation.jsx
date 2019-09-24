@@ -136,9 +136,11 @@ function OrderNav({ orderCount }) {
 class Navigation extends Component {
   componentDidMount() {
     const { fetchCart, fetchProfile, fetchConsumerOrder } = this.props;
-    fetchProfile();
-    fetchCart();
-    fetchConsumerOrder();
+    if (this.authUser().auth) {
+      fetchProfile();
+      fetchCart();
+      fetchConsumerOrder();
+    }
   }
   componentWillReceiveProps(props) {}
 
