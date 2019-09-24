@@ -59,12 +59,12 @@ class Router extends Component {
               path="/reset/password"
               component={ResetPassword}
             /> */}
-            <Route exact path="/" component={Markets} />
             <Route exact path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route exact path="/markets" component={Markets} />
-            <Route path="/market/:id" component={Market} />
-            <Route path="/product/:id" component={Listing} />
+            <PrivateRoute exact path="/" component={Markets} />
+            <PrivateRoute exact path="/markets" component={Markets} />
+            <PrivateRoute path="/market/:id" component={Market} />
+            <PrivateRoute path="/product/:id" component={Listing} />
             <PrivateRoute path="/orders" component={Orders} />
             <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute path="/basket" component={Basket} />
