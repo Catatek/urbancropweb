@@ -5,5 +5,15 @@ import { BasketItem } from "./BasketItem";
 import { Modal } from "./Modal";
 import { Account } from "./Account";
 import { Empty } from "./Empty";
+import { PurchaseBar } from "./PurchaseBar";
 
-export { Market, SearchBar, HeroImage, BasketItem, Modal, Account, Empty };
+export {
+  Market,
+  SearchBar,
+  HeroImage,
+  BasketItem,
+  Modal,
+  Account,
+  Empty,
+  PurchaseBar
+};

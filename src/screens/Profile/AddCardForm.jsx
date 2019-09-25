@@ -46,12 +46,13 @@ class Form extends Component {
     validationData: null
   };
   handleSubmit = async ev => {
-    const { stripe, addCardAction } = this.props;
+    const { stripe, addCardAction, toggleModal } = this.props;
     ev.preventDefault();
     try {
       this.setState({ isAddingCard: true });
       const token = await stripe.createToken();
       await addCardAction({ stripeToken: token.token.id });
+      toggleModal();
     } catch (error) {
       this.setState({
         validationData: {
@@ -60,6 +61,7 @@ class Form extends Component {
           isAddingCard: false
         }
       });
+      toggleModal();
     }
   };
 
@@ -83,7 +85,11 @@ function AddCardForm(props) {
   return (
     <StripeProvider apiKey="pk_test_a5i7XL9ASV3LvZcLcLBofxvl">
       <Elements>
-        <CardForm addCardAction={props.addCardAction} active={props.active} />
+        <CardForm
+          toggleModal={props.toggleModal}
+          addCardAction={props.addCardAction}
+          active={props.active}
+        />
       </Elements>
     </StripeProvider>
   );

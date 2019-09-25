@@ -94,7 +94,7 @@ class Payments extends Component {
           show={isOpen}
           toggleModal={this.toggleModal}
         >
-          <AddCardForm active={active} />
+          <AddCardForm toggleModal={this.toggleModal} active={active} />
         </Modal>
       </div>
     );

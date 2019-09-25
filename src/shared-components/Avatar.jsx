@@ -51,8 +51,15 @@ class Avatar extends Component {
   }
 
   getInitials = () => {
-    let name = `${this.props.firstName} ${this.props.lastName}`;
+    let name = "";
+    const { type, farmerFirstName, farmerLastName } = this.props;
+    if (type === "farmer") {
+      name = `${this.props.farmerFirstName} ${this.props.farmerLastName}`;
+    } else {
+      name = `${this.props.firstName} ${this.props.lastName}`;
+    }
     let initials = name.match(/\b\w/g) || [];
+
     initials = (
       (initials.shift() || "") + (initials.pop() || "")
     ).toUpperCase();
@@ -74,9 +81,25 @@ class Avatar extends Component {
     }, 400);
   };
 
+  handleAvatar = type => {
+    const { avatar, farmerAvatar } = this.props;
+    let avatarState = "";
+    if (type === "farmer" && farmerAvatar) {
+      avatarState = `url('${farmerAvatar}')`;
+    } else if (type === "farmer" && !farmerAvatar) {
+      avatarState = "#fbc513";
+    } else if (avatar) {
+      avatarState = `url('${avatar}')`;
+    } else {
+      avatarState = "#fbc513";
+    }
+    return avatarState;
+  };
+
   render() {
     const initials = this.getInitials();
-    const { avatar, handleClick, large, margin } = this.props;
+    const { avatar, handleClick, large, margin, type } = this.props;
+    const display = this.handleAvatar(type);
 
     return (
       <div>
@@ -86,7 +109,7 @@ class Avatar extends Component {
           onClick={handleClick}
           // tabIndex="-1"
           // onBlur={this.handleBlur}
-          background={avatar ? `url('${avatar}')` : "#fbc513"}
+          background={display}
         >
           {!avatar && <StyledText large={large}>{initials}</StyledText>}
         </Circle>
