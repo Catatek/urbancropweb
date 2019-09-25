@@ -10,7 +10,7 @@ import {
 } from "../../store/actions/data";
 import { fetchCardsAction } from "../../store/actions/payment";
 import Navigation from "../../shared-components/Navigation";
-import { HeroImage, BasketItem } from "../../shared-components";
+import { HeroImage, BasketItem, Empty } from "../../shared-components";
 import { Title, Text, Button } from "../../theme";
 import { getBasket } from "../../store/selectors/data";
 import { getActive, getLast4, getBrand } from "../../store/selectors/payment";
@@ -26,23 +26,6 @@ const Div = styled.div`
   @media (max-width: 600px) {
     width: 90%;
   }
-`;
-
-const StyledImage = styled.img`
-  width: 200px;
-  height: 167px;
-  margin-bottom: 16px;
-`;
-
-const Empty = styled.div`
-  margin: auto;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 4em;
 `;
 
 class Basket extends Component {
@@ -128,16 +111,12 @@ class Basket extends Component {
         <Navigation />
         <HeroImage title="Basket" />
         {!isLoadingItems && basket.size === 0 && (
-          <Empty>
-            <StyledImage src={dog} />
-            <Text smalltitle>Your basket is empty!</Text>
-          </Empty>
+          <Empty image={dog} title="Your basket is empty!" />
         )}
         {!isLoadingItems && basket.size > 0 && (
           <Div>
             <Title margin=".5em 0 .25em 0">Basket</Title>
             <Text margin=".25em 0 2em 0">{basketCount}</Text>
-
             {basket &&
               basket.map((key, index) => {
                 return (

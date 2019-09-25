@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import { fetchAllFavorites } from "../../store/actions/data";
 import Navigation from "../../shared-components/Navigation";
 import { Title } from "../../theme";
-import { HeroImage } from "../../shared-components";
+import { HeroImage, Empty } from "../../shared-components";
 import { dataSelector } from "../../store/selectors/data";
+import cat from "../../assets/cat2.png";
 
 const Div = styled.div`
   width: 85%;
@@ -16,9 +17,14 @@ const Div = styled.div`
 `;
 
 class Favorites extends Component {
+  state = {
+    isLoadingItems: true
+  };
   componentDidMount() {
     const { fetchAllFavorites } = this.props;
-    fetchAllFavorites();
+    fetchAllFavorites().then(() => {
+      this.setState({ isLoadingItems: false });
+    });
   }
 
   formatPrice = x => {
@@ -26,15 +32,20 @@ class Favorites extends Component {
   };
 
   render() {
-    console.log(this.props.favorites, "fav");
-
+    const { favorites } = this.props;
+    const { isLoadingItems } = this.state;
     return (
       <div>
         <Navigation />
         <HeroImage title="Favorites" />
-        <Div>
-          <Title>Favorites</Title>
-        </Div>
+        {!isLoadingItems && favorites.size === 0 && (
+          <Empty image={cat} title="You do not have any current orders!" />
+        )}
+        {isLoadingItems && favorites.size > 0 && (
+          <Div>
+            <Title>Favorites</Title>
+          </Div>
+        )}
       </div>
     );
   }

@@ -6,9 +6,10 @@ import {
   fetchPastConsumerOrders
 } from "../../store/actions/data";
 import Navigation from "../../shared-components/Navigation";
-import { HeroImage } from "../../shared-components";
+import { HeroImage, Empty } from "../../shared-components";
 import { Title } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
+import cat from "../../assets/cat1.png";
 
 const Div = styled.div`
   width: 85%;
@@ -32,9 +33,14 @@ const Grid = styled.div`
 `;
 
 class Orders extends Component {
+  state = {
+    isLoadingItems: true
+  };
   componentDidMount() {
     const { fetchConsumerOrder, fetchPastConsumerOrders } = this.props;
-    fetchConsumerOrder();
+    fetchConsumerOrder().then(() => {
+      this.setState({ isLoadingItems: false });
+    });
     fetchPastConsumerOrders();
   }
 
@@ -44,14 +50,20 @@ class Orders extends Component {
 
   render() {
     const { consumerOrder, pastConsumerOrders } = this.props;
+    const { isLoadingItems } = this.state;
 
     return (
       <div>
         <Navigation />
         <HeroImage title="Orders" />
-        <Div>
-          <Title>Orders</Title>
-        </Div>
+        {!isLoadingItems && consumerOrder.size === 0 && (
+          <Empty image={cat} title="You do not have any current orders!" />
+        )}
+        {isLoadingItems && consumerOrder.size > 0 && (
+          <Div>
+            <Title>Orders</Title>
+          </Div>
+        )}
       </div>
     );
   }
