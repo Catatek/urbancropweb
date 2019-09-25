@@ -28,7 +28,8 @@ const Div = styled.div`
   min-width: 440px;
   flex-direction: column;
   @media (max-width: 780px) {
-    width: 95%;
+    width: 90%;
+    min-width: 325px;
   }
 `;
 

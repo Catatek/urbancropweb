@@ -6,6 +6,7 @@ import { userLogin } from "../../store/actions/auth";
 import { Title, Text, Button } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
+import { USER_LOGIN } from "../../store/types/auth";
 
 const Wrapper = styled.div`
   width: 440px;
@@ -13,6 +14,11 @@ const Wrapper = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(152, 152, 152, 0.2);
   background-color: #ffffff;
+  @media (max-width: 780px) {
+    width: 85%;
+    height: auto;
+    padding-bottom: 1em;
+  }
 `;
 
 const Form = styled.form`
@@ -20,12 +26,10 @@ const Form = styled.form`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  @media (max-width: 780px) {
+    width: 85%;
+  }
 `;
-
-const StyledTextInput = styled(TextField)({
-  width: "100%",
-  borderColor: "red"
-});
 
 class LoginForm extends Component {
   render() {
@@ -34,9 +38,9 @@ class LoginForm extends Component {
       <Wrapper>
         <Formik
           initialValues={{ email: "", password: "" }}
-          onSubmit={values => {
-            userLogin({ email: values.email, password: values.password }).then(
-              action => {
+          onSubmit={(values, { setErrors }) => {
+            userLogin({ email: values.email, password: values.password })
+              .then(action => {
                 localStorage.setItem("authorization", action.authToken);
                 localStorage.setItem("role", action.role);
                 if (addToBasketState.state) {
@@ -51,8 +55,10 @@ class LoginForm extends Component {
                 } else {
                   history.push("/");
                 }
-              }
-            );
+              })
+              .catch(err =>
+                setErrors({ loginErr: "Username or password is incorrect." })
+              );
           }}
           render={({
             handleChange,
@@ -71,8 +77,8 @@ class LoginForm extends Component {
                 onBlur={handleBlur}
                 margin="normal"
                 name="email"
+                autoCapitalize="none"
               />
-
               <TextField
                 label="Password"
                 value={values.password}
@@ -82,6 +88,7 @@ class LoginForm extends Component {
                 name="password"
                 type="password"
               />
+              {errors && <Text error>{errors.loginErr}</Text>}
               <Button signin type="submit">
                 Sign in
               </Button>

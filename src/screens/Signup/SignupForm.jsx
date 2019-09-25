@@ -14,6 +14,11 @@ const Wrapper = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(152, 152, 152, 0.2);
   background-color: #ffffff;
+  @media (max-width: 780px) {
+    width: 85%;
+    height: auto;
+    padding-bottom: 1em;
+  }
 `;
 
 const Form = styled.form`
@@ -21,6 +26,9 @@ const Form = styled.form`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  @media (max-width: 780px) {
+    width: 85%;
+  }
 `;
 
 const StyledTextInput = styled(TextField)({
@@ -98,6 +106,7 @@ class SignupForm extends Component {
                 onBlur={handleBlur}
                 margin="normal"
                 name="email"
+                autoCapitalize="none"
               />
 
               <TextField

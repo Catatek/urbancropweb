@@ -20,8 +20,7 @@ const Icon = styled.img`
   height: 24px;
   margin-right: 1.5em;
   @media (max-width: 620px) {
-    width: 18px;
-    height: 18px;
+    display: none;
   }
 `;
 

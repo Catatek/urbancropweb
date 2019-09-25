@@ -58,6 +58,12 @@ export const Text = styled.p`
       text-transform: ${props => (props.orange ? "capitalize" : "none")};
       font-weight: 600;
     `};
+  ${props =>
+    props.error &&
+    css`
+      color: red;
+      margin: 0.25em 0 0.5em 0;
+    `};
 `;
 
 export const Label = styled.label`

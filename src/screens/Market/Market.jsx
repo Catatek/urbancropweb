@@ -19,6 +19,7 @@ const Div = styled.div`
   max-width: 1300px;
   @media (max-width: 920px) {
     width: 90%;
+    margin-top: 2em;
   }
 `;
 
@@ -39,6 +40,7 @@ const Grid = styled.div`
   @media (max-width: 920px) {
     grid-auto-rows: auto;
     width: 90%;
+    margin-bottom: 2em;
   }
 `;
 

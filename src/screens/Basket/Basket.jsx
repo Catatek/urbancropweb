@@ -15,6 +15,7 @@ import { Title, Text, Button } from "../../theme";
 import { getBasket } from "../../store/selectors/data";
 import { getActive, getLast4, getBrand } from "../../store/selectors/payment";
 import { Link } from "react-router-dom";
+import dog from "../../assets/dog1.png";
 
 const Div = styled.div`
   width: 45%;
@@ -25,6 +26,23 @@ const Div = styled.div`
   @media (max-width: 600px) {
     width: 90%;
   }
+`;
+
+const StyledImage = styled.img`
+  width: 200px;
+  height: 167px;
+  margin-bottom: 16px;
+`;
+
+const Empty = styled.div`
+  margin: auto;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4em;
 `;
 
 class Basket extends Component {
@@ -104,96 +122,108 @@ class Basket extends Component {
       isLoadingItems
     } = this.state;
     const basketCount = this.calcQuantity(basket.size);
+
     return (
       <div>
         <Navigation />
         <HeroImage title="Basket" />
-        <Div>
-          <Title margin=".5em 0 .25em 0">Basket</Title>
-          <Text margin=".25em 0 2em 0">{basketCount}</Text>
-          {basket &&
-            basket.map((key, index) => {
-              return (
-                <BasketItem
-                  index={index}
-                  key={index}
-                  formatPrice={this.formatPrice}
-                  quantity={key.get("itemQuantity", 0)}
-                  totalItemQuantity={key.getIn(["item", "quantity"], 0)}
-                  itemName={key.getIn(["item", "itemName"], "")}
-                  cost={key.getIn(["item", "cost"], "")}
-                  unit={key.getIn(["item", "unit"], "")}
-                  type="item"
-                  itemId={key.getIn(["item", "itemId"], "")}
-                  removeItemFromCart={this.props.removeItemFromCart}
-                  navigate={this.props.history}
-                  expandedItemIndex={expandedItemIndex}
-                  handleExpandItem={this.handleExpandItem}
-                  updateItemInCart={this.props.updateItemInCart}
-                  calc={this.calc}
-                />
-              );
-            })}
-          <BasketItem
-            itemName="State tax"
-            quantity={0.7}
-            cost={tax}
-            type="salesTax"
-            formatPrice={this.formatPrice}
-            index={null}
-          />
-          <BasketItem
-            itemName="Processing fee"
-            cost={fee}
-            type="processingFee"
-            formatPrice={this.formatPrice}
-            index={null}
-          />
-          <BasketItem
-            item="Total"
-            cost={total}
-            type="total"
-            formatPrice={this.formatPrice}
-            index={null}
-          />
-          {!active && (
-            <Link
-              style={{
-                marginTop: 16,
-                marginBottom: 16,
-                alignSelf: "flex-start",
-                marginLeft: "auto",
-                marginRight: "auto",
-                width: "90%"
-              }}
-              to="/"
-            >
-              <Text>Click here to add a card before checking out!</Text>
-            </Link>
-          )}
-          {active && (
-            <div>
-              <div
+        {!isLoadingItems && basket.size === 0 && (
+          <Empty>
+            <StyledImage src={dog} />
+            <Text smalltitle>Your basket is empty!</Text>
+          </Empty>
+        )}
+        {!isLoadingItems && basket.size > 0 && (
+          <Div>
+            <Title margin=".5em 0 .25em 0">Basket</Title>
+            <Text margin=".25em 0 2em 0">{basketCount}</Text>
+
+            {basket &&
+              basket.map((key, index) => {
+                return (
+                  <BasketItem
+                    index={index}
+                    key={index}
+                    formatPrice={this.formatPrice}
+                    quantity={key.get("itemQuantity", 0)}
+                    totalItemQuantity={key.getIn(["item", "quantity"], 0)}
+                    itemName={key.getIn(["item", "itemName"], "")}
+                    cost={key.getIn(["item", "cost"], "")}
+                    unit={key.getIn(["item", "unit"], "")}
+                    type="item"
+                    itemId={key.getIn(["item", "itemId"], "")}
+                    removeItemFromCart={this.props.removeItemFromCart}
+                    navigate={this.props.history}
+                    expandedItemIndex={expandedItemIndex}
+                    handleExpandItem={this.handleExpandItem}
+                    updateItemInCart={this.props.updateItemInCart}
+                    calc={this.calc}
+                  />
+                );
+              })}
+            <BasketItem
+              itemName="State tax"
+              quantity={0.7}
+              cost={tax}
+              type="salesTax"
+              formatPrice={this.formatPrice}
+              index={null}
+            />
+            <BasketItem
+              itemName="Processing fee"
+              cost={fee}
+              type="processingFee"
+              formatPrice={this.formatPrice}
+              index={null}
+            />
+            <BasketItem
+              item="Total"
+              cost={total}
+              type="total"
+              formatPrice={this.formatPrice}
+              index={null}
+            />
+            {!active && (
+              <Link
                 style={{
-                  marginBottom: "1em",
+                  marginTop: 16,
+                  marginBottom: 16,
                   alignSelf: "flex-start",
-                  display: "flex"
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  width: "90%"
                 }}
+                to="/"
               >
-                <Text>Charged to your {brand} card ending in</Text>&nbsp;
-                <Text orange>{last4}</Text>
+                <Text>Click here to add a card before checking out!</Text>
+              </Link>
+            )}
+            {active && (
+              <div>
+                <div
+                  style={{
+                    marginBottom: "1em",
+                    alignSelf: "flex-start",
+                    display: "flex"
+                  }}
+                >
+                  <Text>Charged to your {brand} card ending in</Text>&nbsp;
+                  <Link to="/profile/payments">
+                    <Text orange>{last4}</Text>
+                  </Link>
+                </div>
+                <Button
+                  onClick={createOrder}
+                  checkout
+                  active={active}
+                  disabled={!active}
+                >
+                  Checkout
+                </Button>
               </div>
-              <Button
-                onClick={createOrder}
-                checkout
-                active={active}
-                disabled={!active}
-              >
-                Checkout
-              </Button>
-            </div>
-          )}
-        </Div>
+            )}
+          </Div>
+        )}
       </div>
     );
   }

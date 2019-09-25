@@ -48,6 +48,8 @@ const Grid = styled.div`
   @media (max-width: 920px) {
     grid-template-columns: repeat(1, 1fr);
     width: 100%;
+    grid-gap: 25px;
+    margin-bottom: 2em;
   }
 `;
 
