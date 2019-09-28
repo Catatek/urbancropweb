@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import marketsplash from "../assets/markets_splash.jpg";
 import basketsplash from "../assets/basket_splash.jpg";
+import updatessplash from "../assets/updates_splash.jpg";
 import explore from "../assets/explore.svg";
 import { Title } from "../theme";
 
@@ -30,6 +31,9 @@ export class HeroImage extends Component {
     switch (title) {
       case "Basket":
         splash = basketsplash;
+        break;
+      case "Product Updates":
+        splash = updatessplash;
         break;
       default:
         splash = marketsplash;

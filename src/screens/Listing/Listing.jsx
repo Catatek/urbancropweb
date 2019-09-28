@@ -21,12 +21,17 @@ import noGmo from "../../assets/gmo-free.png";
 import Map from "./Map";
 import Avatar from "../../shared-components/Avatar";
 import { PurchaseBar } from "../../shared-components";
-import { FaRegHeart, FaHeart, FaFacebook, FaTwitter } from "react-icons/fa";
+import {
+  FaRegHeart,
+  FaHeart,
+  FaFacebook,
+  FaTwitter,
+  FaWhatsappSquare
+} from "react-icons/fa";
 import {
   FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon
+  WhatsappShareButton,
+  TwitterShareButton
 } from "react-share";
 
 const SplashImage = styled.div`
@@ -80,13 +85,17 @@ const MapDiv = styled.div`
   margin-bottom: 8em;
   @media (max-width: 920px) {
     width: 75%;
+    margin-bottom: 2em;
+  }
+  @media (max-width: 780px) {
+    width: 85%;
   }
   @media (max-width: 500px) {
     height: 350px;
   }
 `;
 
-const SideBarWrapper = styled.div`
+const ShareBarWrapper = styled.div`
   position: fixed;
   left: 15%;
   top: 50%;
@@ -95,13 +104,23 @@ const SideBarWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   @media (max-width: 920px) {
-    display: none;
+    position: relative;
+    flex-direction: row;
+    margin: 0 auto;
+    margin-bottom: 6.5em;
+    width: 75%;
+    top: 0;
+    left: 0;
+  }
+  @media (max-width: 780px) {
+    width: 85%;
   }
 `;
 
 const StyledFaHeart = styled(FaHeart)`
   color: #f75d19;
   margin-top: 1em;
+  margin-right: 0.75em;
   transition: 500ms;
   cursor: pointer;
   &:hover {
@@ -112,6 +131,7 @@ const StyledFaHeart = styled(FaHeart)`
 const StyledFaRegHeart = styled(FaRegHeart)`
   color: #000;
   margin-top: 1em;
+  margin-right: 0.75em;
   transition: 500ms;
   cursor: pointer;
   &:hover {
@@ -119,43 +139,58 @@ const StyledFaRegHeart = styled(FaRegHeart)`
   }
 `;
 
-// const BasketSvg = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="23"
-//     height="21"
-//     viewBox="0 0 24 22"
-//   >
-//     <g fill="none" fillRule="evenodd" stroke={"#f75d19"}>
-//       <path d="M4.05 8l6-8M19.05 8l-5-8" />
-//       <path strokeLinecap="square" d="M17.55 21H6.45L1.05 8h22z" />
-//     </g>
-//   </svg>
-// );
+const StyledText = styled(Text)`
+  margin-top: 1em;
+  margin-right: 0.75em;
+  display: none;
+  @media (max-width: 920px) {
+    display: block;
+  }
+`;
 
-function SideBar({ favorite, handleFavorite, shareUrl, title }) {
+function ShareBar({ favorite, handleFavorite, shareUrl, title }) {
   return (
-    <SideBarWrapper>
-      {/* <IconDiv>
-        <BasketSvg />
-      </IconDiv> */}{" "}
+    <ShareBarWrapper>
+      <StyledText smalltitle>Share or favorite:</StyledText>
       <FacebookShareButton
         url={shareUrl}
         quote={title}
-        style={{ outline: "none", cursor: "pointer" }}
+        style={{
+          marginTop: "1em",
+          marginRight: ".75em",
+          outline: "none",
+          cursor: "pointer"
+        }}
       >
         <FaFacebook size="1.25em" color="#292929" />
       </FacebookShareButton>
       <TwitterShareButton
         url={shareUrl}
         quote={title}
-        style={{ marginTop: "1em", outline: "none", cursor: "pointer" }}
+        style={{
+          marginTop: "1em",
+          marginRight: ".75em",
+          outline: "none",
+          cursor: "pointer"
+        }}
       >
         <FaTwitter size="1.25em" color="#292929" />
       </TwitterShareButton>
+      <WhatsappShareButton
+        url={shareUrl}
+        quote={title}
+        style={{
+          marginTop: "1em",
+          marginRight: ".75em",
+          outline: "none",
+          cursor: "pointer"
+        }}
+      >
+        <FaWhatsappSquare size="1.25em" color="#292929" />
+      </WhatsappShareButton>
       {favorite && <StyledFaHeart onClick={handleFavorite} size="1.25em" />}
       {!favorite && <StyledFaRegHeart onClick={handleFavorite} size="1.25em" />}
-    </SideBarWrapper>
+    </ShareBarWrapper>
   );
 }
 
@@ -359,7 +394,7 @@ class Listing extends Component {
         )}
         {!isFetchingItem && (
           <Map
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAe6xsQwAD0242Km-Dvf_fIXq5OlMVMuXA&v=3.exp&libraries=geometry,drawing,places"
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_RzaeDKWkj0MoJn3oaNPaqOWaXAwDr5I&v=3.exp&libraries=geometry,drawing,places"
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<MapDiv />}
             mapElement={<div style={{ height: `100%` }} />}
@@ -367,7 +402,7 @@ class Listing extends Component {
             lng={lng}
           />
         )}
-        <SideBar
+        <ShareBar
           shareUrl={`https://market.urbancrop.io/product/${item.getIn(
             ["item", "itemId"],
             ""

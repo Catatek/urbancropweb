@@ -53,6 +53,8 @@ export default function Setting({
           ? handleLogout
           : type === "payments"
           ? () => history.push("/profile/payments")
+          : type === "updates"
+          ? () => history.push("/updates")
           : () => toggleModal(form, title)
       }
     >

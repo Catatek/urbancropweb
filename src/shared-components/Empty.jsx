@@ -4,7 +4,6 @@ import { Text } from "../theme";
 
 const StyledImage = styled.img`
   width: 200px;
-  height: 167px;
   margin-bottom: 16px;
 `;
 

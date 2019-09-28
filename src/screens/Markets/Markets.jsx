@@ -113,10 +113,10 @@ class Markets extends Component {
               );
             })}
         </Grid>
-        <Column margin="2em auto" alignitems="center">
+        {/* <Column margin="2em auto" alignitems="center">
           <Text>Expand your search area to discover more markets</Text>
           <Button marketsearch>Expand Search Area</Button>
-        </Column>
+        </Column> */}
       </div>
     );
   }

@@ -202,8 +202,7 @@ class Profile extends Component {
 
       {
         text: "Product Updates",
-        navigation: "Product Updates",
-        type: "Product Updates",
+        type: "updates",
         icon: Notifications
       },
       {
