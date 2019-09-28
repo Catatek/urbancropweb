@@ -21,7 +21,13 @@ import noGmo from "../../assets/gmo-free.png";
 import Map from "./Map";
 import Avatar from "../../shared-components/Avatar";
 import { PurchaseBar } from "../../shared-components";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaFacebook, FaTwitter } from "react-icons/fa";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon
+} from "react-share";
 
 const SplashImage = styled.div`
   width: 55%;
@@ -93,23 +99,6 @@ const SideBarWrapper = styled.div`
   }
 `;
 
-const IconDiv = styled.div`
-  //   width: 42px;
-  //   height: 42px;
-  //   border-radius: 50%;
-  //   background: #f1f1f2;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   transition: 500ms;
-  //   cursor: pointer;
-  //   &:hover {
-  //     background-color: #fff;
-  //     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  //   }
-  //
-`;
-
 const StyledFaHeart = styled(FaHeart)`
   color: #f75d19;
   margin-top: 1em;
@@ -144,12 +133,26 @@ const StyledFaRegHeart = styled(FaRegHeart)`
 //   </svg>
 // );
 
-function SideBar({ favorite, handleFavorite }) {
+function SideBar({ favorite, handleFavorite, shareUrl, title }) {
   return (
     <SideBarWrapper>
       {/* <IconDiv>
         <BasketSvg />
-      </IconDiv> */}
+      </IconDiv> */}{" "}
+      <FacebookShareButton
+        url={shareUrl}
+        quote={title}
+        style={{ outline: "none", cursor: "pointer" }}
+      >
+        <FaFacebook size="1.25em" color="#292929" />
+      </FacebookShareButton>
+      <TwitterShareButton
+        url={shareUrl}
+        quote={title}
+        style={{ marginTop: "1em", outline: "none", cursor: "pointer" }}
+      >
+        <FaTwitter size="1.25em" color="#292929" />
+      </TwitterShareButton>
       {favorite && <StyledFaHeart onClick={handleFavorite} size="1.25em" />}
       {!favorite && <StyledFaRegHeart onClick={handleFavorite} size="1.25em" />}
     </SideBarWrapper>
@@ -272,7 +275,8 @@ class Listing extends Component {
   };
 
   render() {
-    const marketName = this.props.location.state.marketName;
+    const marketName =
+      this.props.location.state.marketName || "Statesboro Farmer's Market";
     const marketId = this.props.location.state.marketId;
     const itemName = this.props.location.state.itemName;
     const { item } = this.props;
@@ -282,6 +286,12 @@ class Listing extends Component {
     );
     const lat = item.getIn(["farm", "location", "coordinates", 0]);
     const lng = item.getIn(["farm", "location", "coordinates", 1]);
+    console.log(
+      `https://market.urbancrop.io/product/${item.getIn(
+        ["item", "itemId"],
+        ""
+      )}`
+    );
 
     return (
       <div>
@@ -357,7 +367,15 @@ class Listing extends Component {
             lng={lng}
           />
         )}
-        <SideBar favorite={favorite} handleFavorite={this.handleFavorite} />
+        <SideBar
+          shareUrl={`https://market.urbancrop.io/product/${item.getIn(
+            ["item", "itemId"],
+            ""
+          )}`}
+          title={`Buy ${itemName} from ${item.getIn(["farm", "farmName"], "")}`}
+          favorite={favorite}
+          handleFavorite={this.handleFavorite}
+        />
         <PurchaseBar
           cost={item.getIn(["item", "cost"], "")}
           quantity={item.getIn(["item", "quantity"], "")}

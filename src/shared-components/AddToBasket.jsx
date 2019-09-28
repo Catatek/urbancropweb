@@ -50,14 +50,7 @@ export class AddToBasket extends Component {
         {type !== "basket" && (
           <Button
             style={{ marginLeft: 16, borderRadius: 10 }}
-            onClick={() =>
-              isAuthed
-                ? handleAddItem(itemId, count)
-                : history.push({
-                    pathname: "/login",
-                    state: { itemId, count, marketId, marketName }
-                  })
-            }
+            onClick={() => handleAddItem(itemId, count)}
           >
             <StyledIcon src={basket} />
           </Button>

@@ -100,7 +100,7 @@ class Market extends Component {
 
   render() {
     const { query } = this.state;
-    const marketName = this.props.location.state.marketName;
+    const marketName = "Statesboro Farmer's Market";
     const marketId = this.props.match.params.id;
     const searchProducts = this.filterProducts(query);
     const productCount = this.calcQuantity(searchProducts.length);

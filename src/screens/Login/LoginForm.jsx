@@ -92,7 +92,7 @@ class LoginForm extends Component {
               <Button signin type="submit">
                 Sign in
               </Button>
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   marginTop: "20px",
@@ -102,7 +102,7 @@ class LoginForm extends Component {
                 <Link to="/signup">
                   <Text orange>Don't have an account? Sign up</Text>
                 </Link>
-              </div>
+              </div> */}
             </Form>
           )}
         />
