@@ -7,6 +7,7 @@ import { Title, Text, Button } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import { USER_LOGIN } from "../../store/types/auth";
+import * as yup from "yup";
 
 const Wrapper = styled.div`
   width: 440px;
@@ -38,6 +39,13 @@ class LoginForm extends Component {
       <Wrapper>
         <Formik
           initialValues={{ email: "", password: "" }}
+          validationSchema={yup.object().shape({
+            email: yup
+              .string()
+              .email()
+              .required("Email is required"),
+            password: yup.string().required("Password is required")
+          })}
           onSubmit={(values, { setErrors }) => {
             userLogin({ email: values.email, password: values.password })
               .then(action => {
@@ -65,7 +73,8 @@ class LoginForm extends Component {
             handleSubmit,
             handleBlur,
             values,
-            errors
+            errors,
+            touched
           }) => (
             <Form onSubmit={handleSubmit}>
               <Title margin="1em 0 0 0">Welcome back!</Title>
@@ -78,6 +87,7 @@ class LoginForm extends Component {
                 margin="normal"
                 name="email"
                 autoCapitalize="none"
+                error={touched.email && errors.email}
               />
               <TextField
                 label="Password"
@@ -87,6 +97,7 @@ class LoginForm extends Component {
                 margin="normal"
                 name="password"
                 type="password"
+                error={touched.password && errors.password}
               />
               {errors && <Text error>{errors.loginErr}</Text>}
               <Button signin type="submit">

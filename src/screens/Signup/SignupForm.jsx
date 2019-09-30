@@ -32,11 +32,6 @@ const Form = styled.form`
   }
 `;
 
-const StyledTextInput = styled(TextField)({
-  width: "100%",
-  borderColor: "red"
-});
-
 class SignupForm extends Component {
   render() {
     const { userSignup, history } = this.props;
