@@ -50,11 +50,11 @@ export const showMessage = (id, details) => {
     dispatch(setMessage(id, details));
     setTimeout(() => {
       dispatch(clearMessage(id));
-    }, 3000);
+    }, 4500);
   };
 };
 
-export function Messages(state = Map(), action) {
+export function messages(state = Map(), action) {
   switch (action.type) {
     case SET_MESSAGE:
       return state.set(action.id, action.details);

@@ -33,6 +33,7 @@ import {
   WhatsappShareButton,
   TwitterShareButton
 } from "react-share";
+import { showMessage } from "../../redux_util";
 
 const SplashImage = styled.div`
   width: 55%;
@@ -258,10 +259,18 @@ class Listing extends Component {
 
   handleFavorite = () => {
     const { favorite } = this.state;
+    const itemName = this.props.location.state.itemName;
     const itemId = this.props.match.params.id;
     let fav = favorite;
     if (!fav) {
       this.props.addFavorite({ itemId });
+      this.props.showMessage("favorites", {
+        type: "MESSAGE",
+        message: [
+          "Success",
+          `You successfully added ${itemName} to your favorites!`
+        ]
+      });
       this.setState({ addedFavorite: true });
     } else {
       this.props.deleteFavorite({ itemId });
@@ -297,11 +306,19 @@ class Listing extends Component {
   };
 
   handleAddItem = (itemId, count) => {
+    const itemName = this.props.location.state.itemName;
     let data = {
       itemQuantity: count
     };
     this.props.addItemToCart(itemId, data).then(action => {
       if (action.type === POST_ITEM_TO_CART.SUCCESS) {
+        this.props.showMessage("cart", {
+          type: "MESSAGE",
+          message: [
+            "Success",
+            `You successfully added ${itemName} to your basket!`
+          ]
+        });
         this.setState({ count: 0, addedItem: true });
       } else {
         console.log("error");
@@ -427,5 +444,12 @@ class Listing extends Component {
 
 export default connect(
   dataSelector,
-  { fetchItem, fetchFavorite, addFavorite, deleteFavorite, addItemToCart }
+  {
+    fetchItem,
+    fetchFavorite,
+    addFavorite,
+    deleteFavorite,
+    addItemToCart,
+    showMessage
+  }
 )(Listing);

@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 // import { getFarmId } from '../store/selectors/data';
 // import { getUserFarmId } from '../store/selectors/auth';
 import LazyLoad from "react-lazyload";
+import { showMessage } from "../redux_util";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -96,12 +97,19 @@ class Item extends Component {
     }
   };
 
-  handleAddItem = (itemId, count) => {
+  handleAddItem = (itemId, count, itemName) => {
     let data = {
       itemQuantity: count
     };
     this.props.addItemToCart(itemId, data).then(action => {
       if (action.type === POST_ITEM_TO_CART.SUCCESS) {
+        this.props.showMessage("cart", {
+          type: "MESSAGE",
+          message: [
+            "Success",
+            `You successfully added ${itemName} to your basket!`
+          ]
+        });
         this.setState({ count: 0 });
       } else {
         console.log("error");
@@ -220,6 +228,7 @@ class Item extends Component {
                 marketId={marketId}
                 marketName={marketName}
                 quantity={quantity}
+                itemName={itemName}
               />
             )}
             {quantity < 0 && <Text>Out of stock</Text>}
@@ -234,5 +243,5 @@ export default connect(
   createStructuredSelector({
     // farmerId: state => getUserFarmId(state)
   }),
-  { addItemToCart }
+  { addItemToCart, showMessage }
 )(Item);

@@ -29,7 +29,7 @@ const Grid = styled.div`
   display: grid;
   width: 85%;
   max-width: 1300px;
-  margin: 1em auto 0 auto;
+  margin: 1em auto;
   grid-gap: 35px;
   grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
   grid-auto-rows: auto;

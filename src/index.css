@@ -17,6 +17,19 @@ a {
   color: inherit;
 }
 
+.fadeIn {
+  animation: fadeIn ease-in 0.8s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .shimmer {
   background: #f6f7f8;
   background-image: linear-gradient(

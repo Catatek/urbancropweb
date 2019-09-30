@@ -6,6 +6,9 @@ import { Modal } from "./Modal";
 import { Account } from "./Account";
 import { Empty } from "./Empty";
 import { PurchaseBar } from "./PurchaseBar";
+import { OrderItem } from "./OrderItem";
+import { OrdersCard } from "./OrdersCard";
+import { SmallItemCard } from "./SmallItemCard";
 
 export {
   Market,
@@ -15,5 +18,8 @@ export {
   Modal,
   Account,
   Empty,
-  PurchaseBar
+  PurchaseBar,
+  OrdersCard,
+  OrderItem,
+  SmallItemCard
 };
