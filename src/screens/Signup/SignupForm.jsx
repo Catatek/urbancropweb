@@ -7,6 +7,7 @@ import { Title, Text, Button } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import InputMask from "react-input-mask";
+import * as yup from "yup";
 
 const Wrapper = styled.div`
   width: 440px;
@@ -57,12 +58,26 @@ class SignupForm extends Component {
               history.push("/markets");
             });
           }}
+          validationSchema={yup.object().shape({
+            firstName: yup.string().required("First Name is required"),
+            lastName: yup.string().required("Last Name is required"),
+            email: yup
+              .string()
+              .email()
+              .required("Email is required"),
+            mobile: yup.string().required("Mobile is required"),
+            password: yup
+              .string()
+              .min(6, "Password must be at least 6 digits")
+              .required("Password is required")
+          })}
           render={({
             handleChange,
             handleSubmit,
             handleBlur,
             values,
-            errors
+            errors,
+            touched
           }) => (
             <Form onSubmit={handleSubmit}>
               <Title margin="1em 0 0 0">Create account</Title>
@@ -74,6 +89,7 @@ class SignupForm extends Component {
                 onBlur={handleBlur}
                 margin="normal"
                 name="firstName"
+                error={touched.firstName && errors.firstName}
               />
 
               <TextField
@@ -83,12 +99,14 @@ class SignupForm extends Component {
                 onBlur={handleBlur}
                 margin="normal"
                 name="lastName"
+                error={touched.lastName && errors.lastName}
               />
 
               <InputMask
                 mask="999-999-9999"
                 value={values.mobile}
                 onChange={handleChange}
+                error={touched.mobile && errors.mobile}
               >
                 {() => (
                   <TextField
@@ -96,6 +114,7 @@ class SignupForm extends Component {
                     value={values.mobile}
                     margin="normal"
                     name="mobile"
+                    error={touched.mobile && errors.mobile}
                   />
                 )}
               </InputMask>
@@ -107,6 +126,7 @@ class SignupForm extends Component {
                 margin="normal"
                 name="email"
                 autoCapitalize="none"
+                error={touched.email && errors.email}
               />
 
               <TextField
@@ -117,6 +137,7 @@ class SignupForm extends Component {
                 margin="normal"
                 name="password"
                 type="password"
+                error={touched.password && errors.password}
               />
               <Button signin type="submit">
                 Create account

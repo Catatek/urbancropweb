@@ -34,6 +34,8 @@ class Favorites extends Component {
   render() {
     const { favorites } = this.props;
     const { isLoadingItems } = this.state;
+    console.log(favorites.size);
+
     return (
       <div>
         <Navigation />
@@ -41,7 +43,7 @@ class Favorites extends Component {
         {!isLoadingItems && favorites.size === 0 && (
           <Empty image={cat} title="You do not have any current orders!" />
         )}
-        {isLoadingItems && favorites.size > 0 && (
+        {!isLoadingItems && favorites.size > 0 && (
           <Div>
             <Title>Favorites</Title>
           </Div>
