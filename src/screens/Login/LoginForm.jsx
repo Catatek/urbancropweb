@@ -11,7 +11,8 @@ import * as yup from "yup";
 
 const Wrapper = styled.div`
   width: 440px;
-  height: 480px;
+  height: auto;
+  padding-bottom: 3.5em;
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(152, 152, 152, 0.2);
   background-color: #ffffff;
@@ -86,6 +87,7 @@ class LoginForm extends Component {
                 onBlur={handleBlur}
                 margin="normal"
                 name="email"
+                type="email"
                 autoCapitalize="none"
                 error={touched.email && errors.email}
               />

@@ -1,22 +1,25 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import SignupForm from "./SignupForm";
-import logoWhite from "../../assets/logo_white.svg";
+import logoColor from "../../assets/logo_color_centered.svg";
+import loginsplash from "../../assets/login_splash.png";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
-  background: linear-gradient(125deg, #f75d19, #f88747);
+  min-height: 100vh;
+  background: ${props => props.background};
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin: auto;
+  justify-content: center;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: contain;
 `;
 
 const Logo = styled.img`
-  width: 275px;
-  margin-bottom: 1em;
+  width: 200px;
+  margin-bottom: 2em;
 `;
 
 class Signup extends Component {
@@ -24,8 +27,8 @@ class Signup extends Component {
     const { history, location } = this.props;
 
     return (
-      <Wrapper>
-        <Logo src={logoWhite} />
+      <Wrapper background={`url('${loginsplash}')`}>
+        <Logo src={logoColor} />
         <SignupForm history={history} addToBasketState={location} />
       </Wrapper>
     );

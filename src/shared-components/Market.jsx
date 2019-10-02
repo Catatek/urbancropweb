@@ -25,7 +25,16 @@ const Image = styled.img`
   margin-bottom: 0.5em;
 `;
 
-export function Market({ img, id, marketName }) {
+export function Market({
+  img,
+  id,
+  marketName,
+  lat,
+  lng,
+  userLat,
+  userLng,
+  calcDistance
+}) {
   return (
     <Link
       to={{
@@ -36,6 +45,12 @@ export function Market({ img, id, marketName }) {
       <Wrapper>
         <Image src={img} />
         <Text smalltitle>{marketName}</Text>
+        {/* <Text margin="0">{`${calcDistance(
+          userLat,
+          userLng,
+          lng,
+          lat
+        )} miles away`}</Text> */}
       </Wrapper>
     </Link>
   );

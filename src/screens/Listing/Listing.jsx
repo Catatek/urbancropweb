@@ -130,7 +130,7 @@ const StyledFaHeart = styled(FaHeart)`
 `;
 
 const StyledFaRegHeart = styled(FaRegHeart)`
-  color: #000;
+  color: #a3a3a3;
   margin-top: 1em;
   margin-right: 0.75em;
   transition: 500ms;
@@ -163,7 +163,7 @@ function ShareBar({ favorite, handleFavorite, shareUrl, title }) {
           cursor: "pointer"
         }}
       >
-        <FaFacebook size="1.25em" color="#292929" />
+        <FaFacebook size="1.25em" color="#a3a3a3" />
       </FacebookShareButton>
       <TwitterShareButton
         url={shareUrl}
@@ -175,7 +175,7 @@ function ShareBar({ favorite, handleFavorite, shareUrl, title }) {
           cursor: "pointer"
         }}
       >
-        <FaTwitter size="1.25em" color="#292929" />
+        <FaTwitter size="1.25em" color="#a3a3a3" />
       </TwitterShareButton>
       <WhatsappShareButton
         url={shareUrl}
@@ -187,7 +187,7 @@ function ShareBar({ favorite, handleFavorite, shareUrl, title }) {
           cursor: "pointer"
         }}
       >
-        <FaWhatsappSquare size="1.25em" color="#292929" />
+        <FaWhatsappSquare size="1.25em" color="#a3a3a3" />
       </WhatsappShareButton>
       {favorite && <StyledFaHeart onClick={handleFavorite} size="1.25em" />}
       {!favorite && <StyledFaRegHeart onClick={handleFavorite} size="1.25em" />}

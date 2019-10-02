@@ -8,7 +8,6 @@ import { fetchCart, fetchConsumerOrder } from "../store/actions/data";
 import { fetchProfile } from "../store/actions/auth";
 import { dataSelector } from "../store/selectors/data";
 import { Link, withRouter } from "react-router-dom";
-import DropdownModal from "./DropdownModal";
 import Avatar from "./Avatar";
 
 const Wrapper = styled.div`
