@@ -9,7 +9,7 @@ import { dataSelector } from "../../store/selectors/data";
 import cat from "../../assets/cat2.png";
 
 const Div = styled.div`
-  width: 55%;
+  width: 45%;
   margin: 0 auto;
   margin-top: 1em;
   display: flex;
@@ -56,7 +56,7 @@ class Favorites extends Component {
         <Navigation />
         <HeroImage title="Favorites" />
         {!isLoadingItems && favorites.size === 0 && (
-          <Empty image={cat} title="You do not have any current orders!" />
+          <Empty image={cat} title="You do not have any favorites!" />
         )}
         {!isLoadingItems && favorites.size > 0 && (
           <Div>
@@ -67,6 +67,7 @@ class Favorites extends Component {
                   <SmallItemCard
                     image={key.getIn(["images", 0], 0)}
                     itemName={key.get("itemName")}
+                    description={key.get("description")}
                     cost={key.get("cost", 0)}
                     unit={key.get("unit", "")}
                     formatPrice={this.formatPrice}

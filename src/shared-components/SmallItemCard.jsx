@@ -38,7 +38,8 @@ export function SmallItemCard({
   type,
   itemId,
   navigation,
-  deleteFavorite
+  deleteFavorite,
+  description
 }) {
   return (
     <Wrapper
@@ -56,10 +57,13 @@ export function SmallItemCard({
       <Row>
         <StyledImage src={image} />
         <Column>
-          <Text basketitem black margin="0">
+          <Text smalltitle black margin="0">
             {itemName}
           </Text>
-          <Text basketitem>{`$${formatPrice(cost)}/${unit}`}</Text>
+          <Text basketitem margin=".5em 0 0 0">{`$${formatPrice(
+            cost
+          )}/${unit}`}</Text>
+          <Text margin="0">{`${description.substring(0, 45)}...`}</Text>
         </Column>
       </Row>
       <StyledRow>
