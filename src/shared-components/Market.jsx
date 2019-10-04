@@ -23,6 +23,10 @@ const Image = styled.img`
   object-fit: contain;
   border-radius: 8px;
   margin-bottom: 0.5em;
+  @media (min-width: 920px) {
+    &:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
 `;
 
 export function Market({
