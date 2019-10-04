@@ -163,19 +163,21 @@ class Basket extends Component {
               index={null}
             />
             {!active && (
-              <Link
+              <div
                 style={{
                   marginTop: 16,
                   marginBottom: 16,
                   alignSelf: "flex-start",
                   marginLeft: "auto",
-                  marginRight: "auto",
-                  width: "90%"
+                  marginRight: "auto"
                 }}
-                to="/"
               >
-                <Text>Click here to add a card before checking out!</Text>
-              </Link>
+                <Link to="/profile/payments">
+                  <Text orange>
+                    Click here to add a card before checking out!
+                  </Text>
+                </Link>
+              </div>
             )}
             {active && (
               <div>
@@ -191,16 +193,16 @@ class Basket extends Component {
                     <Text orange>{last4}</Text>
                   </Link>
                 </div>
-                <Button
-                  onClick={createOrder}
-                  checkout
-                  active={active}
-                  disabled={!active}
-                >
-                  Checkout
-                </Button>
               </div>
             )}
+            <Button
+              onClick={createOrder}
+              checkout
+              active={active}
+              disabled={!active}
+            >
+              Checkout
+            </Button>
           </Div>
         )}
       </div>

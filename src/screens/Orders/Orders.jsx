@@ -13,7 +13,7 @@ import cat from "../../assets/cat1.png";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
 const Div = styled.div`
-  width: 55%;
+  width: 45%;
   margin: 0 auto;
   margin: 1em auto;
   display: flex;
