@@ -152,7 +152,8 @@ class Item extends Component {
       history,
       marketId,
       marketName,
-      quantity
+      quantity,
+      type
     } = this.props;
     const { count } = this.state;
     const isAuthed = this.authUser();
@@ -175,7 +176,12 @@ class Item extends Component {
           </Link>
           <StyledColumn>
             <Link to={{ pathname: `/product/${itemId}`, state: { itemName } }}>
-              <Text smalltitle>{`${itemName} selected from ${farmName}`}</Text>
+              {type !== "inventory" && (
+                <Text
+                  smalltitle
+                >{`${itemName} selected from ${farmName}`}</Text>
+              )}
+              {type === "inventory" && <Text smalltitle>{`${itemName}`}</Text>}
               {/* <StyledRow> */}
               {/* <FontAwesome
               style={{ marginRight: 4 }}
@@ -216,7 +222,7 @@ class Item extends Component {
             </div>
           ) : ( */}
             </Link>
-            {quantity > 0 && (
+            {type !== "inventory" && quantity > 0 && (
               <AddToBasket
                 count={count}
                 increment={this.increment}
@@ -230,6 +236,9 @@ class Item extends Component {
                 quantity={quantity}
                 itemName={itemName}
               />
+            )}
+            {type === "inventory" && quantity > 0 && (
+              <Text>{`${quantity} in stock`}</Text>
             )}
             {quantity < 0 && <Text>Out of stock</Text>}
             {/* )} */}

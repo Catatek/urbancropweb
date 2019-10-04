@@ -10,11 +10,11 @@ import {
   getProfile,
   postSignup,
   // postActivateuser,
-  postProfile
+  postProfile,
   // postFarmDetails,
   // getCode,
   // postAvatar,
-  // getFarm,
+  getFarm
 } from "../../services/api";
 import {
   USER_LOGIN,
@@ -23,13 +23,13 @@ import {
   // CHECK_USER_LOGIN,
   USER_SIGNUP,
   // ACTIVATE_USER,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
   // RESEND_CODE,
   // FORGOT_PASSWORD,
   // RESET_PASSWORD,
   // UPDATE_AVATAR,
   // UPDATE_FARM,
-  // FETCH_FARM,
+  FETCH_FARM
 } from "../types/auth";
 
 const userLoginRequest = createAction(USER_LOGIN.PENDING);
@@ -221,15 +221,15 @@ export const updateProfile = data => async dispatch => {
 //   }
 // };
 
-// const fetchFarmPending = createAction(FETCH_FARM.PENDING);
-// const fetchFarmSuccess = createAction(FETCH_FARM.SUCCESS, 'farm');
-// const fetchFarmFailed = createAction(FETCH_FARM.FAILED, 'error');
-// export const fetchFarm = farmId => async dispatch => {
-//   dispatch(fetchFarmPending());
-//   try {
-//     const res = await getFarm(farmId);
-//     return dispatch(fetchFarmSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(fetchFarmFailed(error));
-//   }
-// };
+const fetchFarmPending = createAction(FETCH_FARM.PENDING);
+const fetchFarmSuccess = createAction(FETCH_FARM.SUCCESS, "farm");
+const fetchFarmFailed = createAction(FETCH_FARM.FAILED, "error");
+export const fetchFarm = farmId => async dispatch => {
+  dispatch(fetchFarmPending());
+  try {
+    const res = await getFarm(farmId);
+    return dispatch(fetchFarmSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchFarmFailed(error));
+  }
+};

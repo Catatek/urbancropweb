@@ -49,7 +49,7 @@ const messages = state => state.get("messages", Map());
 //   state.data.getIn(['item', 'farm', 'farmer', 'lastName'], '');
 
 export const getBasket = state => state.getIn(["data", "cart"], List());
-// export const getInventory = state => state.data.get('farmItems', List());
+export const getInventory = state => state.getIn(["data", "farmItems"], List());
 
 export const getFavorites = state => state.getIn(["data", "favorites"], List());
 
@@ -68,5 +68,6 @@ export const dataSelector = createStructuredSelector({
   consumerOrder: getCurrentOrder,
   pastConsumerOrders: getPastConsumerOrders,
   favorites: getFavorites,
-  messages
+  messages,
+  inventory: getInventory
 });
