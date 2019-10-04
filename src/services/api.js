@@ -42,11 +42,11 @@ export const postProfile = data =>
 //     data,
 //   });
 
-// export const getFarm = farmId =>
-//   client.request({
-//     method: 'GET',
-//     url: `get/farm/${farmId}`,
-//   });
+export const getFarm = farmId =>
+  client.request({
+    method: "GET",
+    url: `get/farm/${farmId}`
+  });
 
 // export const postAvatar = data =>
 //   client.request({
@@ -102,11 +102,11 @@ export const getItems = data =>
     url: `/get/items/market/${data}`
   });
 
-// export const getFarmItems = data =>
-//   client.request({
-//     method: 'GET',
-//     url: `/get/items/${data}`,
-//   });
+export const getFarmItems = data =>
+  client.request({
+    method: "GET",
+    url: `/get/items/${data}`
+  });
 
 export const getMarkets = data =>
   client.request({

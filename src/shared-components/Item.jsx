@@ -7,8 +7,7 @@ import { connect } from "react-redux";
 import { POST_ITEM_TO_CART } from "../store/types/data";
 import { createStructuredSelector } from "reselect";
 import { Link } from "react-router-dom";
-// import { getFarmId } from '../store/selectors/data';
-// import { getUserFarmId } from '../store/selectors/auth';
+import { getUserFarmId } from "../store/selectors/auth";
 import LazyLoad from "react-lazyload";
 import { showMessage } from "../redux_util";
 
@@ -128,18 +127,17 @@ class Item extends Component {
     return auth;
   };
 
-  // authFarmer = () => {
-  //   const { farmId, farmerId } = this.props;
-  //   if (farmerId) {
-  //     if (farmId === farmerId) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } else {
-  //     return false;
-  //   }
-  // };
+  authFarmer = (farmId, userFarmId) => {
+    if (userFarmId) {
+      if (farmId === userFarmId) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
 
   render() {
     const {
@@ -152,10 +150,17 @@ class Item extends Component {
       history,
       marketId,
       marketName,
-      quantity
+      quantity,
+      type,
+      description,
+      farmId,
+      userFarmId
     } = this.props;
     const { count } = this.state;
-    const isAuthed = this.authUser();
+    const isAuthed = this.authFarmer(farmId, userFarmId);
+    console.log(isAuthed);
+    console.log(farmId, "FARM-ID", userFarmId);
+
     return (
       <LazyLoad
         placeholder={<PlaceHolder />}
@@ -175,7 +180,12 @@ class Item extends Component {
           </Link>
           <StyledColumn>
             <Link to={{ pathname: `/product/${itemId}`, state: { itemName } }}>
-              <Text smalltitle>{`${itemName} selected from ${farmName}`}</Text>
+              {type !== "inventory" && (
+                <Text
+                  smalltitle
+                >{`${itemName} selected from ${farmName}`}</Text>
+              )}
+              {type === "inventory" && <Text smalltitle>{`${itemName}`}</Text>}
               {/* <StyledRow> */}
               {/* <FontAwesome
               style={{ marginRight: 4 }}
@@ -210,13 +220,15 @@ class Item extends Component {
               {/* </StyledRow> */}
 
               <Label>{`$${cost} / ${unit}`}</Label>
-              {/* {this.authFarmer() ? (
-            <div style={{ marginTop: 2 }}>
-              <Text>Click to manage your listing</Text>
-            </div>
-          ) : ( */}
+
+              {type !== "inventory" && isAuthed && (
+                <Text>Click to manage your listing</Text>
+              )}
+              {type === "inventory" && (
+                <Text margin="0">{`${description.substring(0, 40)}...`}</Text>
+              )}
             </Link>
-            {quantity > 0 && (
+            {type !== "inventory" && !isAuthed && quantity > 0 && (
               <AddToBasket
                 count={count}
                 increment={this.increment}
@@ -231,8 +243,10 @@ class Item extends Component {
                 itemName={itemName}
               />
             )}
-            {quantity < 0 && <Text>Out of stock</Text>}
-            {/* )} */}
+            {type === "inventory" && quantity > 0 && (
+              <Text margin=".25em 0 0">{`${quantity} in stock`}</Text>
+            )}
+            {quantity < 0 && <Text margin=".25em 0 0">Out of stock</Text>}
           </StyledColumn>
         </Wrapper>
       </LazyLoad>
@@ -241,7 +255,7 @@ class Item extends Component {
 }
 export default connect(
   createStructuredSelector({
-    // farmerId: state => getUserFarmId(state)
+    userFarmId: state => getUserFarmId(state)
   }),
   { addItemToCart, showMessage }
 )(Item);

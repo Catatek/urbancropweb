@@ -18,8 +18,8 @@ export const getUserMobile = state =>
 
 // export const getUserItems = state => state.data.get('farmItems', List());
 
-// export const getUserFarmId = state =>
-//   state.auth.getIn(['info', 'farmId'], null);
+export const getUserFarmId = state =>
+  state.getIn(["auth", "info", "farmId"], null);
 // export const getUserFarmName = state =>
 //   state.auth.getIn(['info', 'farm', 'farmName']);
 // export const getUserFarmEmail = state =>

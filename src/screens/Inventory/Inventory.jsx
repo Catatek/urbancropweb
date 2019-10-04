@@ -1,0 +1,117 @@
+import React, { Component } from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
+import { fetchFarmItems } from "../../store/actions/data";
+import { fetchFarm } from "../../store/actions/auth";
+import Navigation from "../../shared-components/Navigation";
+import Item from "../../shared-components/Item";
+import { HeroImage, Empty, OrdersCard } from "../../shared-components";
+import { Title, Text, Column } from "../../theme";
+import { dataSelector, getInventory } from "../../store/selectors/data";
+import cat from "../../assets/cat1.png";
+import { getUserFarmId } from "../../store/selectors/auth";
+import { createStructuredSelector } from "reselect";
+
+const Div = styled.div`
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  max-width: 1300px;
+  @media (max-width: 920px) {
+    width: 90%;
+    margin-top: 2em;
+  }
+`;
+
+const Grid = styled.div`
+  display: grid;
+  width: 100%;
+  grid-gap: 5px 75px;
+  max-width: 1300px;
+  margin: 1em auto 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+  grid-auto-rows: auto;
+  @media (max-width: 920px) {
+    grid-auto-rows: auto;
+    width: 100%;
+    margin-bottom: 2em;
+  }
+`;
+
+class Inventory extends Component {
+  state = {
+    isLoadingItems: true
+  };
+
+  componentDidMount() {
+    const { userFarmId, fetchFarm, fetchFarmItems } = this.props;
+
+    fetchFarm(userFarmId);
+    fetchFarmItems(userFarmId).then(() => {
+      this.setState({ isLoadingItems: false });
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { userFarmId, fetchFarm, fetchFarmItems } = this.props;
+    if (prevProps.userFarmId !== userFarmId) {
+      fetchFarm(userFarmId);
+      fetchFarmItems(userFarmId).then(() => {
+        this.setState({ isLoadingItems: false });
+      });
+    }
+  }
+
+  formatPrice = x => {
+    return (x / 100).toFixed(2);
+  };
+
+  render() {
+    const { inventory } = this.props;
+    const { isLoadingItems } = this.state;
+    console.log(inventory);
+
+    return (
+      <div>
+        <Navigation />
+        <HeroImage title="Inventory" />
+        {!isLoadingItems && inventory.size === 0 && (
+          <Empty image={cat} title="You do not have any inventory!" />
+        )}
+        {!isLoadingItems && inventory.size > 0 && (
+          <Div>
+            <Title>Inventory</Title>
+            <Grid>
+              {inventory.map((key, index) => {
+                return (
+                  <Item
+                    key={index}
+                    images={key.getIn(["images", 0], 0)}
+                    itemName={key.get("itemName")}
+                    description={key.get("description")}
+                    cost={this.formatPrice(key.get("cost", 0))}
+                    unit={key.get("unit")}
+                    navigation={this.props.history}
+                    itemId={key.get("itemId")}
+                    quantity={key.get("quantity", 0)}
+                    type="inventory"
+                  />
+                );
+              })}
+            </Grid>
+          </Div>
+        )}
+      </div>
+    );
+  }
+}
+
+export default connect(
+  createStructuredSelector({
+    userFarmId: state => getUserFarmId(state),
+    inventory: state => getInventory(state)
+  }),
+  { fetchFarmItems, fetchFarm }
+)(Inventory);

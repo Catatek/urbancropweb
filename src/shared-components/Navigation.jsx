@@ -34,7 +34,6 @@ const Div = styled.div`
   justify-content: space-evenly;
   align-items: center;
   @media (max-width: 920px) {
-    margin-top: 0.5em;
     width: 100%;
   }
 `;
@@ -143,39 +142,39 @@ class Navigation extends Component {
   }
   componentWillReceiveProps(props) {}
 
-  onClickOption = val => {
-    this.props.history.push(val.link);
-  };
+  // onClickOption = val => {
+  //   this.props.history.push(val.link);
+  // };
 
-  logout = val => {
-    this.props.history.push(val.link);
-    localStorage.clear();
-  };
+  // logout = val => {
+  //   this.props.history.push(val.link);
+  //   localStorage.clear();
+  // };
 
-  getOptions = () => {
-    return [
-      {
-        label: "Profile",
-        link: "/profile",
-        onClick: this.onClickOption
-      },
-      {
-        label: "Support",
-        link: "/",
-        onClick: this.onClickOption
-      },
-      {
-        label: "Product Updates",
-        link: "/updates",
-        onClick: this.onClickOption
-      },
-      {
-        label: "Logout",
-        link: "/",
-        onClick: this.logout
-      }
-    ];
-  };
+  // getOptions = () => {
+  //   return [
+  //     {
+  //       label: "Profile",
+  //       link: "/profile",
+  //       onClick: this.onClickOption
+  //     },
+  //     {
+  //       label: "Support",
+  //       link: "/",
+  //       onClick: this.onClickOption
+  //     },
+  //     {
+  //       label: "Product Updates",
+  //       link: "/updates",
+  //       onClick: this.onClickOption
+  //     },
+  //     {
+  //       label: "Logout",
+  //       link: "/",
+  //       onClick: this.logout
+  //     }
+  //   ];
+  // };
 
   authUser = () => {
     let auth;
@@ -201,8 +200,7 @@ class Navigation extends Component {
         <Image src={logo} />
         <Div>
           <Nav to="/">Explore</Nav>
-          {/* {role === "farmer" && <Nav to="/vendors">Farm</Nav>} */}
-
+          {role === "farmer" && <Nav to="/inventory">Farm</Nav>}
           <Nav to="/orders">Orders</Nav>
           {isAuthed && <Nav to="/favorites">Favorites</Nav>}
           {isAuthed && (
@@ -214,7 +212,6 @@ class Navigation extends Component {
               // )}
             />
           )}
-
           {!isAuthed && (
             <Button nav onClick={() => history.push("/login")}>
               Sign in

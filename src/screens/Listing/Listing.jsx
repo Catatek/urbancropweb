@@ -12,7 +12,8 @@ import { POST_ITEM_TO_CART } from "../../store/types/data";
 import Navigation from "../../shared-components/Navigation";
 import { Link } from "react-router-dom";
 import { Title, Text, Row } from "../../theme";
-import { dataSelector } from "../../store/selectors/data";
+import { getItem, getFarmId } from "../../store/selectors/data";
+import { getUserFarmId } from "../../store/selectors/auth";
 import noPesticides from "../../assets/pesticide-free.png";
 import organic from "../../assets/organic.png";
 import local from "../../assets/vegan.png";
@@ -20,7 +21,7 @@ import vegetarian from "../../assets/vegetarian.png";
 import noGmo from "../../assets/gmo-free.png";
 import Map from "./Map";
 import Avatar from "../../shared-components/Avatar";
-import { PurchaseBar } from "../../shared-components";
+import { PurchaseBar, FarmerBar } from "../../shared-components";
 import {
   FaRegHeart,
   FaHeart,
@@ -34,6 +35,7 @@ import {
   TwitterShareButton
 } from "react-share";
 import { showMessage } from "../../redux_util";
+import { createStructuredSelector } from "reselect";
 
 const SplashImage = styled.div`
   width: 55%;
@@ -338,21 +340,15 @@ class Listing extends Component {
   render() {
     const marketName =
       this.props.location.state.marketName || "Statesboro Farmer's Market";
-    const marketId = this.props.location.state.marketId;
+    const marketId = this.props.location.state.marketId || "market-D3EC";
     const itemName = this.props.location.state.itemName;
-    const { item } = this.props;
+    const { item, farmId, userFarmId } = this.props;
     const { isFetchingItem, favorite } = this.state;
     const attributesArr = this.handleAttributes(
       item.getIn(["item", "attributes"], "")
     );
     const lat = item.getIn(["farm", "location", "coordinates", 0]);
     const lng = item.getIn(["farm", "location", "coordinates", 1]);
-    console.log(
-      `https://market.urbancrop.io/product/${item.getIn(
-        ["item", "itemId"],
-        ""
-      )}`
-    );
 
     return (
       <div>
@@ -431,22 +427,31 @@ class Listing extends Component {
           favorite={favorite}
           handleFavorite={this.handleFavorite}
         />
-        <PurchaseBar
-          cost={item.getIn(["item", "cost"], "")}
-          quantity={item.getIn(["item", "quantity"], "")}
-          unit={item.getIn(["item", "unit"], "")}
-          formatPrice={this.formatPrice}
-          count={item.getIn(["item", "images", 0], "")}
-          handleAddItem={this.handleAddItem}
-          itemId={item.getIn(["item", "itemId"], "")}
-        />
+        {userFarmId && userFarmId === farmId && (
+          <FarmerBar navigate={this.props.history} />
+        )}
+        {!userFarmId && (
+          <PurchaseBar
+            cost={item.getIn(["item", "cost"], "")}
+            quantity={item.getIn(["item", "quantity"], "")}
+            unit={item.getIn(["item", "unit"], "")}
+            formatPrice={this.formatPrice}
+            count={item.getIn(["item", "images", 0], "")}
+            handleAddItem={this.handleAddItem}
+            itemId={item.getIn(["item", "itemId"], "")}
+          />
+        )}
       </div>
     );
   }
 }
 
 export default connect(
-  dataSelector,
+  createStructuredSelector({
+    item: state => getItem(state),
+    farmId: state => getFarmId(state),
+    userFarmId: state => getUserFarmId(state)
+  }),
   {
     fetchItem,
     fetchFavorite,

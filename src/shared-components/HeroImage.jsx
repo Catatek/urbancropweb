@@ -5,6 +5,7 @@ import basketsplash from "../assets/basket_splash.jpg";
 import updatessplash from "../assets/updates_splash.jpg";
 import orderssplash from "../assets/orders_splash.jpg";
 import profilesplash from "../assets/profile_splash.jpg";
+import inventorysplash from "../assets/inventory_splash.jpg";
 import explore from "../assets/explore.svg";
 import { Title } from "../theme";
 
@@ -45,6 +46,9 @@ export class HeroImage extends Component {
         break;
       case "Profile":
         splash = profilesplash;
+        break;
+      case "Inventory":
+        splash = inventorysplash;
         break;
       default:
         splash = marketsplash;

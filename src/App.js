@@ -11,6 +11,7 @@ import Basket from "./screens/Basket/Basket";
 import Signup from "./screens/Signup/Signup";
 import Favorites from "./screens/Favorites/Favorites";
 import Updates from "./screens/Updates/Updates";
+import Inventory from "./screens/Inventory/Inventory";
 
 function isAuthenticated() {
   return localStorage.getItem("authorization");
@@ -72,6 +73,7 @@ class Router extends Component {
             <PrivateRoute path="/favorites" component={Favorites} />
             <PrivateRoute exact path="/profile/payments" component={Payments} />
             <PrivateRoute exact path="/updates" component={Updates} />
+            <PrivateRoute exact path="/inventory" component={Inventory} />
 
             {/* <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/settings" component={Settings} />

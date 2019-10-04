@@ -5,10 +5,10 @@ import {
   FETCH_PROFILE,
   //   CHECK_USER_LOGIN,
   USER_SIGNUP,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
   //   UPDATE_AVATAR,
   //   UPDATE_FARM,
-  //   FETCH_FARM,
+  FETCH_FARM
 } from "../types/auth";
 
 export default (state = Map(), { type, ...action }) => {
@@ -24,6 +24,9 @@ export default (state = Map(), { type, ...action }) => {
       return state;
     case USER_SIGNUP.SUCCESS:
       state = state.set("info", fromJS(action.userInfo));
+      return state;
+    case FETCH_FARM.SUCCESS:
+      state = state.set("farm", fromJS(action.farm.farm));
       return state;
     default:
       return state;

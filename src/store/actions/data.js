@@ -72,21 +72,21 @@ export const fetchItem = data => async dispatch => {
   }
 };
 
-// const fetchFarmItemsPending = createAction(FETCH_FARM_ITEMS.PENDING);
-// const fetchFarmItemsSuccess = createAction(
-//   FETCH_FARM_ITEMS.SUCCESS,
-//   'farmItems',
-// );
-// const fetchFarmItemsFailed = createAction(FETCH_FARM_ITEMS.FAILED, 'error');
-// export const fetchFarmItems = data => async dispatch => {
-//   dispatch(fetchFarmItemsPending());
-//   try {
-//     const res = await getFarmItems(data);
-//     return dispatch(fetchFarmItemsSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(fetchFarmItemsFailed(error));
-//   }
-// };
+const fetchFarmItemsPending = createAction(FETCH_FARM_ITEMS.PENDING);
+const fetchFarmItemsSuccess = createAction(
+  FETCH_FARM_ITEMS.SUCCESS,
+  "farmItems"
+);
+const fetchFarmItemsFailed = createAction(FETCH_FARM_ITEMS.FAILED, "error");
+export const fetchFarmItems = data => async dispatch => {
+  dispatch(fetchFarmItemsPending());
+  try {
+    const res = await getFarmItems(data);
+    return dispatch(fetchFarmItemsSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchFarmItemsFailed(error));
+  }
+};
 
 // // ADD ITEM
 
