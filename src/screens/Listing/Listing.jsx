@@ -149,6 +149,15 @@ const StyledText = styled(Text)`
   }
 `;
 
+const StyledImageDiv = styled.div`
+  margin: 2em auto;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 780px) {
+    margin: 0 auto;
+  }
+`;
+
 function ShareBar({ favorite, handleFavorite, shareUrl, title }) {
   return (
     <ShareBarWrapper>
@@ -348,17 +357,11 @@ class Listing extends Component {
     return (
       <div>
         <Navigation />
-        <div
-          style={{
-            margin: "2em auto",
-            display: "flex",
-            justifyContent: "center"
-          }}
-        >
+        <StyledImageDiv>
           <SplashImage
             background={`url('${item.getIn(["item", "images", 0], "")}')`}
           />
-        </div>
+        </StyledImageDiv>
 
         <Div>
           <div>

@@ -11,14 +11,27 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: contain;
 `;
 
 const Logo = styled.img`
-  width: 250px;
-  margin-bottom: 2em;
+  width: 200px;
+  margin-bottom: 1em;
+`;
+
+const Div = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4em;
+  @media (max-width: 780px) {
+    margin-bottom: 0;
+  }
 `;
 
 class Login extends Component {
@@ -27,18 +40,10 @@ class Login extends Component {
 
     return (
       <Wrapper background={`url('${loginsplash}')`}>
-        <div
-          style={{
-            marginTop: "5em",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "100%"
-          }}
-        >
+        <Div>
           <Logo src={logoColor} />
           <LoginForm history={history} addToBasketState={location} />
-        </div>
+        </Div>
       </Wrapper>
     );
   }
