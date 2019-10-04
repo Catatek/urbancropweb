@@ -34,7 +34,6 @@ const Div = styled.div`
   justify-content: space-evenly;
   align-items: center;
   @media (max-width: 920px) {
-    margin-top: 0.5em;
     width: 100%;
   }
 `;

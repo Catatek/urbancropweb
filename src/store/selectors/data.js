@@ -36,8 +36,8 @@ const messages = state => state.get("messages", Map());
 // export const getFarmLatLong = state =>
 //   state.data.getIn(['item', 'farm', 'location', 'coordinates'], List());
 
-// export const getFarmId = state =>
-//   state.data.getIn(['item', 'farm', 'farmId'], '');
+export const getFarmId = state =>
+  state.getIn(["data", "item", "farm", "farmId"], "");
 
 // export const getFarmerAvatar = state =>
 //   state.data.getIn(['item', 'farm', 'farmer', 'avatar'], '');

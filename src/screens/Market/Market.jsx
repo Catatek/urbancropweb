@@ -52,7 +52,7 @@ class Market extends Component {
   componentDidMount() {
     const { fetchItems, location, addItemToCart } = this.props;
     const addToBasketState = location.state && location.state.addToBasketState;
-    const marketId = this.props.match.params.id;
+    const marketId = this.props.match.params.id || "market-D3EC";
     fetchItems(marketId).then(() => {
       this.setState({ isFetchingMarkets: false });
     });
