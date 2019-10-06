@@ -3,6 +3,7 @@ import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 import { Formik } from "formik";
 import { Button } from "../../theme";
+import InputMask from "react-input-mask";
 
 const Form = styled.form`
   display: flex;
@@ -11,26 +12,37 @@ const Form = styled.form`
   margin: 0 auto;
 `;
 
-export default function EmailForm({
-  firstName,
-  lastName,
+export default function FarmMobileForm({
+  farmName,
+  addrLine1,
+  addrLine2,
+  city,
+  state,
+  country,
+  zipCode,
   email,
   mobile,
-  updateProfile,
-  toggleModal
+  updateFarm,
+  toggleModal,
+  farmId
 }) {
   return (
     <div>
       <Formik
-        initialValues={{ email }}
+        initialValues={{ mobile }}
         onSubmit={values => {
           let data = {
-            firstName,
-            lastName,
-            mobile,
-            email: values.email
+            farmName,
+            addrLine1,
+            addrLine2,
+            city,
+            state,
+            country,
+            zipCode,
+            mobile: values.mobile,
+            email
           };
-          updateProfile(data).then(action => {
+          updateFarm(farmId, data).then(() => {
             toggleModal();
           });
         }}
@@ -42,14 +54,21 @@ export default function EmailForm({
           errors
         }) => (
           <Form onSubmit={handleSubmit}>
-            <TextField
-              label="Email"
-              value={values.email}
+            <InputMask
+              mask="999-999-9999"
+              value={values.mobile}
               onChange={handleChange}
-              onBlur={handleBlur}
-              margin="normal"
-              name="email"
-            />
+            >
+              {() => (
+                <TextField
+                  label="Phone Number"
+                  value={values.mobile}
+                  margin="normal"
+                  name="mobile"
+                />
+              )}
+            </InputMask>
+
             <Button type="submit" active margin="1em 0 0 0" checkout>
               Save
             </Button>

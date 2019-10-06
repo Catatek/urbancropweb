@@ -6,7 +6,9 @@ import loginsplash from "../../assets/login_splash.png";
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
+  max-height: -webkit-fill-available;
+  height: 100vh;
+  min-height: -webkit-fill-available;
   background: ${props => props.background};
   display: flex;
   flex-direction: column;
@@ -19,7 +21,10 @@ const Wrapper = styled.div`
 
 const Logo = styled.img`
   width: 200px;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
+  @media (max-width: 500px) {
+    width: 150px;
+  }
 `;
 
 class Signup extends Component {

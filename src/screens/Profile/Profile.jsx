@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchCardsAction } from "../../store/actions/payment";
-import { updateProfile } from "../../store/actions/auth";
+import { updateProfile, fetchFarm, updateFarm } from "../../store/actions/auth";
 import Navigation from "../../shared-components/Navigation";
 import { Title, Label, Column, Text } from "../../theme";
 import { HeroImage, Modal } from "../../shared-components";
@@ -23,6 +23,8 @@ import NameForm from "./NameForm";
 import EmailForm from "./EmailForm";
 import MobileForm from "./MobileForm";
 import Avatar from "../../shared-components/Avatar";
+import FarmMobileForm from "./FarmMobileForm";
+import FarmEmailForm from "./FarmEmailForm";
 
 const Div = styled.div`
   width: 55%;
@@ -38,7 +40,7 @@ const Div = styled.div`
 const Grid = styled.div`
   display: grid;
   width: 55%;
-  grid-gap: 50px;
+  grid-gap: 0 50px;
   margin: 1em auto 0 auto;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: auto;
@@ -95,6 +97,14 @@ class Profile extends Component {
   componentDidMount() {
     const { fetchCardsAction } = this.props;
     fetchCardsAction();
+    this.handleFetchFarm();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { farmId } = this.props;
+    if (prevProps.farmId !== farmId) {
+      this.handleFetchFarm();
+    }
   }
 
   formatPrice = x => {
@@ -118,16 +128,35 @@ class Profile extends Component {
     this.setState({ isOpen: !this.state.isOpen, type, title });
   };
 
+  handleFetchFarm = async () => {
+    let farmId = this.props.farmId;
+    if (farmId) {
+      this.props.fetchFarm(farmId);
+    }
+  };
+
   render() {
     const {
-      avatar,
       email,
       firstName,
       lastName,
       mobile,
       updateProfile,
-      history
+      history,
+      farmName,
+      farmEmail,
+      farmAddress,
+      farmMobile,
+      farmId,
+      addrLine1,
+      addrLine2,
+      city,
+      state,
+      country,
+      zipCode,
+      updateFarm
     } = this.props;
+
     const { isOpen, type, title } = this.state;
     const values = [
       {
@@ -162,34 +191,42 @@ class Profile extends Component {
       //   value: '605 Timber Ridge Dr.',
       // },
 
-      // {
-      //   text: 'Farm Name',
-      //   navigation: 'FarmDetails',
-      //   type: 'favorites',
-      //   icon: Business,
-      //   value: `${farmName}`,
-      // },
-      // {
-      //   text: 'Farm Email',
-      //   navigation: 'FarmDetails',
-      //   type: 'payout',
-      //   icon: Email,
-      //   value: `${farmEmail}`,
-      // },
-      // {
-      //   text: 'Farm Phone',
-      //   navigation: 'FarmDetails',
-      //   type: 'notifications',
-      //   icon: Phone,
-      //   value: `${farmMobile}`,
-      // },
-      // {
-      //   text: 'Farm Address',
-      //   navigation: 'FarmAddress',
-      //   type: 'payments',
-      //   icon: BusinessAddress,
-      //   value: `${farmAddress}`,
-      // },
+      {
+        text: "Farm Name",
+        navigation: "FarmDetails",
+        form: "notavailable",
+        type: "notavailable",
+        title: "Please contact your market to change this setting.",
+        icon: Business,
+        value: `${farmName}`
+      },
+      {
+        text: "Farm Email",
+        navigation: "FarmDetails",
+        type: "farmemail",
+        form: "emailfarmform",
+        title: "Edit Farm Email",
+        icon: Email,
+        value: `${farmEmail}`
+      },
+      {
+        text: "Farm Phone",
+        navigation: "FarmDetails",
+        type: "phone",
+        form: "mobilefarmform",
+        title: "Edit Farm Phone",
+        icon: Phone,
+        value: `${farmMobile}`
+      },
+      {
+        text: "Farm Address",
+        navigation: "FarmAddress",
+        form: "notavailable",
+        type: "notavailable",
+        title: "Please contact your market to change this setting.",
+        icon: BusinessAddress,
+        value: `${farmAddress}`
+      },
 
       {
         text: "Payment Methods",
@@ -199,7 +236,12 @@ class Profile extends Component {
         type: "payments",
         icon: Payments
       },
-
+      {
+        text: "Payout Methods",
+        navigation: "Payout",
+        type: "payout",
+        icon: Payouts
+      },
       {
         text: "Product Updates",
         type: "updates",
@@ -214,7 +256,8 @@ class Profile extends Component {
     ];
 
     const profileOptions = values.slice(0, 3);
-    const settingsOptions = values.slice(3, 6);
+    const farmOptions = values.slice(3, 7);
+    const settingsOptions = values.slice(7, 13);
 
     return (
       <div>
@@ -245,6 +288,29 @@ class Profile extends Component {
                 />
               );
             })}
+            {farmId && (
+              <React.Fragment>
+                <Label extrasmall style={{ marginTop: "2em" }}>
+                  Farm
+                </Label>
+                {farmOptions.map((key, index) => {
+                  return (
+                    <Setting
+                      key={index}
+                      text={key.text}
+                      icon={key.icon}
+                      link={key.navigation}
+                      type={key.type}
+                      toggleModal={this.toggleModal}
+                      value={key.value}
+                      displayValue={this.displayValue}
+                      form={key.form}
+                      title={key.title}
+                    />
+                  );
+                })}
+              </React.Fragment>
+            )}
           </StyledColumn>
           <StyledColumn>
             <Label extrasmall>Settings</Label>
@@ -300,6 +366,39 @@ class Profile extends Component {
               toggleModal={this.toggleModal}
             />
           )}
+          {type === "mobilefarmform" && (
+            <FarmMobileForm
+              updateFarm={updateFarm}
+              farmName={farmName}
+              addrLine1={addrLine1}
+              addrLine2={addrLine2}
+              city={city}
+              state={state}
+              country={country}
+              zipCode={zipCode}
+              email={farmEmail}
+              mobile={farmMobile}
+              farmId={farmId}
+              toggleModal={this.toggleModal}
+            />
+          )}
+          {type === "emailfarmform" && (
+            <FarmEmailForm
+              updateFarm={updateFarm}
+              farmName={farmName}
+              addrLine1={addrLine1}
+              addrLine2={addrLine2}
+              state={state}
+              country={country}
+              city={city}
+              zipCode={zipCode}
+              email={farmEmail}
+              mobile={farmMobile}
+              farmId={farmId}
+              toggleModal={this.toggleModal}
+            />
+          )}
+          {type === "notavailable" && null}
         </Modal>
       </div>
     );
@@ -308,5 +407,5 @@ class Profile extends Component {
 
 export default connect(
   authSelector,
-  { fetchCardsAction, updateProfile }
+  { fetchCardsAction, updateProfile, fetchFarm, updateFarm }
 )(Profile);

@@ -7,7 +7,7 @@ import {
   USER_SIGNUP,
   UPDATE_PROFILE,
   //   UPDATE_AVATAR,
-  //   UPDATE_FARM,
+  UPDATE_FARM,
   FETCH_FARM
 } from "../types/auth";
 
@@ -27,6 +27,9 @@ export default (state = Map(), { type, ...action }) => {
       return state;
     case FETCH_FARM.SUCCESS:
       state = state.set("farm", fromJS(action.farm.farm));
+      return state;
+    case UPDATE_FARM.SUCCESS:
+      state = state.set("farm", fromJS(action.farmInfo));
       return state;
     default:
       return state;

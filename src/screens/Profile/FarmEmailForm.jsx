@@ -11,13 +11,19 @@ const Form = styled.form`
   margin: 0 auto;
 `;
 
-export default function EmailForm({
-  firstName,
-  lastName,
+export default function FarmEmailForm({
+  farmName,
+  addrLine1,
+  addrLine2,
+  city,
+  state,
+  country,
+  zipCode,
   email,
   mobile,
-  updateProfile,
-  toggleModal
+  updateFarm,
+  toggleModal,
+  farmId
 }) {
   return (
     <div>
@@ -25,12 +31,17 @@ export default function EmailForm({
         initialValues={{ email }}
         onSubmit={values => {
           let data = {
-            firstName,
-            lastName,
+            farmName,
+            addrLine1,
+            addrLine2,
+            city,
+            state,
+            country,
+            zipCode,
             mobile,
             email: values.email
           };
-          updateProfile(data).then(action => {
+          updateFarm(farmId, data).then(() => {
             toggleModal();
           });
         }}

@@ -46,19 +46,18 @@ class Inventory extends Component {
   };
 
   componentDidMount() {
-    const { userFarmId, fetchFarm, fetchFarmItems } = this.props;
-
-    fetchFarm(userFarmId);
-    fetchFarmItems(userFarmId).then(() => {
+    const { farmId, fetchFarm, fetchFarmItems } = this.props;
+    fetchFarm(farmId);
+    fetchFarmItems(farmId).then(() => {
       this.setState({ isLoadingItems: false });
     });
   }
 
   componentDidUpdate(prevProps) {
-    const { userFarmId, fetchFarm, fetchFarmItems } = this.props;
-    if (prevProps.userFarmId !== userFarmId) {
-      fetchFarm(userFarmId);
-      fetchFarmItems(userFarmId).then(() => {
+    const { farmId, fetchFarm, fetchFarmItems } = this.props;
+    if (prevProps.farmId !== farmId) {
+      fetchFarm(farmId);
+      fetchFarmItems(farmId).then(() => {
         this.setState({ isLoadingItems: false });
       });
     }
@@ -110,7 +109,7 @@ class Inventory extends Component {
 
 export default connect(
   createStructuredSelector({
-    userFarmId: state => getUserFarmId(state),
+    farmId: state => getUserFarmId(state),
     inventory: state => getInventory(state)
   }),
   { fetchFarmItems, fetchFarm }

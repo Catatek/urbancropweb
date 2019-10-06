@@ -20,25 +20,23 @@ export const getUserMobile = state =>
 
 export const getUserFarmId = state =>
   state.getIn(["auth", "info", "farmId"], null);
-// export const getUserFarmName = state =>
-//   state.auth.getIn(['info', 'farm', 'farmName']);
-// export const getUserFarmEmail = state =>
-//   state.auth.getIn(['info', 'farm', 'email'], '');
-// export const getUserFarmMobile = state =>
-//   state.auth.getIn(['info', 'farm', 'mobile'], '');
+export const getUserFarmName = state =>
+  state.getIn(["auth", "farm", "farmName"]);
+export const getUserFarmEmail = state =>
+  state.getIn(["auth", "farm", "email"], "");
+export const getUserFarmMobile = state =>
+  state.getIn(["auth", "farm", "mobile"], "");
 
-// export const getFarmCountry = state =>
-//   state.auth.getIn(['info', 'farm', 'country'], '');
-// export const getFarmAddressLine1 = state =>
-//   state.auth.getIn(['info', 'farm', 'addrLine1'], '');
-// export const getFarmAddressLine2 = state =>
-//   state.auth.getIn(['info', 'farm', 'addrLine2'], '');
-// export const getFarmCity = state =>
-//   state.auth.getIn(['info', 'farm', 'city'], '');
-// export const getFarmState = state =>
-//   state.auth.getIn(['info', 'farm', 'state'], '');
-// export const getFarmZipCode = state =>
-//   state.auth.getIn(['info', 'farm', 'zipCode'], '');
+export const getFarmCountry = state =>
+  state.getIn(["auth", "farm", "country"], "");
+export const getFarmAddressLine1 = state =>
+  state.getIn(["auth", "farm", "addrLine1"], "");
+export const getFarmAddressLine2 = state =>
+  state.getIn(["auth", "farm", "addrLine2"], "");
+export const getFarmCity = state => state.getIn(["auth", "farm", "city"], "");
+export const getFarmState = state => state.getIn(["auth", "farm", "state"], "");
+export const getFarmZipCode = state =>
+  state.getIn(["auth", "farm", "zipCode"], "");
 
 // export const getUserFarmLatLong = state =>
 //   state.auth.getIn(['info', 'farm', 'location', 'coordinates'], List());
@@ -48,5 +46,16 @@ export const authSelector = createStructuredSelector({
   lastName: getUserLastName,
   avatar: getUserAvatar,
   mobile: getUserMobile,
-  email: getUserEmail
+  email: getUserEmail,
+  farmName: getUserFarmName,
+  farmEmail: getUserFarmEmail,
+  farmAddress: getFarmAddressLine1,
+  farmId: getUserFarmId,
+  farmMobile: getUserFarmMobile,
+  addrLine1: getFarmAddressLine1,
+  addrLine2: getFarmAddressLine2,
+  city: getFarmCity,
+  state: getFarmState,
+  country: getFarmCountry,
+  zipCode: getFarmZipCode
 });

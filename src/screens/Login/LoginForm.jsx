@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { userLogin } from "../../store/actions/auth";
 import { Title, Text, Button } from "../../theme";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
-import { USER_LOGIN } from "../../store/types/auth";
+// import { Link } from "react-router-dom";
+// import { USER_LOGIN } from "../../store/types/auth";
 import * as yup from "yup";
 
 const Wrapper = styled.div`
