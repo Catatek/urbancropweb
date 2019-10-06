@@ -82,7 +82,7 @@ class SignupForm extends Component {
                 value={values.firstName}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                margin="normal"
+                margin="dense"
                 name="firstName"
                 error={touched.firstName && errors.firstName}
               />
@@ -92,7 +92,7 @@ class SignupForm extends Component {
                 value={values.lastName}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                margin="normal"
+                margin="dense"
                 name="lastName"
                 error={touched.lastName && errors.lastName}
               />
@@ -107,7 +107,7 @@ class SignupForm extends Component {
                   <TextField
                     label="Phone Number"
                     value={values.mobile}
-                    margin="normal"
+                    margin="dense"
                     name="mobile"
                     error={touched.mobile && errors.mobile}
                   />
@@ -118,7 +118,7 @@ class SignupForm extends Component {
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                margin="normal"
+                margin="dense"
                 name="email"
                 autoCapitalize="none"
                 error={touched.email && errors.email}
@@ -129,7 +129,7 @@ class SignupForm extends Component {
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                margin="normal"
+                margin="dense"
                 name="password"
                 type="password"
                 error={touched.password && errors.password}
@@ -140,9 +140,9 @@ class SignupForm extends Component {
               <div
                 style={{
                   display: "flex",
-                  marginTop: "20px",
+                  marginTop: "6px",
                   justifyContent: "center",
-                  marginBottom: "16px"
+                  marginBottom: "8px"
                 }}
               >
                 <Link to="/login">

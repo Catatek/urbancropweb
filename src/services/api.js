@@ -35,12 +35,12 @@ export const postProfile = data =>
     data
   });
 
-// export const postFarmDetails = (farmId, data) =>
-//   client.request({
-//     method: 'PUT',
-//     url: `update/farm/${farmId}`,
-//     data,
-//   });
+export const postFarmDetails = (farmId, data) =>
+  client.request({
+    method: "PUT",
+    url: `update/farm/${farmId}`,
+    data
+  });
 
 export const getFarm = farmId =>
   client.request({

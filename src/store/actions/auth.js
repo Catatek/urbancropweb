@@ -11,7 +11,7 @@ import {
   postSignup,
   // postActivateuser,
   postProfile,
-  // postFarmDetails,
+  postFarmDetails,
   // getCode,
   // postAvatar,
   getFarm
@@ -28,7 +28,7 @@ import {
   // FORGOT_PASSWORD,
   // RESET_PASSWORD,
   // UPDATE_AVATAR,
-  // UPDATE_FARM,
+  UPDATE_FARM,
   FETCH_FARM
 } from "../types/auth";
 
@@ -208,18 +208,18 @@ export const updateProfile = data => async dispatch => {
 //   }
 // };
 
-// const updateFarmPending = createAction(UPDATE_FARM.PENDING);
-// const updateFarmSuccess = createAction(UPDATE_FARM.SUCCESS, 'farmInfo');
-// const updateFarmFailed = createAction(UPDATE_FARM.FAILED, 'error');
-// export const updateFarm = (farmId, data) => async dispatch => {
-//   dispatch(updateFarmPending());
-//   try {
-//     const res = await postFarmDetails(farmId, data);
-//     return dispatch(updateFarmSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(updateFarmFailed(error));
-//   }
-// };
+const updateFarmPending = createAction(UPDATE_FARM.PENDING);
+const updateFarmSuccess = createAction(UPDATE_FARM.SUCCESS, "farmInfo");
+const updateFarmFailed = createAction(UPDATE_FARM.FAILED, "error");
+export const updateFarm = (farmId, data) => async dispatch => {
+  dispatch(updateFarmPending());
+  try {
+    const res = await postFarmDetails(farmId, data);
+    return dispatch(updateFarmSuccess(res.data));
+  } catch (error) {
+    return dispatch(updateFarmFailed(error));
+  }
+};
 
 const fetchFarmPending = createAction(FETCH_FARM.PENDING);
 const fetchFarmSuccess = createAction(FETCH_FARM.SUCCESS, "farm");

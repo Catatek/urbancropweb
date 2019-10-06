@@ -61,9 +61,12 @@ export default function Setting({
       <StyledImage src={icon} />
       <StyledRow border={type !== "logout"}>
         <Label setting>{text}</Label>
+
         <Row alignitems="center">
           <StyledSettingText>{value && displayValue(value)}</StyledSettingText>
-          <FaAngleRight size={22} color="#a3a3a3" />
+          {type !== "notavailable" && (
+            <FaAngleRight size={22} color="#a3a3a3" />
+          )}
         </Row>
       </StyledRow>
     </Row>

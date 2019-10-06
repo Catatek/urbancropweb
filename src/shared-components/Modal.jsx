@@ -63,7 +63,9 @@ export class Modal extends Component {
             justifycontent="space-between"
             alignitems="center"
           >
-            <Subtitle>{title}</Subtitle>
+            <div style={{ width: "85%" }}>
+              <Subtitle>{title}</Subtitle>
+            </div>
             <Circle onClick={toggleModal}>
               <FaTimes size={14} color="#000" />
             </Circle>

@@ -65,6 +65,7 @@ class Favorites extends Component {
               {favorites.map((key, index) => {
                 return (
                   <SmallItemCard
+                    key={index}
                     image={key.getIn(["images", 0], 0)}
                     itemName={key.get("itemName")}
                     description={key.get("description")}
