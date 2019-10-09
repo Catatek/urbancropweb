@@ -5,9 +5,9 @@ import { fetchFarmItems } from "../../store/actions/data";
 import { fetchFarm } from "../../store/actions/auth";
 import Navigation from "../../shared-components/Navigation";
 import Item from "../../shared-components/Item";
-import { HeroImage, Empty, OrdersCard } from "../../shared-components";
-import { Title, Text, Column } from "../../theme";
-import { dataSelector, getInventory } from "../../store/selectors/data";
+import { HeroImage, Empty } from "../../shared-components";
+import { Title } from "../../theme";
+import { getInventory } from "../../store/selectors/data";
 import cat from "../../assets/cat1.png";
 import { getUserFarmId } from "../../store/selectors/auth";
 import { createStructuredSelector } from "reselect";
@@ -70,7 +70,6 @@ class Inventory extends Component {
   render() {
     const { inventory } = this.props;
     const { isLoadingItems } = this.state;
-    console.log(inventory);
 
     return (
       <div>

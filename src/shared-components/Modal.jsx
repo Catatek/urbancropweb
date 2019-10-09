@@ -55,7 +55,7 @@ export class Modal extends Component {
       return null;
     }
     return (
-      <Backdrop>
+      <Backdrop className="fadeIn">
         <Div>
           <Row
             margin="0 auto"

@@ -20,3 +20,9 @@ export const POST_FAVORITE = createActionType("POST_FAVORITE");
 export const DELETE_FAVORITE = createActionType("DELETE_FAVORITE");
 export const FETCH_FAVORITE = createActionType("FETCH_FAVORITE");
 export const FETCH_ALL_FAVORITES = createActionType("FETCH_ALL_FAVORITES");
+
+export const FULLFILL_ORDER = createActionType("FULLFILL_ORDER");
+export const FETCH_FARM_ORDERS = createActionType("FETCH_FARM_ORDERS");
+export const FETCH_PAST_FARM_ORDERS = createActionType(
+  "FETCH_PAST_FARM_ORDERS"
+);

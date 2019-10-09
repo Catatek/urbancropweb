@@ -253,3 +253,22 @@ export const postOrder = () =>
     method: "POST",
     url: "/create/order"
   });
+
+export const getFarmOrders = farm =>
+  client.request({
+    method: "GET",
+    url: `/orders/farmer/current/${farm}`
+  });
+
+export const getPastFarmOrders = farm =>
+  client.request({
+    method: "GET",
+    url: `/orders/farmer/past/${farm}`
+  });
+
+export const fullfillOrder = (order, data) =>
+  client.request({
+    method: "PUT",
+    url: `/update/order/status/${order}`,
+    data
+  });

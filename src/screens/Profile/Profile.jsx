@@ -196,7 +196,7 @@ class Profile extends Component {
         navigation: "FarmDetails",
         form: "notavailable",
         type: "notavailable",
-        title: "Please contact your market to change this setting.",
+        title: "Please contact your market to change your farm's name!",
         icon: Business,
         value: `${farmName}`
       },
@@ -223,7 +223,7 @@ class Profile extends Component {
         navigation: "FarmAddress",
         form: "notavailable",
         type: "notavailable",
-        title: "Please contact your market to change this setting.",
+        title: "Please contact your market to change your farm's address!",
         icon: BusinessAddress,
         value: `${farmAddress}`
       },
@@ -258,6 +258,7 @@ class Profile extends Component {
     const profileOptions = values.slice(0, 3);
     const farmOptions = values.slice(3, 7);
     const settingsOptions = values.slice(7, 13);
+    const role = localStorage.getItem("role") || "consumer";
 
     return (
       <div>
@@ -288,7 +289,7 @@ class Profile extends Component {
                 />
               );
             })}
-            {farmId && (
+            {role === "farmer" && (
               <React.Fragment>
                 <Label extrasmall style={{ marginTop: "2em" }}>
                   Farm

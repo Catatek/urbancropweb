@@ -12,7 +12,9 @@ import {
   FETCH_CONSUMER_ORDER,
   FETCH_PAST_CONSUMER_ORDERS,
   UPDATE_ITEM_IN_CART,
-  FETCH_ALL_FAVORITES
+  FETCH_ALL_FAVORITES,
+  FETCH_FARM_ORDERS,
+  FETCH_PAST_FARM_ORDERS
 } from "../types/data";
 
 export default (state = Map(), { type, ...action }) => {
@@ -52,6 +54,12 @@ export default (state = Map(), { type, ...action }) => {
       return state;
     case FETCH_ALL_FAVORITES.SUCCESS:
       state = state.set("favorites", fromJS(action.favorites.items));
+      return state;
+    case FETCH_FARM_ORDERS.SUCCESS:
+      state = state.set("farmOrders", fromJS(action.farmOrders.orders));
+      return state;
+    case FETCH_PAST_FARM_ORDERS.SUCCESS:
+      state = state.set("farmPastOrders", fromJS(action.farmPastOrders.orders));
       return state;
     default:
       return state;

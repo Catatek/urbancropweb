@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Text, Row, Column, Button, Label } from "../theme";
+import { Text, Row, Column, Button } from "../theme";
 import { OrderItem } from "./OrderItem";
 import { BasketItem } from "./BasketItem";
 import FulfilledIcon from "../assets/fulfilledIndicator.png";
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   height: auto;
   background: #fff;
   border-radius: 4px;
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 0.75em 0;
   box-shadow: ${props =>
     props.boxshadow &&
@@ -43,8 +43,6 @@ const Icon = styled.img`
 
 const StyledRow = styled(Row)`
   margin: 4px auto 16px auto;
-  width: 90%;
-  justify-content: space-between;
 `;
 
 function Status({ orderId, status, date }) {
@@ -123,12 +121,12 @@ export class OrdersCard extends Component {
     const {
       orderDetails,
       status,
-      navigation,
+      history,
       orderId,
       type,
-      handleModal,
       currentOrder
     } = this.props;
+
     const { total, tax, fee } = this.state;
     return (
       <Wrapper boxshadow={!currentOrder}>
@@ -179,29 +177,43 @@ export class OrdersCard extends Component {
             type="total"
             formatPrice={this.formatPrice}
           />
-          {/* <StyledRow>
+          <StyledRow>
             {type === "consumer" && (
-              <Button>
-                <Label orderbutton>Email Receipt</Label>
+              <Button orderActions style={{ marginRight: ".75em" }}>
+                Email Receipt
               </Button>
             )}
 
-            {status === "pending" && (
-              <Button primary>
-                <Label orderbutton primary>
-                  Fullfill
-                </Label>
+            {status === "pending" && type === "farmer" && (
+              <Button orderActions orange style={{ marginRight: ".75em" }}>
+                Fulfill Order
+              </Button>
+            )}
+            {type === "farmer" && (
+              <Button
+                orderActions
+                onClick={() =>
+                  history.push(`/help/${orderId}`, { orderId, role: "farmer" })
+                }
+              >
+                Help
               </Button>
             )}
 
-            <Button
-              onClick={() =>
-                navigation.navigate("Help", { orderNumber: orderId })
-              }
-            >
-              <Label orderbutton>Help</Label>
-            </Button>
-          </StyledRow> */}
+            {type === "consumer" && status === "completed" && (
+              <Button
+                orderActions
+                onClick={() =>
+                  history.push(`/help/${orderId}`, {
+                    orderId,
+                    role: "consumer"
+                  })
+                }
+              >
+                Help
+              </Button>
+            )}
+          </StyledRow>
         </Container>
       </Wrapper>
     );

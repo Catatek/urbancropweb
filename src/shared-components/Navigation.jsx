@@ -98,12 +98,11 @@ function OrderNav({ orderCount }) {
   return (
     <div
       style={{
-        width: 30,
-        height: 30,
         position: "relative",
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        width: 44
+        // marginRight: "2.25em"
       }}
     >
       <Nav to="/orders">Orders</Nav>
@@ -111,7 +110,7 @@ function OrderNav({ orderCount }) {
         <div
           style={{
             position: "absolute",
-            right: -4,
+            right: -14,
             top: -8,
             backgroundColor: "#F75D19",
             borderRadius: 100,
@@ -201,8 +200,9 @@ class Navigation extends Component {
         <Div>
           <Nav to="/">Explore</Nav>
           {role === "farmer" && <Nav to="/inventory">Farm</Nav>}
-          <Nav to="/orders">Orders</Nav>
+
           {isAuthed && <Nav to="/favorites">Favorites</Nav>}
+          <Nav to="/orders">Orders</Nav>
           {isAuthed && (
             <Avatar
               handleClick={() => history.push("/profile")}
@@ -212,6 +212,7 @@ class Navigation extends Component {
               // )}
             />
           )}
+
           {!isAuthed && (
             <Button nav onClick={() => history.push("/login")}>
               Sign in

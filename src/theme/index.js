@@ -48,6 +48,7 @@ export const Text = styled.p`
     css`
       color: #f75d19;
       cursor: pointer;
+      transition: 250ms;
     `};
   ${props =>
     props.basketitem &&
@@ -201,6 +202,20 @@ export const Button = styled.button`
                   props.active ? "#f9804a" : "#ccc"};
               }
             `}
+            ${props =>
+              props.orderActions &&
+              css`
+                width: 112px;
+                border-radius: 4px;
+                margin: ${props => props.margin};
+                background-color: ${props =>
+                  props.orange ? "#f75d19" : "#ccc"};
+
+                &:hover {
+                  background-color: ${props =>
+                    props.orange ? "#f9804a" : "#ccc"};
+                }
+              `}
 `;
 
 export const Row = styled.div`

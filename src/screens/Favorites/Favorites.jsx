@@ -21,9 +21,10 @@ const Div = styled.div`
 
 const Grid = styled.div`
   display: grid;
-  width: 65%;
+  width: 100%;
   grid-gap: 15px;
-  grid-template-columns: 1fr;
+  max-width: 1300px;
+  grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
   grid-auto-rows: auto;
   @media (max-width: 920px) {
     grid-auto-rows: auto;
@@ -49,7 +50,6 @@ class Favorites extends Component {
   render() {
     const { favorites } = this.props;
     const { isLoadingItems } = this.state;
-    console.log(favorites.size);
 
     return (
       <div>

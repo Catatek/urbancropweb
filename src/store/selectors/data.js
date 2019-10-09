@@ -53,6 +53,11 @@ export const getInventory = state => state.getIn(["data", "farmItems"], List());
 
 export const getFavorites = state => state.getIn(["data", "favorites"], List());
 
+export const getFarmOrders = state =>
+  state.getIn(["data", "farmOrders"], List());
+export const getPastFarmOrders = state =>
+  state.getIn(["data", "farmPastOrd]ers"], List());
+
 // CONSUMERS
 
 export const getCurrentOrder = state =>
@@ -69,5 +74,7 @@ export const dataSelector = createStructuredSelector({
   pastConsumerOrders: getPastConsumerOrders,
   favorites: getFavorites,
   messages,
-  inventory: getInventory
+  inventory: getInventory,
+  farmOrders: getFarmOrders,
+  pastFarmOrders: getPastFarmOrders
 });

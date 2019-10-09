@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   border-radius: 4px;
   background-color: #fff;
   align-items: center;
-  margin: 8px auto;
+  margin: 0 auto;
   justify-content: space-between;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   cursor: pointer;

@@ -21,7 +21,10 @@ import {
   UPDATE_ITEM_IN_CART,
   FETCH_CONSUMER_ORDER,
   FETCH_PAST_CONSUMER_ORDERS,
-  POST_ORDER
+  POST_ORDER,
+  FETCH_FARM_ORDERS,
+  FULLFILL_ORDER,
+  FETCH_PAST_FARM_ORDERS
 } from "../types/data";
 import {
   getItems,
@@ -41,7 +44,10 @@ import {
   postFavorite,
   removeFavorite,
   getFavorite,
-  getAllFavorites
+  getAllFavorites,
+  getFarmOrders,
+  fullfillOrder,
+  getPastFarmOrders
 } from "../../services/api";
 
 // // GET ITEMS
@@ -328,5 +334,58 @@ export const fetchAllFavorites = () => async dispatch => {
     return dispatch(fetchAllFavoritesSuccess(res.data));
   } catch (error) {
     return dispatch(fetchAllFavoritesFailed(error));
+  }
+};
+
+// FARM
+
+const fetchFarmOrdersPending = createAction(FETCH_FARM_ORDERS.PENDING);
+const fetchFarmOrdersSuccess = createAction(
+  FETCH_FARM_ORDERS.SUCCESS,
+  "farmOrders"
+);
+const fetchFarmOrdersFailed = createAction(FETCH_FARM_ORDERS.FAILED, "error");
+export const fetchFarmOrders = farmId => async dispatch => {
+  dispatch(fetchFarmOrdersPending());
+  try {
+    const res = await getFarmOrders(farmId);
+    return dispatch(fetchFarmOrdersSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchFarmOrdersFailed(error));
+  }
+};
+
+const fetchPastFarmOrdersPending = createAction(FETCH_PAST_FARM_ORDERS.PENDING);
+const fetchPastFarmOrdersSuccess = createAction(
+  FETCH_PAST_FARM_ORDERS.SUCCESS,
+  "farmPastOrders"
+);
+const fetchPastFarmOrdersFailed = createAction(
+  FETCH_PAST_FARM_ORDERS.FAILED,
+  "error"
+);
+export const fetchPastFarmOrders = farmId => async dispatch => {
+  dispatch(fetchPastFarmOrdersPending());
+  try {
+    const res = await getPastFarmOrders(farmId);
+    return dispatch(fetchPastFarmOrdersSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchPastFarmOrdersFailed(error));
+  }
+};
+
+const postFullfillOrderPending = createAction(FULLFILL_ORDER.PENDING);
+const postFullfillOrderSuccess = createAction(
+  FULLFILL_ORDER.SUCCESS,
+  "fullfill"
+);
+const postFullfillOrderFailed = createAction(FULLFILL_ORDER.FAILED, "error");
+export const postFullfillOrder = (order, data) => async dispatch => {
+  dispatch(postFullfillOrderPending());
+  try {
+    const res = await fullfillOrder(order, data);
+    return dispatch(postFullfillOrderSuccess(res.data));
+  } catch (error) {
+    return dispatch(postFullfillOrderFailed(error));
   }
 };
