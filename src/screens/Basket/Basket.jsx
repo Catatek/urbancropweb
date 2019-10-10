@@ -9,8 +9,7 @@ import {
   removeItemFromCart
 } from "../../store/actions/data";
 import { fetchCardsAction } from "../../store/actions/payment";
-import Navigation from "../../shared-components/Navigation";
-import { HeroImage, BasketItem, Empty } from "../../shared-components";
+import { Layout, BasketItem, Empty } from "../../shared-components";
 import { Title, Text, Button } from "../../theme";
 import { getBasket } from "../../store/selectors/data";
 import { getActive, getLast4, getBrand } from "../../store/selectors/payment";
@@ -107,9 +106,7 @@ class Basket extends Component {
     const basketCount = this.calcQuantity(basket.size);
 
     return (
-      <div>
-        <Navigation />
-        <HeroImage title="Basket" />
+      <Layout title="Basket">
         {!isLoadingItems && basket.size === 0 && (
           <Empty image={dog} title="Your basket is empty!" />
         )}
@@ -205,7 +202,7 @@ class Basket extends Component {
             </Button>
           </Div>
         )}
-      </div>
+      </Layout>
     );
   }
 }

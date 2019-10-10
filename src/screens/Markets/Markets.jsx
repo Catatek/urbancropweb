@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchMarkets } from "../../store/actions/data";
-import { Market, SearchBar, HeroImage } from "../../shared-components";
-import Navigation from "../../shared-components/Navigation";
+import { Market, SearchBar, Layout } from "../../shared-components";
 import { Title, Text, Button, Column } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
 
@@ -108,9 +107,7 @@ class Markets extends Component {
     const marketCount = this.calcQuantity(searchMarkets.length);
 
     return (
-      <div>
-        <Navigation />
-        <HeroImage title="Explore Markets" icon />
+      <Layout title="Explore Markets" icon>
         <Div>
           <TitleDiv>
             <Title margin=".25em 0 0 0 ">Markets</Title>
@@ -145,7 +142,7 @@ class Markets extends Component {
           <Text>Expand your search area to discover more markets</Text>
           <Button marketsearch>Expand Search Area</Button>
         </Column> */}
-      </div>
+      </Layout>
     );
   }
 }

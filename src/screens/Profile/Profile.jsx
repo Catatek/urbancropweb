@@ -3,15 +3,14 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchCardsAction } from "../../store/actions/payment";
 import { updateProfile, fetchFarm, updateFarm } from "../../store/actions/auth";
-import Navigation from "../../shared-components/Navigation";
 import { Title, Label, Column, Text } from "../../theme";
-import { HeroImage, Modal } from "../../shared-components";
+import { Layout, Modal } from "../../shared-components";
 import AddCardForm from "./AddCardForm";
 import Name from "../../assets/name.png";
 import Email from "../../assets/email.png";
 import Phone from "../../assets/phone.png";
 import Logout from "../../assets/logout.png";
-import Address from "../../assets/address.png";
+// import Address from "../../assets/address.png";
 import Payouts from "../../assets/payouts.png";
 import Notifications from "../../assets/notifications.png";
 import Business from "../../assets/businessIcon.png";
@@ -261,9 +260,7 @@ class Profile extends Component {
     const role = localStorage.getItem("role") || "consumer";
 
     return (
-      <div>
-        <Navigation />
-        <HeroImage title="Profile" />
+      <Layout title="Profile">
         <Div>
           <Title>Profile</Title>
         </Div>
@@ -401,7 +398,7 @@ class Profile extends Component {
           )}
           {type === "notavailable" && null}
         </Modal>
-      </div>
+      </Layout>
     );
   }
 }

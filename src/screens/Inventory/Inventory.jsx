@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchFarmItems } from "../../store/actions/data";
 import { fetchFarm } from "../../store/actions/auth";
-import Navigation from "../../shared-components/Navigation";
 import Item from "../../shared-components/Item";
-import { HeroImage, Empty } from "../../shared-components";
+import { Layout, Empty } from "../../shared-components";
 import { Title } from "../../theme";
 import { getInventory } from "../../store/selectors/data";
 import cat from "../../assets/cat1.png";
@@ -72,9 +71,7 @@ class Inventory extends Component {
     const { isLoadingItems } = this.state;
 
     return (
-      <div>
-        <Navigation />
-        <HeroImage title="Inventory" />
+      <Layout title="Inventory">
         {!isLoadingItems && inventory.size === 0 && (
           <Empty image={cat} title="You do not have any inventory!" />
         )}
@@ -101,7 +98,7 @@ class Inventory extends Component {
             </Grid>
           </Div>
         )}
-      </div>
+      </Layout>
     );
   }
 }

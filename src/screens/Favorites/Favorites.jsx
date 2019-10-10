@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchAllFavorites } from "../../store/actions/data";
-import Navigation from "../../shared-components/Navigation";
 import { Title } from "../../theme";
-import { HeroImage, Empty, SmallItemCard } from "../../shared-components";
+import { Layout, Empty, SmallItemCard } from "../../shared-components";
 import { dataSelector } from "../../store/selectors/data";
 import cat from "../../assets/cat2.png";
 
@@ -52,9 +51,7 @@ class Favorites extends Component {
     const { isLoadingItems } = this.state;
 
     return (
-      <div>
-        <Navigation />
-        <HeroImage title="Favorites" />
+      <Layout title="Favorites">
         {!isLoadingItems && favorites.size === 0 && (
           <Empty image={cat} title="You do not have any favorites!" />
         )}
@@ -82,7 +79,7 @@ class Favorites extends Component {
             </Grid>
           </Div>
         )}
-      </div>
+      </Layout>
     );
   }
 }

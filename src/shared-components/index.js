@@ -10,6 +10,7 @@ import { OrderItem } from "./OrderItem";
 import { OrdersCard } from "./OrdersCard";
 import { SmallItemCard } from "./SmallItemCard";
 import { FarmerBar } from "./FarmerBar";
+import { Layout } from "./Layout";
 
 export {
   Market,
@@ -23,5 +24,6 @@ export {
   OrdersCard,
   OrderItem,
   SmallItemCard,
-  FarmerBar
+  FarmerBar,
+  Layout
 };

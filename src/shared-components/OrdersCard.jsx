@@ -4,6 +4,7 @@ import { Text, Row, Column, Button } from "../theme";
 import { OrderItem } from "./OrderItem";
 import { BasketItem } from "./BasketItem";
 import FulfilledIcon from "../assets/fulfilledIndicator.png";
+import PendingIcon from "../assets/pendingIndicator.png";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -50,7 +51,7 @@ function Status({ orderId, status, date }) {
   return (
     <StatusWrapper>
       <Row alignitems="flex-start">
-        <Icon src={FulfilledIcon} />
+        <Icon src={status === "pending" ? PendingIcon : FulfilledIcon} />
         <Column>
           <Text margin="0" smalltitle>{`Order ${status}`}</Text>
           <Text>{date}</Text>
@@ -69,23 +70,6 @@ export class OrdersCard extends Component {
   componentDidMount() {
     this.calc();
   }
-
-  handleSubmit = () => {
-    const {
-      postFullfillOrder,
-      orderId,
-      fetchFarmOrders,
-      fetchPastFarmOrders
-    } = this.props;
-
-    postFullfillOrder(orderId, {
-      farmId: "farm-2796",
-      status: "fulfilled"
-    }).then(() => {
-      fetchFarmOrders("farm-2796");
-      fetchPastFarmOrders("farm-2796");
-    });
-  };
 
   formatPrice = x => {
     return (x / 100).toFixed(2);
@@ -124,7 +108,8 @@ export class OrdersCard extends Component {
       history,
       orderId,
       type,
-      currentOrder
+      currentOrder,
+      handleSubmit
     } = this.props;
 
     const { total, tax, fee } = this.state;
@@ -185,7 +170,12 @@ export class OrdersCard extends Component {
             )}
 
             {status === "pending" && type === "farmer" && (
-              <Button orderActions orange style={{ marginRight: ".75em" }}>
+              <Button
+                onClick={() => handleSubmit(orderId)}
+                orderActions
+                orange
+                style={{ marginRight: ".75em" }}
+              >
                 Fulfill Order
               </Button>
             )}

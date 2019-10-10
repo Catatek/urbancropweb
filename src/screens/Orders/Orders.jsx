@@ -5,12 +5,10 @@ import {
   fetchConsumerOrder,
   fetchPastConsumerOrders
 } from "../../store/actions/data";
-import Navigation from "../../shared-components/Navigation";
-import { HeroImage } from "../../shared-components";
+import { Layout } from "../../shared-components";
 import { Text, Column } from "../../theme";
-import { dataSelector } from "../../store/selectors/data";
-import MyOrders from "./MyOrders";
 import FarmOrders from "./FarmOrders";
+import MyOrders from "./MyOrders";
 
 const Div = styled.div`
   width: 45%;
@@ -78,15 +76,13 @@ class Orders extends Component {
     const { selected } = this.state;
     const role = this.authRole();
     return (
-      <div>
-        <Navigation />
-        <HeroImage title="Orders" />
+      <Layout title="Orders">
         {role === "farmer" && (
           <Tabs handleClick={this.handleClick} selected={selected} />
         )}
         {selected === "farmOrders" && <FarmOrders />}
         {selected === "myOrders" && <MyOrders />}
-      </div>
+      </Layout>
     );
   }
 }
