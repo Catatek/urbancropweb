@@ -45,6 +45,12 @@ export const postFarmDetails = (farmId, data) =>
 export const getFarm = farmId =>
   client.request({
     method: "GET",
+    url: `get/farm`
+  });
+
+export const getFarmById = farmId =>
+  client.request({
+    method: "GET",
     url: `get/farm/${farmId}`
   });
 

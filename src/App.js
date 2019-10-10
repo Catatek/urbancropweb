@@ -13,6 +13,7 @@ import Favorites from "./screens/Favorites/Favorites";
 import Updates from "./screens/Updates/Updates";
 import Inventory from "./screens/Inventory/Inventory";
 import Help from "./screens/Help/Help";
+import Farm from "./screens/Farm/Farm";
 
 function isAuthenticated() {
   return localStorage.getItem("authorization");
@@ -76,6 +77,7 @@ class Router extends Component {
             <PrivateRoute path="/updates" component={Updates} />
             <PrivateRoute path="/inventory" component={Inventory} />
             <PrivateRoute path="/help/:id" component={Help} />
+            <PrivateRoute path="/farm/:id" component={Farm} />
 
             {/* <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/settings" component={Settings} />

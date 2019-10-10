@@ -72,10 +72,16 @@ const StyledNameCard = styled.div`
   margin: 1em 0 2em 0;
 `;
 
-function NameCard({ firstName, lastName, email }) {
+function NameCard({ firstName, lastName, email, avatar }) {
   return (
     <StyledNameCard>
-      <Avatar margin="0 2em 0 1em" large />
+      <Avatar
+        margin="0 2em 0 1em"
+        large
+        firstName={firstName}
+        lastName={lastName}
+        avatar={avatar}
+      />
       <Column>
         <Text margin="0" smalltitle>{`${firstName} ${lastName}`}</Text>
         <Text margin="0" style={{ color: "#9b9b9b", fontSize: 16 }}>
@@ -139,6 +145,7 @@ class Profile extends Component {
       email,
       firstName,
       lastName,
+      avatar,
       mobile,
       updateProfile,
       history,
@@ -265,7 +272,12 @@ class Profile extends Component {
           <Title>Profile</Title>
         </Div>
         <Div>
-          <NameCard firstName={firstName} lastName={lastName} email={email} />
+          <NameCard
+            avatar={avatar}
+            firstName={firstName}
+            lastName={lastName}
+            email={email}
+          />
         </Div>
         <Grid>
           <StyledColumn>

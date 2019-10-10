@@ -1,5 +1,4 @@
 import { createStructuredSelector } from "reselect";
-import { List, Map } from "immutable";
 
 // export const getCards = state => state.payment.get('card', Map());
 

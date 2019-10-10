@@ -19,7 +19,7 @@ import organic from "../../assets/organic.png";
 import local from "../../assets/vegan.png";
 import vegetarian from "../../assets/vegetarian.png";
 import noGmo from "../../assets/gmo-free.png";
-import Map from "./Map";
+import Map from "../../shared-components/Map";
 import Avatar from "../../shared-components/Avatar";
 import { PurchaseBar, FarmerBar } from "../../shared-components";
 import {
@@ -371,29 +371,39 @@ class Listing extends Component {
               ""
             )}`}</Title>
             <Row alignitems="center">
-              <Avatar
-                large
-                type="farmer"
-                farmerAvatar={`${item.getIn(["farm", "farmer", "avatar"], "")}`}
-                farmerFirstName={`${item.getIn(
-                  ["farm", "farmer", "firstName"],
-                  ""
-                )}`}
-                farmerLastName={`${item.getIn(
-                  ["farm", "farmer", "lastName"],
-                  ""
-                )}`}
-              />
-              <div>
-                <Text margin="0" smalltitle>{`${item.getIn(
-                  ["farm", "farmer", "firstName"],
-                  ""
-                )} ${item.getIn(["farm", "farmer", "lastName"], "")}`}</Text>
-                <Text margin="0" orange>{`${item.getIn(
-                  ["farm", "farmName"],
-                  ""
-                )}`}</Text>
-              </div>
+              <Link to={`/farm/${farmId}`}>
+                <Row alignitems="center">
+                  <Avatar
+                    large
+                    type="farmer"
+                    farmerAvatar={`${item.getIn(
+                      ["farm", "farmer", "avatar"],
+                      ""
+                    )}`}
+                    farmerFirstName={`${item.getIn(
+                      ["farm", "farmer", "firstName"],
+                      ""
+                    )}`}
+                    farmerLastName={`${item.getIn(
+                      ["farm", "farmer", "lastName"],
+                      ""
+                    )}`}
+                  />
+                  <div>
+                    <Text margin="0" smalltitle>{`${item.getIn(
+                      ["farm", "farmer", "firstName"],
+                      ""
+                    )} ${item.getIn(
+                      ["farm", "farmer", "lastName"],
+                      ""
+                    )}`}</Text>
+                    <Text margin="0" orange>{`${item.getIn(
+                      ["farm", "farmName"],
+                      ""
+                    )}`}</Text>
+                  </div>
+                </Row>
+              </Link>
             </Row>
           </div>
         </Div>

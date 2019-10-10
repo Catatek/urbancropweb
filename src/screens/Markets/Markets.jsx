@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchMarkets } from "../../store/actions/data";
 import { Market, SearchBar, Layout } from "../../shared-components";
-import { Title, Text, Button, Column } from "../../theme";
+import { Title, Text } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
 
 const Div = styled.div`
@@ -80,7 +80,7 @@ class Markets extends Component {
   };
 
   calcDistance = (lat1, lon1, lat2, lon2) => {
-    if (lat1 == lat2 && lon1 == lon2) {
+    if (lat1 === lat2 && lon1 === lon2) {
       return 0;
     } else {
       let radlat1 = (Math.PI * lat1) / 180;

@@ -1,5 +1,5 @@
 import { combineReducers } from "redux-immutable";
-import { httpReducer as http, messages } from "./redux_util";
+import { messages } from "./redux_util";
 import auth from "./store/reducers/auth";
 import data from "./store/reducers/data";
 import payment from "./store/reducers/payment";

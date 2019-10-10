@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Column, Row, Label, Text } from "../theme";
+import { Column, Row, Text } from "../theme";
 import { AddToBasket } from "./AddToBasket";
 
 const Wrapper = styled(Row)`
