@@ -52,11 +52,17 @@ class Avatar extends Component {
 
   getInitials = () => {
     let name = "";
-    const { type, farmerFirstName, farmerLastName } = this.props;
+    const {
+      type,
+      farmerFirstName,
+      farmerLastName,
+      firstName,
+      lastName
+    } = this.props;
     if (type === "farmer") {
-      name = `${this.props.farmerFirstName} ${this.props.farmerLastName}`;
+      name = `${farmerFirstName} ${farmerLastName}`;
     } else {
-      name = `${this.props.firstName} ${this.props.lastName}`;
+      name = `${firstName} ${lastName}`;
     }
     let initials = name.match(/\b\w/g) || [];
 

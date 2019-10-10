@@ -65,6 +65,13 @@ export const Text = styled.p`
       color: red;
       margin: 0.25em 0 0.5em 0;
     `};
+  ${props =>
+    props.white &&
+    css`
+      color: #fff;
+      font-weight: ${props => (props.bold ? 600 : 300)};
+      margin: 0;
+    `};
 `;
 
 export const Label = styled.label`

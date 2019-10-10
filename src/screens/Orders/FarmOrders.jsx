@@ -64,6 +64,22 @@ class FarmOrders extends Component {
     return (x / 100).toFixed(2);
   };
 
+  handleSubmit = orderId => {
+    const {
+      postFullfillOrder,
+      fetchFarmOrders,
+      fetchPastFarmOrders,
+      farmId
+    } = this.props;
+    postFullfillOrder(orderId, {
+      farmId,
+      status: "fulfilled"
+    }).then(() => {
+      fetchFarmOrders(farmId);
+      fetchPastFarmOrders(farmId);
+    });
+  };
+
   render() {
     const { farmOrders, pastFarmOrders } = this.props;
     const { isLoadingItems } = this.state;
@@ -88,6 +104,7 @@ class FarmOrders extends Component {
                     history={this.props.history}
                     orderId={key.get("orderId", "")}
                     type="farmer"
+                    handleSubmit={this.handleSubmit}
                   />
                 );
               })}
@@ -107,6 +124,7 @@ class FarmOrders extends Component {
                     history={this.props.history}
                     orderId={key.get("orderId", "")}
                     type="farmer"
+                    handleSubmit={this.handleSubmit}
                   />
                 );
               })}
