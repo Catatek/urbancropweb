@@ -144,7 +144,7 @@ class Farm extends Component {
                     navigation={this.props.history}
                     itemId={key.get("itemId")}
                     quantity={key.get("quantity", 0)}
-                    type="inventory"
+                    farmName={farm.get("farmName", "")}
                   />
                 );
               })}

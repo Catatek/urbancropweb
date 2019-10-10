@@ -13,6 +13,9 @@ const Wrapper = styled.div`
   align-items: ${props => (props.top ? "flex-start" : "center")};
   display: ${props => (props.top ? "block" : "flex")};
   background: ${props => (props.top ? "#8bc53c" : "#3AAA35")};
+  @media (max-width: 780px) {
+    height: 100%;
+  }
   @media (max-width: 500px) {
     display: ${props => (props.top ? "block" : "none")};
     height: ${props => (props.top ? "250px" : "")};
@@ -49,6 +52,7 @@ const StyledRow = styled(Row)`
   }
   @media (max-width: 780px) {
     width: 75%;
+    margin-bottom: 2em;
   }
   @media (max-width: 500px) {
     width: 85%;
