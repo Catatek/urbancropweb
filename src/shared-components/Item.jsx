@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { AddToBasket } from "./AddToBasket";
-import { Text, Column, Row, Label } from "../theme";
+import { Text, Column, Label } from "../theme";
 import { addItemToCart } from "../store/actions/data";
 import { connect } from "react-redux";
 import { POST_ITEM_TO_CART } from "../store/types/data";
@@ -158,8 +158,6 @@ class Item extends Component {
     } = this.props;
     const { count } = this.state;
     const isAuthed = this.authFarmer(farmId, userFarmId);
-    console.log(isAuthed);
-    console.log(farmId, "FARM-ID", userFarmId);
 
     return (
       <LazyLoad

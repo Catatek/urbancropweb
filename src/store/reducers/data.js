@@ -7,14 +7,13 @@ import {
   FETCH_CART,
   DELETE_ITEM_FROM_CART,
   POST_ITEM_TO_CART,
-  UPDATE_FARM_ITEM,
-  FETCH_FARM,
   FETCH_CONSUMER_ORDER,
   FETCH_PAST_CONSUMER_ORDERS,
   UPDATE_ITEM_IN_CART,
   FETCH_ALL_FAVORITES,
   FETCH_FARM_ORDERS,
-  FETCH_PAST_FARM_ORDERS
+  FETCH_PAST_FARM_ORDERS,
+  FETCH_FARM_BY_ID
 } from "../types/data";
 
 export default (state = Map(), { type, ...action }) => {
@@ -30,6 +29,9 @@ export default (state = Map(), { type, ...action }) => {
       return state;
     case FETCH_FARM_ITEMS.SUCCESS:
       state = state.set("farmItems", fromJS(action.farmItems.items));
+      return state;
+    case FETCH_FARM_BY_ID.SUCCESS:
+      state = state.set("farm", fromJS(action.farm.farm));
       return state;
     case FETCH_CART.SUCCESS:
       state = state.set("cart", fromJS(action.cart.cart));

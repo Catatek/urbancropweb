@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Text } from "../theme/index";
 import { connect } from "react-redux";
-import { authSelector } from "../store/selectors/auth";
 
 const Circle = styled.div`
   width: ${props => (props.large ? "52px" : "32px")};
@@ -30,26 +29,28 @@ const Circle = styled.div`
   @media (max-width: 780px) {
     margin-right: ${props => (props.large ? ".75em" : "0")};
   }
+  ${props =>
+    props.square &&
+    css`
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+      @media (max-width: 780px) {
+        margin-right: 1em;
+        width: 200px;
+        height: 200px;
+      }
+    `}
 `;
 
 const StyledText = styled(Text)`
-  font-size: ${props => (props.large ? "18px" : "13px")};
+  font-size: ${props =>
+    props.large ? "18px" : props.square ? "28px" : "13px"};
   font-weight: 600;
   color: #fff;
 `;
 
 class Avatar extends Component {
-  _isMounted = false;
-
-  constructor(props) {
-    super(props);
-    this.state = { displayDropdown: false };
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
   getInitials = () => {
     let name = "";
     const {
@@ -72,21 +73,6 @@ class Avatar extends Component {
     return initials;
   };
 
-  handleClick = () => {
-    this.setState({ displayDropdown: !this.state.displayDropdown });
-    this._isMounted = true;
-  };
-
-  handleBlur = () => {
-    setTimeout(() => {
-      if (this._isMounted) {
-        this.setState({
-          displayDropdown: false
-        });
-      }
-    }, 400);
-  };
-
   handleAvatar = type => {
     const { avatar, farmerAvatar } = this.props;
     let avatarState = "";
@@ -104,7 +90,7 @@ class Avatar extends Component {
 
   render() {
     const initials = this.getInitials();
-    const { avatar, handleClick, large, margin, type } = this.props;
+    const { avatar, handleClick, large, margin, type, square } = this.props;
     const display = this.handleAvatar(type);
 
     return (
@@ -113,20 +99,21 @@ class Avatar extends Component {
           margin={margin}
           large={large}
           onClick={handleClick}
-          // tabIndex="-1"
-          // onBlur={this.handleBlur}
           background={display}
+          square={square}
         >
-          {!avatar && <StyledText large={large}>{initials}</StyledText>}
+          {!avatar && (
+            <StyledText square={square} large={large}>
+              {initials}
+            </StyledText>
+          )}
         </Circle>
-
-        {/* {this.props.render(this.state.displayDropdown)} */}
       </div>
     );
   }
 }
 
 export default connect(
-  authSelector,
+  null,
   {}
 )(Avatar);

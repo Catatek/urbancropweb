@@ -224,10 +224,10 @@ export const updateFarm = (farmId, data) => async dispatch => {
 const fetchFarmPending = createAction(FETCH_FARM.PENDING);
 const fetchFarmSuccess = createAction(FETCH_FARM.SUCCESS, "farm");
 const fetchFarmFailed = createAction(FETCH_FARM.FAILED, "error");
-export const fetchFarm = farmId => async dispatch => {
+export const fetchFarm = () => async dispatch => {
   dispatch(fetchFarmPending());
   try {
-    const res = await getFarm(farmId);
+    const res = await getFarm();
     return dispatch(fetchFarmSuccess(res.data));
   } catch (error) {
     return dispatch(fetchFarmFailed(error));

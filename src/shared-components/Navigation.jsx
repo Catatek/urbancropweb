@@ -6,9 +6,15 @@ import basketIcon from "../assets/basket.svg";
 import { Nav, Button, Text } from "../theme";
 import { fetchCart, fetchConsumerOrder } from "../store/actions/data";
 import { fetchProfile } from "../store/actions/auth";
-import { dataSelector } from "../store/selectors/data";
+import {
+  getUserFirstName,
+  getUserLastName,
+  getUserAvatar
+} from "../store/selectors/auth";
+import { getBasket, getCurrentOrder } from "../store/selectors/data";
 import { Link, withRouter } from "react-router-dom";
 import Avatar from "./Avatar";
+import { createStructuredSelector } from "reselect";
 
 const Wrapper = styled.div`
   background: #fff;
@@ -94,41 +100,41 @@ function BasketIcon({ basketCount }) {
   );
 }
 
-function OrderNav({ orderCount }) {
-  return (
-    <div
-      style={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        width: 44
-        // marginRight: "2.25em"
-      }}
-    >
-      <Nav to="/orders">Orders</Nav>
-      {orderCount > 0 && (
-        <div
-          style={{
-            position: "absolute",
-            right: -14,
-            top: -8,
-            backgroundColor: "#F75D19",
-            borderRadius: 100,
-            width: 20,
-            height: 20,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>
-            {orderCount}
-          </Text>
-        </div>
-      )}
-    </div>
-  );
-}
+// function OrderNav({ orderCount }) {
+//   return (
+//     <div
+//       style={{
+//         position: "relative",
+//         display: "flex",
+//         alignItems: "center",
+//         width: 44
+//         // marginRight: "2.25em"
+//       }}
+//     >
+//       <Nav to="/orders">Orders</Nav>
+//       {orderCount > 0 && (
+//         <div
+//           style={{
+//             position: "absolute",
+//             right: -14,
+//             top: -8,
+//             backgroundColor: "#F75D19",
+//             borderRadius: 100,
+//             width: 20,
+//             height: 20,
+//             display: "flex",
+//             justifyContent: "center",
+//             alignItems: "center"
+//           }}
+//         >
+//           <Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>
+//             {orderCount}
+//           </Text>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 class Navigation extends Component {
   componentDidMount() {
@@ -188,9 +194,16 @@ class Navigation extends Component {
   };
 
   render() {
-    const { basket, consumerOrder, history } = this.props;
+    const {
+      basket,
+
+      history,
+      firstName,
+      lastName,
+      avatar
+    } = this.props;
     const basketCount = basket.size;
-    const orderCount = consumerOrder.size;
+    // const orderCount = consumerOrder.size;
     const isAuthed = this.authUser().auth;
     const role = this.authUser().role;
 
@@ -206,6 +219,10 @@ class Navigation extends Component {
           {isAuthed && (
             <Avatar
               handleClick={() => history.push("/profile")}
+              firstName={firstName}
+              lastName={lastName}
+              avatar={avatar}
+
               // onClick={() => history.push("/profile")}
               // render={display => (
               //   <DropdownModal options={this.getOptions()} display={display} />
@@ -232,7 +249,13 @@ class Navigation extends Component {
 
 export default withRouter(
   connect(
-    dataSelector,
+    createStructuredSelector({
+      firstName: getUserFirstName,
+      lastName: getUserLastName,
+      avatar: getUserAvatar,
+      consumerOrder: getCurrentOrder,
+      basket: getBasket
+    }),
     { fetchCart, fetchProfile, fetchConsumerOrder }
   )(Navigation)
 );

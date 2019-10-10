@@ -86,23 +86,8 @@ class Basket extends Component {
   };
 
   render() {
-    const {
-      basket,
-      createOrder,
-      active,
-      navigation,
-      last4,
-      brand,
-      removeItemFromCart
-    } = this.props;
-    const {
-      total,
-      tax,
-      fee,
-      screenHeight,
-      expandedItemIndex,
-      isLoadingItems
-    } = this.state;
+    const { basket, createOrder, active, last4, brand } = this.props;
+    const { total, tax, fee, expandedItemIndex, isLoadingItems } = this.state;
     const basketCount = this.calcQuantity(basket.size);
 
     return (

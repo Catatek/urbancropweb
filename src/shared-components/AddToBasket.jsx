@@ -31,10 +31,6 @@ export class AddToBasket extends Component {
       handleAddItem,
       itemId,
       type,
-      isAuthed,
-      history,
-      marketId,
-      marketName,
       itemName
     } = this.props;
     return (

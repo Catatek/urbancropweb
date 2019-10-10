@@ -1,19 +1,15 @@
-import {
-  sendingRequest,
-  receivedResponse,
-  createAction
-} from "../../redux_util";
+import { createAction } from "../../redux_util";
 import {
   FETCH_ITEMS,
   FETCH_ITEM,
   FETCH_MARKETS,
   FETCH_FARM_ITEMS,
-  POST_FARM_ITEM,
+  // POST_FARM_ITEM,
   FETCH_CART,
   POST_ITEM_TO_CART,
   DELETE_ITEM_FROM_CART,
-  DELETE_ITEM_BY_ID,
-  UPDATE_FARM_ITEM,
+  // DELETE_ITEM_BY_ID,
+  // UPDATE_FARM_ITEM,
   DELETE_FAVORITE,
   POST_FAVORITE,
   FETCH_FAVORITE,
@@ -24,19 +20,20 @@ import {
   POST_ORDER,
   FETCH_FARM_ORDERS,
   FULLFILL_ORDER,
-  FETCH_PAST_FARM_ORDERS
+  FETCH_PAST_FARM_ORDERS,
+  FETCH_FARM_BY_ID
 } from "../types/data";
 import {
   getItems,
   getItem,
   getMarkets,
   getFarmItems,
-  postFarmItem,
+  // postFarmItem,
   getCart,
   postItemToCart,
   deleteItemFromCart,
-  deleteItemById,
-  putFarmItem,
+  // deleteItemById,
+  // putFarmItem,
   putItemInCart,
   getConsumerOrder,
   getPastConsumerOrders,
@@ -47,7 +44,8 @@ import {
   getAllFavorites,
   getFarmOrders,
   fullfillOrder,
-  getPastFarmOrders
+  getPastFarmOrders,
+  getFarmById
 } from "../../services/api";
 
 // // GET ITEMS
@@ -387,5 +385,18 @@ export const postFullfillOrder = (order, data) => async dispatch => {
     return dispatch(postFullfillOrderSuccess(res.data));
   } catch (error) {
     return dispatch(postFullfillOrderFailed(error));
+  }
+};
+
+const fetchFarmByIdPending = createAction(FETCH_FARM_BY_ID.PENDING);
+const fetchFarmByIdSuccess = createAction(FETCH_FARM_BY_ID.SUCCESS, "farm");
+const fetchFarmByIdFailed = createAction(FETCH_FARM_BY_ID.FAILED, "error");
+export const fetchFarmById = farmId => async dispatch => {
+  dispatch(fetchFarmByIdPending());
+  try {
+    const res = await getFarmById(farmId);
+    return dispatch(fetchFarmByIdSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchFarmByIdFailed(error));
   }
 };

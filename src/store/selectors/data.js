@@ -4,6 +4,7 @@ import { List, Map } from "immutable";
 export const getMarkets = state => state.getIn(["data", "markets"], List());
 export const getItems = state => state.getIn(["data", "items"], List());
 export const getItem = state => state.getIn(["data", "item"], Map());
+export const getFarm = state => state.getIn(["data", "farm"], Map());
 const messages = state => state.get("messages", Map());
 
 // export const getItemName = state =>
@@ -76,5 +77,6 @@ export const dataSelector = createStructuredSelector({
   messages,
   inventory: getInventory,
   farmOrders: getFarmOrders,
-  pastFarmOrders: getPastFarmOrders
+  pastFarmOrders: getPastFarmOrders,
+  farm: getFarm
 });
