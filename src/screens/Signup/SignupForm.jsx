@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { Formik } from "formik";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { userSignup } from "../../store/actions/auth";
+import { userSignup, verifyEmail } from "../../store/actions/auth";
 import { Title, Text, Button } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import InputMask from "react-input-mask";
 import * as yup from "yup";
+import { VERIFY_EMAIL } from "../../store/types/auth";
 
 const Wrapper = styled.div`
   width: 440px;
@@ -34,7 +35,7 @@ const Form = styled.form`
 
 class SignupForm extends Component {
   render() {
-    const { userSignup, history } = this.props;
+    const { userSignup, history, verifyEmail } = this.props;
     return (
       <Wrapper>
         <Formik
@@ -46,12 +47,26 @@ class SignupForm extends Component {
             password: "",
             role: "consumer"
           }}
-          onSubmit={values => {
-            userSignup(values).then(action => {
-              localStorage.setItem("authorization", action.authToken);
-              localStorage.setItem("role", "consumer");
-              history.push("/markets");
-            });
+          onSubmit={(values, { setErrors }) => {
+            verifyEmail(values.email)
+              .then(action => {
+                if (action.type === VERIFY_EMAIL.SUCCESS) {
+                  userSignup(values).then(action => {
+                    localStorage.setItem("authorization", action.authToken);
+                    localStorage.setItem("role", "consumer");
+                    history.push("/markets");
+                  });
+                } else {
+                  setErrors({
+                    email: "Account with this email already exists."
+                  });
+                }
+              })
+              .catch(() => {
+                setErrors({
+                  email: "Account with this email already exists."
+                });
+              });
           }}
           validationSchema={yup.object().shape({
             firstName: yup.string().required("First Name is required"),
@@ -134,6 +149,7 @@ class SignupForm extends Component {
                 type="password"
                 error={touched.password && errors.password}
               />
+              {errors && touched.email && <Text error>{errors.email}</Text>}
               <Button signin type="submit">
                 Create account
               </Button>
@@ -158,5 +174,5 @@ class SignupForm extends Component {
 }
 export default connect(
   null,
-  { userSignup }
+  { userSignup, verifyEmail }
 )(SignupForm);

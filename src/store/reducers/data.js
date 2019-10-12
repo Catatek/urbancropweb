@@ -1,4 +1,4 @@
-import { Map, fromJS } from "immutable";
+import { Map, fromJS, List } from "immutable";
 import {
   FETCH_MARKETS,
   FETCH_ITEMS,
@@ -13,7 +13,8 @@ import {
   FETCH_ALL_FAVORITES,
   FETCH_FARM_ORDERS,
   FETCH_PAST_FARM_ORDERS,
-  FETCH_FARM_BY_ID
+  FETCH_FARM_BY_ID,
+  POST_ORDER
 } from "../types/data";
 
 export default (state = Map(), { type, ...action }) => {
@@ -35,6 +36,9 @@ export default (state = Map(), { type, ...action }) => {
       return state;
     case FETCH_CART.SUCCESS:
       state = state.set("cart", fromJS(action.cart.cart));
+      return state;
+    case POST_ORDER.SUCCESS:
+      state = state.set("cart", List());
       return state;
     case POST_ITEM_TO_CART.SUCCESS:
       state = state.set("cart", fromJS(action.cart.cart));

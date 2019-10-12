@@ -8,7 +8,7 @@ import {
 import { Empty, OrdersCard } from "../../shared-components";
 import { Title, Text, Column } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
-import cat from "../../assets/cat1.png";
+import cat from "../../assets/cat2.png";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { withRouter } from "react-router-dom";
 

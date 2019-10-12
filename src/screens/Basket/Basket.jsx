@@ -15,6 +15,8 @@ import { getBasket } from "../../store/selectors/data";
 import { getActive, getLast4, getBrand } from "../../store/selectors/payment";
 import { Link } from "react-router-dom";
 import dog from "../../assets/dog1.png";
+import { POST_ORDER } from "../../store/types/data";
+import { showMessage } from "../../redux_util";
 
 const Div = styled.div`
   width: 45%;
@@ -34,7 +36,8 @@ class Basket extends Component {
     total: 0,
     screenHeight: 0,
     expandedItemIndex: -1,
-    isLoadingItems: true
+    isLoadingItems: true,
+    checkoutSuccess: false
   };
 
   componentDidMount() {
@@ -68,8 +71,8 @@ class Basket extends Component {
       let cost = key.getIn(["item", "cost"], 0);
       let itemsCost = quantity * cost;
       sub += itemsCost;
-      tax = sub * 0.07;
-      fee = sub * 0.35;
+      tax = 0;
+      fee = sub * 0.1;
       total = sub + tax + fee;
     });
     this.setState(() => {
@@ -85,15 +88,47 @@ class Basket extends Component {
     this.setState({ expandedItemIndex: index });
   };
 
+  handleCheckout = () => {
+    const { createOrder, showMessage } = this.props;
+    createOrder().then(action => {
+      if (action.type === POST_ORDER.SUCCESS) {
+        showMessage("cart", {
+          type: "MESSAGE",
+          message: ["Success", `You successfully checked out`]
+        });
+
+        this.setState({ checkoutSuccess: true });
+      } else {
+        console.log("error");
+      }
+    });
+  };
+
   render() {
-    const { basket, createOrder, active, last4, brand } = this.props;
-    const { total, tax, fee, expandedItemIndex, isLoadingItems } = this.state;
+    const { basket, active, last4, brand } = this.props;
+    const {
+      total,
+      tax,
+      fee,
+      expandedItemIndex,
+      isLoadingItems,
+      checkoutSuccess
+    } = this.state;
     const basketCount = this.calcQuantity(basket.size);
+    console.log(checkoutSuccess);
 
     return (
       <Layout title="Basket">
         {!isLoadingItems && basket.size === 0 && (
-          <Empty image={dog} title="Your basket is empty!" />
+          <Empty
+            image={dog}
+            button={checkoutSuccess}
+            title={
+              checkoutSuccess
+                ? "Congragulations on your purchase!"
+                : "Your basket is empty!"
+            }
+          />
         )}
         {!isLoadingItems && basket.size > 0 && (
           <Div>
@@ -122,14 +157,14 @@ class Basket extends Component {
                   />
                 );
               })}
-            <BasketItem
+            {/* <BasketItem
               itemName="State tax"
               quantity={0.7}
               cost={tax}
               type="salesTax"
               formatPrice={this.formatPrice}
               index={null}
-            />
+            /> */}
             <BasketItem
               itemName="Processing fee"
               cost={fee}
@@ -178,7 +213,7 @@ class Basket extends Component {
               </div>
             )}
             <Button
-              onClick={createOrder}
+              onClick={this.handleCheckout}
               checkout
               active={active}
               disabled={!active}
@@ -204,6 +239,7 @@ export default connect(
     fetchCart,
     createOrder,
     updateItemInCart,
-    removeItemFromCart
+    removeItemFromCart,
+    showMessage
   }
 )(Basket);

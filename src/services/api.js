@@ -278,3 +278,9 @@ export const fullfillOrder = (order, data) =>
     url: `/update/order/status/${order}`,
     data
   });
+
+export const getVerifyEmail = email =>
+  client.request({
+    method: "GET",
+    url: `/verify/email/${email}`
+  });

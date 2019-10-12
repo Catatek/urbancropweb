@@ -38,9 +38,10 @@ export default function Setting({
   farmId,
   form,
   title,
-  history
+  history,
+  role
 }) {
-  if (type === "payout" && !farmId) {
+  if (type === "payout" && role !== "farmer") {
     return null;
   } else;
   return (
@@ -53,6 +54,8 @@ export default function Setting({
           ? handleLogout
           : type === "payments"
           ? () => history.push("/profile/payments")
+          : type === "payout"
+          ? () => history.push("/profile/payouts")
           : type === "updates"
           ? () => history.push("/updates")
           : () => toggleModal(form, title)

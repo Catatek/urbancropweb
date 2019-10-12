@@ -87,8 +87,8 @@ export class OrdersCard extends Component {
       let cost = key.get("itemCost", 0);
       let itemsCost = quantity * cost;
       sub += itemsCost;
-      tax = sub * 0.07;
-      fee = sub * 0.35;
+      tax = 0;
+      fee = sub * 0.1;
       total = sub + tax + fee;
     });
 
@@ -139,14 +139,14 @@ export class OrdersCard extends Component {
             })}
           {type === "consumer" && (
             <React.Fragment>
-              <BasketItem
+              {/* <BasketItem
                 itemName="State tax"
                 quantity={0.7}
                 cost={tax}
                 type="salesTax"
                 formatPrice={this.formatPrice}
                 index={null}
-              />
+              /> */}
               <BasketItem
                 itemName="Processing fee"
                 cost={fee}

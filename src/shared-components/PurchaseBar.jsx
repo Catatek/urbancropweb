@@ -57,7 +57,14 @@ export class PurchaseBar extends Component {
   };
 
   render() {
-    const { cost, unit, formatPrice, itemId, handleAddItem } = this.props;
+    const {
+      cost,
+      unit,
+      formatPrice,
+      itemId,
+      handleAddItem,
+      quantity
+    } = this.props;
     const { count } = this.state;
     return (
       <Wrapper>
@@ -65,13 +72,16 @@ export class PurchaseBar extends Component {
           <Column>
             <Text smalltitle>{`$${formatPrice(cost)} / per ${unit}`}</Text>
           </Column>
-          <AddToBasket
-            decrement={this.decrement}
-            increment={this.increment}
-            count={count}
-            handleAddItem={handleAddItem}
-            itemId={itemId}
-          />
+          {quantity > 0 && (
+            <AddToBasket
+              decrement={this.decrement}
+              increment={this.increment}
+              count={count}
+              handleAddItem={handleAddItem}
+              itemId={itemId}
+            />
+          )}
+          {quantity === 0 && <Text>Out of stock</Text>}
         </StyledRow>
       </Wrapper>
     );

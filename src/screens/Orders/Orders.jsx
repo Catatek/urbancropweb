@@ -57,10 +57,17 @@ function Tabs({ handleClick, selected }) {
 
 class Orders extends Component {
   state = {
-    selected: "farmOrders"
+    selected: ""
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    const role = localStorage.getItem("role") || "consumer";
+    if (role === "farmer") {
+      this.setState({ selected: "farmOrders" });
+    } else {
+      this.setState({ selected: "myOrders" });
+    }
+  }
 
   handleClick = selected => {
     this.setState({ selected });
@@ -68,7 +75,6 @@ class Orders extends Component {
 
   authRole = () => {
     const role = localStorage.getItem("role") || "consumer";
-
     return role;
   };
 

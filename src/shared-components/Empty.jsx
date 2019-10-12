@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Text } from "../theme";
+import { Text, Button } from "../theme";
+import { Link } from "react-router-dom";
 
 const StyledImage = styled.img`
   width: 200px;
@@ -18,11 +19,18 @@ const Wrapper = styled.div`
   margin-top: 4em;
 `;
 
-export function Empty({ title, image }) {
+export function Empty({ title, image, button }) {
   return (
     <Wrapper>
       <StyledImage src={image} />
       <Text smalltitle>{title}</Text>
+      {button && (
+        <Link to="/orders">
+          <Button orderActions orange style={{ marginTop: ".75em" }}>
+            View orders
+          </Button>
+        </Link>
+      )}
     </Wrapper>
   );
 }

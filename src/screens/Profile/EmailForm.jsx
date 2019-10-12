@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 import { Formik } from "formik";
-import { Button } from "../../theme";
+import { Button, Text } from "../../theme";
+import { VERIFY_EMAIL } from "../../store/types/auth";
 
 const Form = styled.form`
   display: flex;
@@ -17,29 +18,45 @@ export default function EmailForm({
   email,
   mobile,
   updateProfile,
-  toggleModal
+  toggleModal,
+  verifyEmail
 }) {
   return (
     <div>
       <Formik
         initialValues={{ email }}
-        onSubmit={values => {
+        onSubmit={(values, { setErrors }) => {
           let data = {
             firstName,
             lastName,
             mobile,
             email: values.email
           };
-          updateProfile(data).then(action => {
-            toggleModal();
-          });
+          verifyEmail(values.email)
+            .then(action => {
+              if (action.type === VERIFY_EMAIL.SUCCESS) {
+                updateProfile(data).then(action => {
+                  toggleModal();
+                });
+              } else {
+                setErrors({
+                  email: "Account with this email already exists."
+                });
+              }
+            })
+            .catch(() => {
+              setErrors({
+                email: "Account with this email already exists."
+              });
+            });
         }}
         render={({
           handleChange,
           handleSubmit,
           handleBlur,
           values,
-          errors
+          errors,
+          touched
         }) => (
           <Form onSubmit={handleSubmit}>
             <TextField
@@ -49,7 +66,9 @@ export default function EmailForm({
               onBlur={handleBlur}
               margin="normal"
               name="email"
+              error={touched.email && errors.email}
             />
+            {errors && touched.email && <Text error>{errors.email}</Text>}
             <Button type="submit" active margin="1em 0 0 0" checkout>
               Save
             </Button>

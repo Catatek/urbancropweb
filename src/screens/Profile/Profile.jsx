@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchCardsAction } from "../../store/actions/payment";
-import { updateProfile, fetchFarm, updateFarm } from "../../store/actions/auth";
+import {
+  updateProfile,
+  fetchFarm,
+  updateFarm,
+  verifyEmail
+} from "../../store/actions/auth";
 import { Title, Label, Column, Text } from "../../theme";
 import { Layout, Modal } from "../../shared-components";
 import AddCardForm from "./AddCardForm";
@@ -160,7 +165,8 @@ class Profile extends Component {
       state,
       country,
       zipCode,
-      updateFarm
+      updateFarm,
+      verifyEmail
     } = this.props;
 
     const { isOpen, type, title } = this.state;
@@ -245,6 +251,8 @@ class Profile extends Component {
       {
         text: "Payout Methods",
         navigation: "Payout",
+        form: "addcard",
+        route: "/profile/payouts",
         type: "payout",
         icon: Payouts
       },
@@ -339,6 +347,7 @@ class Profile extends Component {
                   form={key.form}
                   title={key.title}
                   history={history}
+                  role={role}
                 />
               );
             })}
@@ -364,6 +373,7 @@ class Profile extends Component {
               email={email}
               mobile={mobile}
               toggleModal={this.toggleModal}
+              verifyEmail={verifyEmail}
             />
           )}
           {type === "mobileform" && (
@@ -417,5 +427,5 @@ class Profile extends Component {
 
 export default connect(
   authSelector,
-  { fetchCardsAction, updateProfile, fetchFarm, updateFarm }
+  { fetchCardsAction, updateProfile, fetchFarm, updateFarm, verifyEmail }
 )(Profile);

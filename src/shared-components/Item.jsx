@@ -244,7 +244,9 @@ class Item extends Component {
             {type === "inventory" && quantity > 0 && (
               <Text margin=".25em 0 0">{`${quantity} in stock`}</Text>
             )}
-            {quantity < 0 && <Text margin=".25em 0 0">Out of stock</Text>}
+            {quantity === 0 && !isAuthed && (
+              <Text margin=".5em 0 0">Out of stock</Text>
+            )}
           </StyledColumn>
         </Wrapper>
       </LazyLoad>

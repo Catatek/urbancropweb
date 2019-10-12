@@ -13,3 +13,4 @@ export const UPDATE_PROFILE = createActionType("UPDATE_PROFILE");
 // export const RESET_PASSWORD = createActionType('RESET_PASSWORD');
 export const UPDATE_FARM = createActionType("UPDATE_FARM");
 export const FETCH_FARM = createActionType("FETCH_FARM");
+export const VERIFY_EMAIL = createActionType("VERIFY_EMAIL");

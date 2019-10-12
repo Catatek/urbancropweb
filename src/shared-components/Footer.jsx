@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   align-items: ${props => (props.top ? "flex-start" : "center")};
   display: ${props => (props.top ? "block" : "flex")};
   background: ${props => (props.top ? "#8bc53c" : "#3AAA35")};
-  @media (max-width: 780px) {
+  @media (max-width: 920px) {
     height: 100%;
   }
   @media (max-width: 500px) {
@@ -31,6 +31,7 @@ const Div = styled.div`
     flex-direction: column;
     width: 100%;
     align-items: center;
+    padding: 2em 0;
   }
   @media (max-width: 500px) {
     justify-content: center;
@@ -52,7 +53,6 @@ const StyledRow = styled(Row)`
   }
   @media (max-width: 780px) {
     width: 75%;
-    margin-bottom: 2em;
   }
   @media (max-width: 500px) {
     width: 85%;
@@ -61,10 +61,8 @@ const StyledRow = styled(Row)`
 
 const StyledIconRow = styled(Row)`
   margin-top: 2em;
-  @media (max-width: 780px) {
+  @media (max-width: 920px) {
     margin-top: 1em;
-  }
-  @media (max-width: 500px) {
     justify-content: center;
   }
 `;
@@ -126,7 +124,7 @@ export class Footer extends Component {
                   <FaFacebook
                     color="#fff"
                     size="1.25em"
-                    style={{ marginRight: ".5em" }}
+                    style={{ marginRight: "1em" }}
                   />
                 </a>
                 <a href="https://www.instagram.com/urbancropus">
@@ -158,10 +156,10 @@ export class Footer extends Component {
                 <Row alignitems="center">
                   <DiApple
                     color="#fff"
-                    size="1.75em"
+                    size="1.5em"
                     style={{ marginRight: ".5em" }}
                   />
-                  <DiAndroid color="#fff" size="1.5em" />
+                  <DiAndroid color="#fff" size="1.25em" />
                 </Row>
               </StyledColumn>
             </StyledRow>

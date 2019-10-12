@@ -14,7 +14,8 @@ import {
   postFarmDetails,
   // getCode,
   // postAvatar,
-  getFarm
+  getFarm,
+  getVerifyEmail
 } from "../../services/api";
 import {
   USER_LOGIN,
@@ -29,7 +30,8 @@ import {
   // RESET_PASSWORD,
   // UPDATE_AVATAR,
   UPDATE_FARM,
-  FETCH_FARM
+  FETCH_FARM,
+  VERIFY_EMAIL
 } from "../types/auth";
 
 const userLoginRequest = createAction(USER_LOGIN.PENDING);
@@ -231,5 +233,18 @@ export const fetchFarm = () => async dispatch => {
     return dispatch(fetchFarmSuccess(res.data));
   } catch (error) {
     return dispatch(fetchFarmFailed(error));
+  }
+};
+
+const verifyEmailPending = createAction(VERIFY_EMAIL.PENDING);
+const verifyEmailSuccess = createAction(VERIFY_EMAIL.SUCCESS, "farm");
+const verifyEmailFailed = createAction(VERIFY_EMAIL.FAILED, "error");
+export const verifyEmail = email => async dispatch => {
+  dispatch(verifyEmailPending());
+  try {
+    const res = await getVerifyEmail(email);
+    return dispatch(verifyEmailSuccess(res.data));
+  } catch (error) {
+    return dispatch(verifyEmailFailed(error));
   }
 };
