@@ -29,7 +29,7 @@ export class OrderItem extends Component {
       formatPrice,
       type,
       itemId,
-      navigate
+      history
     } = this.props;
 
     return (
@@ -49,7 +49,7 @@ export class OrderItem extends Component {
                   basketitem
                   orange
                   onClick={() =>
-                    navigate.push(`/product/${itemId}`, { itemName, itemId })
+                    history.push(`/product/${itemId}`, { itemName, itemId })
                   }
                 >
                   {`${itemName}`}

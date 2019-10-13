@@ -58,7 +58,7 @@ const StyledColumn = styled.div`
 `;
 
 function Status({ title, date, status, handleStatus, type }) {
-  const formattedDate = date.split(",")[1].trim();
+  const formattedDate = date && date.split(",")[1].trim();
   return (
     <StatusWrapper>
       <StyledColumn>
@@ -144,8 +144,6 @@ class MyOrders extends Component {
   render() {
     const { consumerOrder, pastConsumerOrders } = this.props;
     const { isLoadingItems } = this.state;
-    const formattedOrder =
-      consumerOrder && consumerOrder.getIn([0, "orderId"], "").split("-")[1];
 
     return (
       <div>
@@ -155,41 +153,48 @@ class MyOrders extends Component {
             <Empty image={cat} title="You do not have any current orders!" />
           )}
         {!isLoadingItems && consumerOrder.size > 0 && (
-          <Div>
-            <Title>{`Order #${formattedOrder}`}</Title>
-            <Text smalltitle>Status</Text>
-            <Container>
-              <Status
-                title="Placed order"
-                type="placedOrder"
-                handleStatus={this.handleStatus}
-                date={consumerOrder.getIn([0, "placedDate"])}
-                status={consumerOrder.getIn([0, "status"], "pending")}
-              />
-              <Status
-                title="Order fulfilled"
-                type="orderFulfilled"
-                handleStatus={this.handleStatus}
-                date={consumerOrder.getIn([0, "placedDate"])}
-                status={consumerOrder.getIn([0, "status"], "pending")}
-              />
-              <Status
-                title="Pickup order"
-                type="readyForPickup"
-                handleStatus={this.handleStatus}
-                date={consumerOrder.getIn([0, "placedDate"])}
-                status={consumerOrder.getIn([0, "status"], "pending")}
-              />
-            </Container>
-            <OrdersCard
-              orderDetails={consumerOrder.getIn([0, "orderDetails"], "")}
-              status={consumerOrder.getIn([0, "status"], "")}
-              history={this.props.history}
-              orderId={consumerOrder.getIn([0, "orderId"], "")}
-              type="consumer"
-              currentOrder
-            />
-          </Div>
+          <React.Fragment>
+            {consumerOrder.map((key, index) => {
+              const formattedOrder = key.get("orderId", "").split("-")[1];
+              return (
+                <Div key={index}>
+                  <Title>{`Order #${formattedOrder}`}</Title>
+                  <Text smalltitle>Status</Text>
+                  <Container>
+                    <Status
+                      title="Placed order"
+                      type="placedOrder"
+                      handleStatus={this.handleStatus}
+                      date={key.get("placedDate", "")}
+                      status={key.get("status", "pending")}
+                    />
+                    <Status
+                      title="Order fulfilled"
+                      type="orderFulfilled"
+                      handleStatus={this.handleStatus}
+                      date={key.get("fulfilledDate", "")}
+                      status={key.get("status", "pending")}
+                    />
+                    <Status
+                      title="Pickup order"
+                      type="readyForPickup"
+                      handleStatus={this.handleStatus}
+                      date={key.get("pickupDate", "")}
+                      status={key.get("status", "pending")}
+                    />
+                  </Container>
+                  <OrdersCard
+                    orderDetails={key.get("orderDetails", "")}
+                    status={key.get("status", "")}
+                    history={this.props.history}
+                    orderId={key.get("orderId", "")}
+                    type="consumer"
+                    currentOrder
+                  />
+                </Div>
+              );
+            })}
+          </React.Fragment>
         )}
         {!isLoadingItems && pastConsumerOrders.size > 0 && (
           <Div>

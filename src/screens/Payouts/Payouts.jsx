@@ -4,10 +4,12 @@ import { connect } from "react-redux";
 import Navigation from "../../shared-components/Navigation";
 import { HeroImage, Account, Modal } from "../../shared-components";
 import { Title, Text } from "../../theme";
-import { paymentSelector } from "../../store/selectors/payment";
-import { fetchCardsAction } from "../../store/actions/payment";
+import {
+  fetchACHDetailsAction,
+  updateACHAction
+} from "../../store/actions/payout";
+import { payoutSelector } from "../../store/selectors/payout";
 import { Link } from "react-router-dom";
-import AddCardForm from "../Profile/AddCardForm";
 import { FaPlus } from "react-icons/fa";
 
 const Div = styled.div`
@@ -33,75 +35,76 @@ const AddCard = styled.div`
   cursor: pointer;
 `;
 
-class Payments extends Component {
-  state = {
-    isOpen: false
-  };
-
+class Payouts extends Component {
   componentDidMount() {
-    this.props.fetchCardsAction();
+    this.props.fetchACHDetailsAction();
+    this.handleEdit();
   }
 
   componentWillReceiveProps(props) {}
 
-  toggleModal = () => {
-    this.setState({ isOpen: !this.state.isOpen });
-  };
+  handleEdit = async () => {
+    const { updateACHAction } = this.props;
+    const url = await updateACHAction();
+    console.log(url, "URL");
 
-  formatPrice = x => {
-    return (x / 100).toFixed(2);
+    return url;
   };
 
   render() {
-    const { active, last4, brand, expiry } = this.props;
-    const { isOpen } = this.state;
+    const { achDetails } = this.props;
+    const STRIPE_TEST_CLIENT_ID = "ca_F6XDlkXgCaPpzXf5vLVcnDmP4fwV2FzI";
+    const STRIPE_OAUTH_URI = `https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://market.urbancrop.io/profile/payouts&response_type=code&client_id=${STRIPE_TEST_CLIENT_ID}&state={STATE_VALUE}&scope=read_write`;
 
     return (
       <div>
         <Navigation />
-        <HeroImage title="Payment Methods" />
+        <HeroImage title="Payout Methods" />
         <Div>
           <Link to="/profile">
             <Text orange margin=".5em 0 .25em 0">{`Back to profile`}</Text>
           </Link>
-          <Title margin=".15em 0 0 0">Payment Methods</Title>
+          <Title margin=".15em 0 0 0">Payout Methods</Title>
+          {!achDetails && (
+            <div style={{ width: "50%" }}>
+              <Text>
+                We take your privacy incredibly serious, which is why we’ve
+                partnered with Stripe to connect to your bank or debit card.
+                After you connect, you can pay yourself!
+              </Text>
+            </div>
+          )}
         </Div>
         <Div>
-          {active && (
+          {achDetails && (
             <Account
-              type="card"
-              last4={last4}
-              brand={brand}
-              expiry={expiry}
-              toggleModal={this.toggleModal}
+              type="bank_account"
+              bankName={achDetails.get("bankName", "")}
+              last4={achDetails.get("last4Digits", "")}
+              handleEdit={this.handleEdit}
             />
           )}
-          {!active && (
-            <AddCard onClick={this.toggleModal}>
-              <FaPlus
-                style={{ marginRight: ".75em" }}
-                size={14}
-                color="#f75d19"
-              />
-              <Text style={{ fontWeight: 600 }} orange>
-                Add Card
-              </Text>
-            </AddCard>
+          {!achDetails && (
+            <a href={STRIPE_OAUTH_URI}>
+              <AddCard>
+                <FaPlus
+                  style={{ marginRight: ".75em" }}
+                  size={14}
+                  color="#f75d19"
+                />
+                <Text style={{ fontWeight: 600 }} orange>
+                  Add Account
+                </Text>
+              </AddCard>
+            </a>
           )}
         </Div>
-        <Modal
-          title={active ? "Edit Card" : "Add Card"}
-          show={isOpen}
-          toggleModal={this.toggleModal}
-        >
-          <AddCardForm toggleModal={this.toggleModal} active={active} />
-        </Modal>
       </div>
     );
   }
 }
 
 export default connect(
-  paymentSelector,
-  { fetchCardsAction }
-)(Payments);
+  payoutSelector,
+  { fetchACHDetailsAction, updateACHAction }
+)(Payouts);

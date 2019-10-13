@@ -7,6 +7,7 @@ import Listing from "./screens/Listing/Listing";
 import Orders from "./screens/Orders/Orders";
 import Profile from "./screens/Profile/Profile";
 import Payments from "./screens/Payments/Payments";
+import Payouts from "./screens/Payouts/Payouts";
 import Basket from "./screens/Basket/Basket";
 import Signup from "./screens/Signup/Signup";
 import Favorites from "./screens/Favorites/Favorites";
@@ -74,6 +75,7 @@ class Router extends Component {
             <PrivateRoute path="/basket" component={Basket} />
             <PrivateRoute path="/favorites" component={Favorites} />
             <PrivateRoute exact path="/profile/payments" component={Payments} />
+            <PrivateRoute exact path="/profile/payouts" component={Payouts} />
             <PrivateRoute path="/updates" component={Updates} />
             <PrivateRoute path="/inventory" component={Inventory} />
             <PrivateRoute path="/help/:id" component={Help} />

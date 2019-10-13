@@ -39,7 +39,8 @@ export default function Setting({
   form,
   title,
   history,
-  role
+  role,
+  email
 }) {
   if (type === "payout" && role !== "farmer") {
     return null;
@@ -55,7 +56,7 @@ export default function Setting({
           : type === "payments"
           ? () => history.push("/profile/payments")
           : type === "payout"
-          ? () => history.push("/profile/payouts")
+          ? () => history.push("/profile/payouts", { email })
           : type === "updates"
           ? () => history.push("/updates")
           : () => toggleModal(form, title)

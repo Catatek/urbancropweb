@@ -348,6 +348,7 @@ class Profile extends Component {
                   title={key.title}
                   history={history}
                   role={role}
+                  email={email}
                 />
               );
             })}

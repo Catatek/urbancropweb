@@ -225,22 +225,41 @@ export const getAllFavorites = () =>
     method: "GET",
     url: "/get/favorite/items"
   });
-// // ACH
 
-// export const getACHDetails = () =>
-//   client.request({
-//     method: 'GET',
-//     url: '/get/ach/details',
-//   });
+// ACH
 
-// export const postACH = ({ code }) =>
-//   client.request({
-//     method: 'POST',
-//     url: `/add/ach/${code}`,
-//     data: {
-//       code,
-//     },
-//   });
+export const getACHDetails = () =>
+  client.request({
+    method: "GET",
+    url: "/get/ach/details"
+  });
+
+export const postACH = ({ code }) =>
+  client.request({
+    method: "POST",
+    url: `/add/ach/${code}`,
+    data: {
+      code
+    }
+  });
+
+export const getACHBalance = () =>
+  client.request({
+    method: "GET",
+    url: "/get/ach/balance"
+  });
+
+export const putACH = () =>
+  client.request({
+    method: "PUT",
+    url: "/update/ach"
+  });
+
+export const getACHTransactions = () =>
+  client.request({
+    method: "GET",
+    url: "/get/ach/transactions"
+  });
 
 export const getConsumerOrder = () =>
   client.request({

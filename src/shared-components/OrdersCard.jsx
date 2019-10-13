@@ -64,7 +64,8 @@ function Status({ orderId, status, date }) {
 
 export class OrdersCard extends Component {
   state = {
-    total: 0
+    total: 0,
+    sub: 0
   };
 
   componentDidMount() {
@@ -96,7 +97,8 @@ export class OrdersCard extends Component {
       return {
         total,
         tax,
-        fee
+        fee,
+        sub
       };
     });
   };
@@ -112,7 +114,7 @@ export class OrdersCard extends Component {
       handleSubmit
     } = this.props;
 
-    const { total, tax, fee } = this.state;
+    const { total, tax, fee, sub } = this.state;
     return (
       <Wrapper boxshadow={!currentOrder}>
         {!currentOrder && (
@@ -134,6 +136,7 @@ export class OrdersCard extends Component {
                   type="orders"
                   itemId={key.get("itemId", "")}
                   expandedItemIndex={-1}
+                  history={history}
                 />
               );
             })}
@@ -158,7 +161,7 @@ export class OrdersCard extends Component {
           )}
           <OrderItem
             item="Total"
-            cost={total}
+            cost={type === "farmer" ? sub : total}
             type="total"
             formatPrice={this.formatPrice}
           />

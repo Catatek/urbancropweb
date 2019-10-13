@@ -31,7 +31,8 @@ export function Account({
   brand,
   onEdit,
   navigation,
-  toggleModal
+  toggleModal,
+  handleEdit
 }) {
   return (
     <AccountCard
@@ -43,14 +44,23 @@ export function Account({
       onEdit={onEdit}
       navigation={navigation}
       toggleModal={toggleModal}
+      handleEdit={handleEdit}
     />
   );
 }
 
-function AccountCard({ type, last4, brand, bankName, toggleModal, expiry }) {
+function AccountCard({
+  type,
+  last4,
+  brand,
+  bankName,
+  toggleModal,
+  expiry,
+  handleEdit
+}) {
   return (
     <Wrapper
-      onClick={toggleModal}
+      onClick={type === "bank_account" ? handleEdit : toggleModal}
       style={{
         shadowColor: "#989898",
         shadowOffset: { width: 0, height: 2 },
@@ -80,7 +90,7 @@ function AccountCard({ type, last4, brand, bankName, toggleModal, expiry }) {
               <FaCcDiscover size={48} color={"#ccc"} name="cc-discover" />
             )}
             {type === "bank_account" && (
-              <FaBuilding size={48} color={"#ccc"} name="university" />
+              <FaBuilding size={42} color={"#ccc"} name="university" />
             )}
           </Container>
           <Column alignitems="flex-start" justifycontent="center">
@@ -88,12 +98,15 @@ function AccountCard({ type, last4, brand, bankName, toggleModal, expiry }) {
             <Text margin="0" style={{ fontWeight: 600 }}>
               {type === "card" ? `**** **** **** ${last4}` : bankName}
             </Text>
-            <Text margin="0">{type === "card" && ` ${expiry}`}</Text>
+            <Text margin="0">{type === "card" ? ` ${expiry}` : last4}</Text>
           </Column>
         </Row>
-        <Button marginright="0" onClick={toggleModal}>
-          Edit
-        </Button>
+        {type === "card" && (
+          <Button marginright="0" onClick={toggleModal}>
+            Edit
+          </Button>
+        )}
+        {type === "bank_account" && <Button marginright="0">Edit</Button>}
       </Row>
     </Wrapper>
   );
