@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Title, Text, Button, Label, Row } from "../../theme";
+import { Title, Text, Button, Label, Row, Column } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Formik, FieldArray } from "formik";
+import { Formik, FieldArray, Field } from "formik";
 import * as yup from "yup";
 import styled, { css } from "styled-components";
 import { IoIosAdd } from "react-icons/io";
@@ -112,6 +112,34 @@ const StyledCategoryImage = styled.img`
   height: ${props => props.imageheight};
   margin-bottom: 6px;
 `;
+
+function Checkbox({ name, value }) {
+  return (
+    <Field name={name}>
+      {({ field, form }) => (
+        <label className="container-checkbox">
+          <input
+            {...field}
+            type="checkbox"
+            checked={field.value.includes(value)}
+            onChange={() => {
+              const set = new Set(field.value);
+              if (set.has(value)) {
+                set.delete(value);
+              } else {
+                set.add(value);
+              }
+              field.onChange(field.name)(Array.from(set));
+              form.setFieldTouched(field.name, true);
+            }}
+          />
+          {value}
+          <span className="checkmark" />
+        </label>
+      )}
+    </Field>
+  );
+}
 
 function Category({
   setFieldValue,
@@ -398,9 +426,19 @@ class AddItemForm extends Component {
                 })}
               </Row>
 
-              <Label extrasmall style={{ marginTop: "2em" }}>
+              <Label
+                extrasmall
+                style={{ marginTop: "2em", marginBottom: "1.5em" }}
+              >
                 Attributes
               </Label>
+              <Column>
+                <Checkbox name="attributes" value="Non GMO" />
+                <Checkbox name="attributes" value="Organic" />
+                <Checkbox name="attributes" value="Local" />
+                <Checkbox name="attributes" value="No Pesticides" />
+                <Checkbox name="attributes" value="Vegetarian" />
+              </Column>
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Description
               </Label>
