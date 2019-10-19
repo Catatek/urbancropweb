@@ -12,6 +12,15 @@ import { Map, List } from "immutable";
 import { categoriesFilterData } from "../../fixtures/categorieData";
 import NumberFormat from "react-number-format";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import { getItem } from "../../store/selectors/data";
+import { createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
+import {
+  fetchItem,
+  updateFarmItem,
+  removeItemById
+} from "../../store/actions/data";
+import { UPDATE_FARM_ITEM } from "../../store/types/data";
 
 const Div = styled.div`
   width: 45%;
@@ -26,7 +35,7 @@ const Div = styled.div`
 `;
 
 const Form = styled.form`
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -79,6 +88,9 @@ const AddImageLabel = styled.label`
 
 const StyledTextInput = styled(TextField)`
   max-width: 275px;
+  @media (max-width: 920px) {
+    max-width: 350px;
+  }
   ${props =>
     props.small &&
     css`
@@ -112,6 +124,12 @@ const StyledCategoryImage = styled.img`
   width: ${props => props.imagewidth};
   height: ${props => props.imageheight};
   margin-bottom: 6px;
+`;
+
+const StyledPriceRow = styled(Row)`
+  width: 100%;
+  max-width: 450px;
+  justify-content: space-between;
 `;
 
 function Checkbox({ name, value }) {
@@ -201,10 +219,19 @@ function NumberFormatCustom(props) {
   );
 }
 
-class AddItemForm extends Component {
+class EditItemForm extends Component {
   state = {
     files: Map()
   };
+
+  async componentDidMount() {
+    const { fetchItem, itemId } = this.props;
+
+    fetchItem(itemId).then(() => {
+      this.setState({ isFetchingItem: false });
+    });
+  }
+
   handleFileFormat = filename => {
     return "." + filename.split(".")[1];
   };
@@ -272,8 +299,29 @@ class AddItemForm extends Component {
     reader.readAsArrayBuffer(values.uploadData);
   };
 
+  formatPrice = x => {
+    return (x / 100).toFixed(2);
+  };
+
   render() {
+    const {
+      item,
+      updateFarmItem,
+      removeItemById,
+      history,
+      showMessage
+    } = this.props;
     let form;
+    const editValues = {
+      itemName: item.getIn(["item", "itemName"], ""),
+      cost: this.formatPrice(item.getIn(["item", "cost"], "").toString()),
+      quantity: item.getIn(["item", "quantity"], ""),
+      unit: item.getIn(["item", "unit"], ""),
+      category: item.getIn(["item", "category"], ""),
+      attributes: item.getIn(["item", "attributes"], List()),
+      images: item.getIn(["item", "images"], List()),
+      description: item.getIn(["item", "description"], "")
+    };
 
     const units = [
       { label: "pounds (lb)", value: "lb" },
@@ -288,27 +336,48 @@ class AddItemForm extends Component {
     return (
       <Div>
         <Formik
+          enableReinitialize
           ref={node => (form = node)}
-          initialValues={{
-            itemName: "",
-            cost: "",
-            quantity: "",
-            unit: "",
-            category: "",
-            attributes: [],
-            images: [],
-            description: ""
-          }}
+          initialValues={editValues}
           validationSchema={yup.object().shape({
             itemName: yup.string().required("You must name your product!"),
             cost: yup.string().required("You must price your product!"),
             quantity: yup.number().moreThan(0, "You must specify an amount!"),
             unit: yup.string().required("You must specify a unit!"),
             category: yup.string().required("You must specify a category!")
-            // images: yup.array().min(1, "You must add atleast 1 image!")
           })}
           onSubmit={(values, { setErrors }) => {
-            console.log(values);
+            const itemId = item.getIn(["item", "itemId"], "");
+            const itemName = item.getIn(["item", "itemName"], "");
+            let formattedNumber = values.cost.replace(".", "");
+            let data = {
+              itemName: values.itemName,
+              cost: parseInt(formattedNumber),
+              quantity: values.quantity,
+              unit: values.unit,
+              category: values.category,
+              attributes: values.attributes,
+              images: values.images,
+              description: values.description
+            };
+            if (values.images.length !== 0) {
+              updateFarmItem(data, itemId).then(action => {
+                if (action.type === UPDATE_FARM_ITEM.SUCCESS) {
+                  showMessage("items", {
+                    type: "MESSAGE",
+                    message: [
+                      "Success",
+                      `You successfully updated ${itemName}!`
+                    ]
+                  });
+                  history.push("/inventory");
+                } else {
+                  console.log("Error");
+                }
+              });
+            } else {
+              this.setState({ formSubmitted: true });
+            }
           }}
           render={({
             handleChange,
@@ -337,14 +406,21 @@ class AddItemForm extends Component {
                 <FieldArray
                   name="images"
                   render={arrayHelpers => (
-                    <Row style={{ flexWrap: "wrap", height: "auto" }}>
+                    <Row
+                      style={{
+                        flexWrap: "wrap",
+                        height: "auto",
+                        alignItems: "center"
+                      }}
+                    >
                       {values.images &&
-                        values.images.length > 0 &&
-                        values.images.map((image, index) => (
-                          <StyledView>
-                            <StyledImage src={image} />
-                          </StyledView>
-                        ))}
+                        values.images.map((image, index) => {
+                          return (
+                            <StyledView key={index}>
+                              <StyledImage src={image} />
+                            </StyledView>
+                          );
+                        })}
                       {/* {loading && (
                         <StyledView>
                           <ActivityIndicator size="small" color="#f75d19" />
@@ -375,13 +451,12 @@ class AddItemForm extends Component {
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Pricing
               </Label>
-              <Row width="100%" justifycontent="space-between">
+              <StyledPriceRow>
                 <StyledTextInput
                   small
                   label="Cost"
                   margin="normal"
                   value={values.cost}
-                  type="number"
                   onChange={handleChange("cost")}
                   name="cost"
                   error={touched.cost && errors.cost}
@@ -425,7 +500,7 @@ class AddItemForm extends Component {
                     )
                   }}
                 />
-              </Row>
+              </StyledPriceRow>
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Category
               </Label>
@@ -483,24 +558,26 @@ class AddItemForm extends Component {
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Description
               </Label>
+
               <TextField
                 id="standard-multiline-static"
                 label="Multiline"
                 multiline
-                rows="4"
+                rows="6"
                 label="Product description"
                 margin="normal"
-                values={values.description}
+                value={values.description}
                 helperText="Add a catchy product description!"
                 onChange={handleChange("description")}
               />
+
               <Button
                 checkout
                 active
                 type="submit"
                 style={{ marginTop: "2em" }}
               >
-                Add product
+                Save product
               </Button>
               {/* <div
                 style={{
@@ -521,4 +598,9 @@ class AddItemForm extends Component {
   }
 }
 
-export default AddItemForm;
+export default connect(
+  createStructuredSelector({
+    item: state => getItem(state)
+  }),
+  { fetchItem, updateFarmItem, removeItemById, showMessage }
+)(EditItemForm);

@@ -440,7 +440,7 @@ class Listing extends Component {
         {userFarmId && userFarmId === farmId && (
           <FarmerBar
             history={this.props.history}
-            item={item}
+            itemName={this.props.location.state.itemName}
             itemId={item.getIn(["item", "itemId"], "")}
           />
         )}

@@ -32,7 +32,7 @@ export function FarmerBar({
   type,
   handleSubmitItem,
   products,
-  item,
+  itemName,
   farmId,
   itemId
 }) {
@@ -45,7 +45,7 @@ export function FarmerBar({
           onClick={() =>
             type === "preview"
               ? handleSubmitItem(products, farmId)
-              : history.push(`/inventory/edit/${itemId}`, { item })
+              : history.push(`/inventory/edit/${itemId}`, { itemName })
           }
         >
           {type === "preview" ? "Save Product(s)" : "Edit Details"}

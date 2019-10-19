@@ -16,6 +16,7 @@ import Inventory from "./screens/Inventory/Inventory";
 import Help from "./screens/Help/Help";
 import Farm from "./screens/Farm/Farm";
 import AddItem from "./screens/Inventory/AddItem";
+import EditItem from "./screens/Inventory/EditItem";
 
 function isAuthenticated() {
   return localStorage.getItem("authorization");
@@ -83,7 +84,7 @@ class Router extends Component {
             <PrivateRoute
               exact
               path="/inventory/edit/:id"
-              component={AddItem}
+              component={EditItem}
             />
             <PrivateRoute path="/help/:id" component={Help} />
             <PrivateRoute path="/farm/:id" component={Farm} />
