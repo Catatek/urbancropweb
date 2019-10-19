@@ -28,11 +28,13 @@ const StyledRow = styled(Row)`
 `;
 
 export function FarmerBar({
-  navigate,
+  history,
   type,
   handleSubmitItem,
   products,
-  farmId
+  item,
+  farmId,
+  itemId
 }) {
   return (
     <Wrapper>
@@ -43,7 +45,7 @@ export function FarmerBar({
           onClick={() =>
             type === "preview"
               ? handleSubmitItem(products, farmId)
-              : navigate("EditItemForm")
+              : history.push(`/inventory/edit/${itemId}`, { item })
           }
         >
           {type === "preview" ? "Save Product(s)" : "Edit Details"}

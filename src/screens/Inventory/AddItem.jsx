@@ -6,7 +6,7 @@ class AddItem extends Component {
   render() {
     return (
       <Layout title="Add an item">
-        <AddItemForm />
+        <AddItemForm {...this.props} />
       </Layout>
     );
   }

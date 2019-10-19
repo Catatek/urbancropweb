@@ -273,6 +273,13 @@ class AddItemForm extends Component {
   };
 
   render() {
+    // console.log(this.props.location, "PROPS");
+    // const { item } = this.props.location.state;
+    // const editValues = {
+    //   itemName: item.getIn(["item", "itemName"])
+    // };
+    // console.log(editValues);
+
     let form;
     const units = [
       { label: "pounds (lb)", value: "lb" },
@@ -290,7 +297,7 @@ class AddItemForm extends Component {
           ref={node => (form = node)}
           initialValues={{
             itemName: "",
-            cost: 0,
+            cost: "",
             quantity: "",
             unit: "",
             category: "",
@@ -298,13 +305,14 @@ class AddItemForm extends Component {
             images: [],
             description: ""
           }}
-          //   validationSchema={yup.object().shape({
-          //     email: yup
-          //       .string()
-          //       .email()
-          //       .required("Email is required"),
-          //     password: yup.string().required("Password is required")
-          //   })}
+          validationSchema={yup.object().shape({
+            itemName: yup.string().required("You must name your product!"),
+            cost: yup.string().required("You must price your product!"),
+            quantity: yup.number().moreThan(0, "You must specify an amount!"),
+            unit: yup.string().required("You must specify a unit!"),
+            category: yup.string().required("You must specify a category!")
+            // images: yup.array().min(1, "You must add atleast 1 image!")
+          })}
           onSubmit={(values, { setErrors }) => {
             console.log(values);
           }}
@@ -315,7 +323,8 @@ class AddItemForm extends Component {
             values,
             errors,
             touched,
-            setFieldValue
+            setFieldValue,
+            isValid
           }) => (
             <Form onSubmit={handleSubmit}>
               <StyledTextInput
@@ -366,6 +375,9 @@ class AddItemForm extends Component {
                   )}
                 />
               </ImageRow>
+              {touched.images && errors.images && (
+                <Text error>{errors.images}</Text>
+              )}
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Pricing
               </Label>
@@ -374,6 +386,9 @@ class AddItemForm extends Component {
                   small
                   label="Cost"
                   margin="normal"
+                  value={values.cost}
+                  type="number"
+                  onChange={handleChange("cost")}
                   name="cost"
                   error={touched.cost && errors.cost}
                   InputProps={{
@@ -389,6 +404,7 @@ class AddItemForm extends Component {
                   value={values.unit}
                   onChange={handleChange("unit")}
                   margin="normal"
+                  error={touched.unit && errors.unit}
                 >
                   {units.map(option => (
                     <MenuItem key={option.value} value={option.value}>
@@ -454,7 +470,9 @@ class AddItemForm extends Component {
                   );
                 })}
               </Row>
-
+              {touched.category && errors.category && (
+                <Text error>{errors.category}</Text>
+              )}
               <Label
                 extrasmall
                 style={{ marginTop: "2em", marginBottom: "1.5em" }}
@@ -480,6 +498,7 @@ class AddItemForm extends Component {
                 margin="normal"
                 values={values.description}
                 helperText="Add a catchy product description!"
+                onChange={handleChange("description")}
               />
               <Button
                 checkout

@@ -80,6 +80,11 @@ class Router extends Component {
             <PrivateRoute path="/updates" component={Updates} />
             <PrivateRoute exact path="/inventory" component={Inventory} />
             <PrivateRoute exact path="/inventory/add" component={AddItem} />
+            <PrivateRoute
+              exact
+              path="/inventory/edit/:id"
+              component={AddItem}
+            />
             <PrivateRoute path="/help/:id" component={Help} />
             <PrivateRoute path="/farm/:id" component={Farm} />
 
