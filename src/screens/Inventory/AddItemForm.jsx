@@ -9,8 +9,9 @@ import { IoIosAdd } from "react-icons/io";
 import { AWSConfig, s3 } from "../../awsConfig";
 import { showMessage } from "../../redux_util";
 import { Map } from "immutable";
-import InputMask from "react-input-mask";
 import { categoriesFilterData } from "../../fixtures/categorieData";
+import NumberFormat from "react-number-format";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const Div = styled.div`
   width: 45%;
@@ -178,6 +179,28 @@ function Category({
   );
 }
 
+function NumberFormatCustom(props) {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value
+          }
+        });
+      }}
+      decimalScale={2}
+      fixedDecimalScale={true}
+      thousandSeparator
+      prefix="$"
+    />
+  );
+}
+
 class AddItemForm extends Component {
   state = {
     files: Map()
@@ -218,12 +241,13 @@ class AddItemForm extends Component {
       console.log("done");
       const params = {
         Bucket: AWSConfig.bucket,
-        Key: "items/" + currentFile.filename,
+        Key: "items" + "/" + currentFile.filename + ".jpg",
         Body: currentFile.picture,
         ACL: "public-read",
         ContentType: filetype
       };
-      s3.upload(params)
+      return s3
+        .upload(params)
         .on("httpUploadProgress", event => {
           let current =
             parseInt((event.loaded * 50) / event.total, 10) / 100 + 0.5;
@@ -236,11 +260,13 @@ class AddItemForm extends Component {
         .send((err, data) => {
           currentFile.progress = 1;
           currentFile.message = "Uploaded!";
-          if (data.Location) {
-            push(data.Location);
-            this.setState({ loading: false });
-            console.log("Avatar Updated");
-          }
+          console.log(data);
+
+          // if (data.Location) {
+          //   push(data.Location);
+          //   this.setState({ loading: false });
+          //   console.log("Avatar Updated");
+          // }
         });
     };
     reader.readAsArrayBuffer(values.uploadData);
@@ -344,40 +370,24 @@ class AddItemForm extends Component {
                 Pricing
               </Label>
               <Row width="100%" justifycontent="space-between">
-                <InputMask
-                  mask="$9.99"
-                  value={values.mobile}
-                  onChange={handleChange}
-                  error={touched.mobile && errors.mobile}
-                >
-                  {() => (
-                    <StyledTextInput
-                      small
-                      label="Cost"
-                      margin="normal"
-                      name="cost"
-                      error={touched.cost && errors.cost}
-                    />
-                  )}
-                </InputMask>
-
                 <StyledTextInput
                   small
-                  label="Quantity"
-                  value={values.quantity}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  label="Cost"
                   margin="normal"
-                  name="quantity"
-                  error={touched.quantity && errors.quantity}
+                  name="cost"
+                  error={touched.cost && errors.cost}
+                  InputProps={{
+                    inputComponent: NumberFormatCustom
+                  }}
                 />
+
                 <StyledTextInput
                   id="standard-select-currency"
                   select
+                  small
                   label="Unit"
                   value={values.unit}
                   onChange={handleChange("unit")}
-                  helperText="Please select a unit"
                   margin="normal"
                 >
                   {units.map(option => (
@@ -386,6 +396,25 @@ class AddItemForm extends Component {
                     </MenuItem>
                   ))}
                 </StyledTextInput>
+
+                <StyledTextInput
+                  small
+                  label="Quantity"
+                  value={values.quantity}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  margin="normal"
+                  type="number"
+                  name="quantity"
+                  error={touched.quantity && errors.quantity}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {`${values.unit}`}
+                      </InputAdornment>
+                    )
+                  }}
+                />
               </Row>
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Category
@@ -450,10 +479,16 @@ class AddItemForm extends Component {
                 label="Product description"
                 margin="normal"
                 values={values.description}
+                helperText="Add a catchy product description!"
               />
-              {/* <Button checkout type="submit">
-                Sign in
-              </Button> */}
+              <Button
+                checkout
+                active
+                type="submit"
+                style={{ marginTop: "2em" }}
+              >
+                Add product
+              </Button>
               {/* <div
                 style={{
                   display: "flex",

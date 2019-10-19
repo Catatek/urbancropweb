@@ -16,6 +16,7 @@
     "react-icons": "^3.7.0",
     "react-input-mask": "^2.0.4",
     "react-lazyload": "^2.6.2",
+    "react-number-format": "^4.3.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
     "react-router-redux": "^4.0.8",
