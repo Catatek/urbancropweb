@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { Formik, FieldArray, Field } from "formik";
 import * as yup from "yup";
 import styled, { css } from "styled-components";
-import { IoIosAdd } from "react-icons/io";
+import { IoIosAdd, IoIosClose } from "react-icons/io";
 import { AWSConfig, s3 } from "../../awsConfig";
 import { showMessage } from "../../redux_util";
 import { Map, List } from "immutable";
@@ -42,11 +42,26 @@ const Form = styled.form`
 `;
 
 const StyledView = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   margin: 12px 12px 12px 0px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  position: relative;
+`;
+
+const DeleteIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  background: #999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  position: absolute;
+  right: -4px;
+  top: -4px;
 `;
 
 const ImageRow = styled(Row)`
@@ -57,9 +72,10 @@ const ImageRow = styled(Row)`
 `;
 
 const StyledImage = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 4px;
+  object-fit: cover;
 `;
 
 const AddImageInput = styled.input`
@@ -72,8 +88,8 @@ const AddImageInput = styled.input`
 `;
 
 const AddImageLabel = styled.label`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   background: transparent;
   border-radius: 4px;
@@ -319,6 +335,10 @@ class EditItemForm extends Component {
     });
   };
 
+  deleteImage = (index, remove) => {
+    remove(index);
+  };
+
   render() {
     const { item, updateFarmItem, history, showMessage } = this.props;
     let form;
@@ -329,7 +349,7 @@ class EditItemForm extends Component {
       unit: item.getIn(["item", "unit"], ""),
       category: item.getIn(["item", "category"], ""),
       attributes: item.getIn(["item", "attributes"], List()),
-      images: item.getIn(["item", "images"], List()),
+      images: item.getIn(["item", "images"], List()).toArray(),
       description: item.getIn(["item", "description"], "")
     };
 
@@ -354,7 +374,8 @@ class EditItemForm extends Component {
             cost: yup.string().required("You must price your product!"),
             quantity: yup.number().moreThan(0, "You must specify an amount!"),
             unit: yup.string().required("You must specify a unit!"),
-            category: yup.string().required("You must specify a category!")
+            category: yup.string().required("You must specify a category!"),
+            images: yup.array().min(1, "You must add atleast 1 image!")
           })}
           onSubmit={(values, { setErrors }) => {
             const itemId = item.getIn(["item", "itemId"], "");
@@ -426,7 +447,15 @@ class EditItemForm extends Component {
                       {values.images &&
                         values.images.map((image, index) => {
                           return (
-                            <StyledView key={index}>
+                            <StyledView
+                              key={index}
+                              onClick={() =>
+                                this.deleteImage(index, arrayHelpers.remove)
+                              }
+                            >
+                              <DeleteIcon>
+                                <IoIosClose color="#fff" size="22" />
+                              </DeleteIcon>
                               <StyledImage src={image} />
                             </StyledView>
                           );
@@ -582,7 +611,8 @@ class EditItemForm extends Component {
               <Row style={{ marginTop: "2em" }}>
                 <Button
                   checkout
-                  active
+                  active={isValid}
+                  disabled={!isValid}
                   type="submit"
                   style={{ marginRight: "1em" }}
                 >

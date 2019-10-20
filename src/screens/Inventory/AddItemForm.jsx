@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { Formik, FieldArray, Field } from "formik";
 import * as yup from "yup";
 import styled, { css } from "styled-components";
-import { IoIosAdd } from "react-icons/io";
+import { IoIosAdd, IoIosClose } from "react-icons/io";
 import { AWSConfig, s3 } from "../../awsConfig";
 import { showMessage } from "../../redux_util";
 import { Map } from "immutable";
@@ -37,8 +37,8 @@ const Form = styled.form`
 `;
 
 const StyledView = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   margin: 12px 12px 12px 0px;
   align-items: center;
   justify-content: center;
@@ -52,9 +52,10 @@ const ImageRow = styled(Row)`
 `;
 
 const StyledImage = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 4px;
+  object-fit: cover;
 `;
 
 const AddImageInput = styled.input`
@@ -67,8 +68,8 @@ const AddImageInput = styled.input`
 `;
 
 const AddImageLabel = styled.label`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   background: transparent;
   cursor: pointer;
   border-radius: 4px;
@@ -123,6 +124,19 @@ const StyledPriceRow = styled(Row)`
   width: 100%;
   max-width: 450px;
   justify-content: space-between;
+`;
+
+const DeleteIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  background: #999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  position: absolute;
+  right: -4px;
+  top: -4px;
 `;
 
 function Checkbox({ name, value }) {
@@ -283,6 +297,10 @@ class AddItemForm extends Component {
     reader.readAsArrayBuffer(values.uploadData);
   };
 
+  deleteImage = (index, remove) => {
+    remove(index);
+  };
+
   render() {
     let form;
     const { addFarmItem, showMessage, history, farmId } = this.props;
@@ -315,8 +333,8 @@ class AddItemForm extends Component {
             cost: yup.string().required("You must price your product!"),
             quantity: yup.number().moreThan(0, "You must specify an amount!"),
             unit: yup.string().required("You must specify a unit!"),
-            category: yup.string().required("You must specify a category!")
-            // images: yup.array().min(1, "You must add atleast 1 image!")
+            category: yup.string().required("You must specify a category!"),
+            images: yup.array().min(1, "You must add atleast 1 image!")
           })}
           onSubmit={(values, { setErrors }) => {
             let formattedNumber = values.cost.replace(".", "");
@@ -385,7 +403,15 @@ class AddItemForm extends Component {
                       {values.images &&
                         values.images.map((image, index) => {
                           return (
-                            <StyledView key={index}>
+                            <StyledView
+                              key={index}
+                              onClick={() =>
+                                this.deleteImage(index, arrayHelpers.remove)
+                              }
+                            >
+                              <DeleteIcon>
+                                <IoIosClose color="#fff" size="22" />
+                              </DeleteIcon>
                               <StyledImage src={image} />
                             </StyledView>
                           );
