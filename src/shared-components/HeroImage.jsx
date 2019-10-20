@@ -50,6 +50,9 @@ export class HeroImage extends Component {
       case "Inventory":
         splash = inventorysplash;
         break;
+      case "Farms":
+        splash = inventorysplash;
+        break;
       default:
         splash = marketsplash;
     }

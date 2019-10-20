@@ -14,7 +14,9 @@ import {
   FETCH_FARM_ORDERS,
   FETCH_PAST_FARM_ORDERS,
   FETCH_FARM_BY_ID,
-  POST_ORDER
+  POST_ORDER,
+  FETCH_MARKET_ORDERS,
+  FETCH_ALL_FARMS
 } from "../types/data";
 
 export default (state = Map(), { type, ...action }) => {
@@ -54,6 +56,12 @@ export default (state = Map(), { type, ...action }) => {
         "consumerPastOrders",
         fromJS(action.consumerPastOrders.orders)
       );
+      return state;
+    case FETCH_MARKET_ORDERS.SUCCESS:
+      state = state.set("marketOrders", fromJS(action.marketOrders.orders));
+      return state;
+    case FETCH_ALL_FARMS.SUCCESS:
+      state = state.set("marketFarms", fromJS(action.marketFarms.farms));
       return state;
     case UPDATE_ITEM_IN_CART.SUCCESS:
       state = state.set("cart", fromJS(action.cart.cart));

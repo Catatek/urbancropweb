@@ -273,6 +273,18 @@ export const getPastConsumerOrders = () =>
     url: `/orders/consumer/past`
   });
 
+export const getAllMarketOrders = marketId =>
+  client.request({
+    method: "GET",
+    url: `orders/market/${marketId}`
+  });
+
+export const getAllMarketFarms = marketId =>
+  client.request({
+    method: "GET",
+    url: `get/farms/${marketId}`
+  });
+
 export const postOrder = () =>
   client.request({
     method: "POST",

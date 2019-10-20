@@ -371,7 +371,7 @@ class Listing extends Component {
               ""
             )}`}</Title>
             <Row alignitems="center">
-              <Link to={`/farm/${farmId}`}>
+              <Link to={`/farms/${farmId}`}>
                 <Row alignitems="center">
                   <Avatar
                     large

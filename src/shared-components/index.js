@@ -11,6 +11,7 @@ import { OrdersCard } from "./OrdersCard";
 import { SmallItemCard } from "./SmallItemCard";
 import { FarmerBar } from "./FarmerBar";
 import { Layout } from "./Layout";
+import { FarmCard } from "./FarmCard";
 
 export {
   Market,
@@ -25,5 +26,6 @@ export {
   OrderItem,
   SmallItemCard,
   FarmerBar,
-  Layout
+  Layout,
+  FarmCard
 };
