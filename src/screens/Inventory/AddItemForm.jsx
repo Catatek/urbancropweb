@@ -70,6 +70,7 @@ const AddImageLabel = styled.label`
   width: 80px;
   height: 80px;
   background: transparent;
+  cursor: pointer;
   border-radius: 4px;
   border: 1px solid #f75d19;
   border-width: 1px;
@@ -251,7 +252,7 @@ class AddItemForm extends Component {
       console.log("done");
       const params = {
         Bucket: AWSConfig.bucket,
-        Key: "items" + "/" + currentFile.filename + ".jpg",
+        Key: "items" + "/" + currentFile.filename,
         Body: currentFile.picture,
         ACL: "public-read",
         ContentType: filetype
@@ -272,11 +273,11 @@ class AddItemForm extends Component {
           currentFile.message = "Uploaded!";
           console.log(data);
 
-          // if (data.Location) {
-          //   push(data.Location);
-          //   this.setState({ loading: false });
-          //   console.log("Avatar Updated");
-          // }
+          if (data.Location) {
+            push(data.Location);
+            this.setState({ loading: false });
+            console.log("Avatar Updated");
+          }
         });
     };
     reader.readAsArrayBuffer(values.uploadData);
@@ -374,14 +375,21 @@ class AddItemForm extends Component {
                 <FieldArray
                   name="images"
                   render={arrayHelpers => (
-                    <Row style={{ flexWrap: "wrap", height: "auto" }}>
+                    <Row
+                      style={{
+                        flexWrap: "wrap",
+                        height: "auto",
+                        alignItems: "center"
+                      }}
+                    >
                       {values.images &&
-                        values.images.length > 0 &&
-                        values.images.map((image, index) => (
-                          <StyledView>
-                            <StyledImage src={image} />
-                          </StyledView>
-                        ))}
+                        values.images.map((image, index) => {
+                          return (
+                            <StyledView key={index}>
+                              <StyledImage src={image} />
+                            </StyledView>
+                          );
+                        })}
                       {/* {loading && (
                         <StyledView>
                           <ActivityIndicator size="small" color="#f75d19" />
@@ -519,35 +527,22 @@ class AddItemForm extends Component {
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Description
               </Label>
+
               <TextField
                 id="standard-multiline-static"
                 multiline
-                rows="4"
+                rows="6"
                 label="Product description"
                 margin="normal"
-                values={values.description}
+                value={values.description}
                 helperText="Add a catchy product description!"
                 onChange={handleChange("description")}
               />
-              <Button
-                checkout
-                active
-                type="submit"
-                style={{ marginTop: "2em" }}
-              >
-                Add product
-              </Button>
-              {/* <div
-                style={{
-                  display: "flex",
-                  marginTop: "20px",
-                  justifyContent: "center"
-                }}
-              >
-                <Link to="/signup">
-                  <Text orange>Don't have an account? Sign up</Text>
-                </Link>
-              </div> */}
+              <Row style={{ marginTop: "2em" }}>
+                <Button checkout active type="submit">
+                  Add product
+                </Button>
+              </Row>
             </Form>
           )}
         />

@@ -74,6 +74,7 @@ const AddImageInput = styled.input`
 const AddImageLabel = styled.label`
   width: 80px;
   height: 80px;
+  cursor: pointer;
   background: transparent;
   border-radius: 4px;
   border: 1px solid #f75d19;
@@ -265,7 +266,7 @@ class EditItemForm extends Component {
       console.log("done");
       const params = {
         Bucket: AWSConfig.bucket,
-        Key: "items" + "/" + currentFile.filename + ".jpg",
+        Key: "items" + "/" + currentFile.filename,
         Body: currentFile.picture,
         ACL: "public-read",
         ContentType: filetype
@@ -286,11 +287,11 @@ class EditItemForm extends Component {
           currentFile.message = "Uploaded!";
           console.log(data);
 
-          // if (data.Location) {
-          //   push(data.Location);
-          //   this.setState({ loading: false });
-          //   console.log("Avatar Updated");
-          // }
+          if (data.Location) {
+            push(data.Location);
+            this.setState({ loading: false });
+            console.log("Avatar Updated");
+          }
         });
     };
     reader.readAsArrayBuffer(values.uploadData);
