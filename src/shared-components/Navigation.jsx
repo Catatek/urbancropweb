@@ -183,7 +183,8 @@ function ManagerNav({ history, firstName, lastName, avatar }) {
       <Nav to="/">Explore</Nav>
       <Nav to="/farms">Farms</Nav>
       <Nav to="/orders">Orders</Nav>
-      <Nav to="/orders">Transactions</Nav>
+      <Nav to="/transactions">Transactions</Nav>
+      <Nav to="/favorites">Favorites</Nav>
       <Line />
       <Avatar
         handleClick={() => history.push("/profile")}

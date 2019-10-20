@@ -301,9 +301,21 @@ class AddItemForm extends Component {
     remove(index);
   };
 
+  handleFarmId = () => {
+    const role = localStorage.getItem("role") || "consumer";
+    if (role === "manager") {
+      return this.props.match.params.id;
+    } else {
+      return this.props.farmId;
+    }
+  };
+
   render() {
     let form;
-    const { addFarmItem, showMessage, history, farmId } = this.props;
+
+    const { addFarmItem, showMessage, history } = this.props;
+    const farmId = this.handleFarmId();
+
     const units = [
       { label: "pounds (lb)", value: "lb" },
       { label: "kilograms (kg)", value: "kg" },

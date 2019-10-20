@@ -9,6 +9,8 @@ import Map from "../../shared-components/Map";
 import { Title, Row, Text } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
 import dog from "../../assets/dog1.png";
+import addIcon from "../../assets/addIcon.png";
+import { Link } from "react-router-dom";
 
 const Div = styled.div`
   width: 85%;
@@ -64,6 +66,19 @@ const MapDiv = styled.div`
   margin: 0 auto;
 `;
 
+const TitleDiv = styled.div`
+  @media (max-width: 780px) {
+    display: none;
+  }
+`;
+
+const Icon = styled.img`
+  width: 25px;
+  height: 25px;
+  margin-left: 1em;
+  margin-right: 0.5em;
+`;
+
 class Farm extends Component {
   state = {
     isLoadingItems: true
@@ -82,12 +97,21 @@ class Farm extends Component {
     return (x / 100).toFixed(2);
   };
 
+  calcQuantity = quantity => {
+    if (quantity === 1) {
+      return `${quantity} inventory item`;
+    } else {
+      return `${quantity} inventory items`;
+    }
+  };
+
   render() {
     const { inventory, farm } = this.props;
     const { isLoadingItems } = this.state;
     const farmName = farm.get("farmName", "");
     const lat = farm.getIn(["location", "coordinates", 0]);
     const lng = farm.getIn(["location", "coordinates", 1]);
+    const productCount = this.calcQuantity(inventory.size);
     return (
       <Layout title={farmName}>
         <Div>
@@ -130,7 +154,16 @@ class Farm extends Component {
         )}
         {!isLoadingItems && inventory.size > 0 && (
           <Div>
-            <Title>Inventory</Title>
+            <TitleDiv>
+              <Row alignitems="center">
+                <Title margin="0">Inventory</Title>
+                <Icon src={addIcon} />
+                <Link to={`/inventory/add/${farm.get("farmId", "")}`}>
+                  <Text orange>Add item</Text>
+                </Link>
+              </Row>
+              <Text margin=".5em 0 0 0">{productCount}</Text>
+            </TitleDiv>
             <Grid>
               {inventory.map((key, index) => {
                 return (
