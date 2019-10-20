@@ -126,19 +126,19 @@ export const getItem = data =>
     url: `/get/item/${data}`
   });
 
-// export const postFarmItem = (data, farm) =>
-//   client.request({
-//     method: 'POST',
-//     url: `/add/item/${farm}`,
-//     data,
-//   });
+export const postFarmItem = (data, farm) =>
+  client.request({
+    method: "POST",
+    url: `/add/item/${farm}`,
+    data
+  });
 
-// export const putFarmItem = (data, id) =>
-//   client.request({
-//     method: 'PUT',
-//     url: `/update/item/${id}`,
-//     data,
-//   });
+export const putFarmItem = (data, id) =>
+  client.request({
+    method: "PUT",
+    url: `/update/item/${id}`,
+    data
+  });
 
 export const getCart = () =>
   client.request({
@@ -166,11 +166,11 @@ export const deleteItemFromCart = item =>
     url: `/delete/cart/${item}`
   });
 
-// export const deleteItemById = (id, farm) =>
-//   client.request({
-//     method: 'DELETE',
-//     url: `/delete/item/${id}/${farm}`,
-//   });
+export const deleteItemById = (id, farm) =>
+  client.request({
+    method: "DELETE",
+    url: `/delete/item/${id}/${farm}`
+  });
 
 export const postCard = data =>
   client.request({

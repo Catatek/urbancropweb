@@ -438,7 +438,11 @@ class Listing extends Component {
           handleFavorite={this.handleFavorite}
         />
         {userFarmId && userFarmId === farmId && (
-          <FarmerBar navigate={this.props.history} />
+          <FarmerBar
+            history={this.props.history}
+            itemName={this.props.location.state.itemName}
+            itemId={item.getIn(["item", "itemId"], "")}
+          />
         )}
         {!userFarmId && (
           <PurchaseBar

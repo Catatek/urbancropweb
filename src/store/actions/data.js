@@ -4,12 +4,12 @@ import {
   FETCH_ITEM,
   FETCH_MARKETS,
   FETCH_FARM_ITEMS,
-  // POST_FARM_ITEM,
+  POST_FARM_ITEM,
   FETCH_CART,
   POST_ITEM_TO_CART,
   DELETE_ITEM_FROM_CART,
-  // DELETE_ITEM_BY_ID,
-  // UPDATE_FARM_ITEM,
+  DELETE_ITEM_BY_ID,
+  UPDATE_FARM_ITEM,
   DELETE_FAVORITE,
   POST_FAVORITE,
   FETCH_FAVORITE,
@@ -28,12 +28,12 @@ import {
   getItem,
   getMarkets,
   getFarmItems,
-  // postFarmItem,
+  postFarmItem,
   getCart,
   postItemToCart,
   deleteItemFromCart,
-  // deleteItemById,
-  // putFarmItem,
+  deleteItemById,
+  putFarmItem,
   putItemInCart,
   getConsumerOrder,
   getPastConsumerOrders,
@@ -94,33 +94,33 @@ export const fetchFarmItems = data => async dispatch => {
 
 // // ADD ITEM
 
-// const addFarmItemPending = createAction(POST_FARM_ITEM.PENDING);
-// const addFarmItemSuccess = createAction(POST_FARM_ITEM.SUCCESS, 'items');
-// const addFarmItemFailed = createAction(POST_FARM_ITEM.FAILED, 'error');
-// export const addFarmItem = (data, farm) => async dispatch => {
-//   dispatch(addFarmItemPending());
-//   try {
-//     const res = await postFarmItem(data, farm);
-//     return dispatch(addFarmItemSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(addFarmItemFailed(error));
-//   }
-// };
+const addFarmItemPending = createAction(POST_FARM_ITEM.PENDING);
+const addFarmItemSuccess = createAction(POST_FARM_ITEM.SUCCESS, "items");
+const addFarmItemFailed = createAction(POST_FARM_ITEM.FAILED, "error");
+export const addFarmItem = (data, farm) => async dispatch => {
+  dispatch(addFarmItemPending());
+  try {
+    const res = await postFarmItem(data, farm);
+    return dispatch(addFarmItemSuccess(res.data));
+  } catch (error) {
+    return dispatch(addFarmItemFailed(error));
+  }
+};
 
 // // UPDATE ITEM
 
-// const updateFarmItemPending = createAction(UPDATE_FARM_ITEM.PENDING);
-// const updateFarmItemSuccess = createAction(UPDATE_FARM_ITEM.SUCCESS, 'items');
-// const updateFarmItemFailed = createAction(UPDATE_FARM_ITEM.FAILED, 'error');
-// export const updateFarmItem = (data, id) => async dispatch => {
-//   dispatch(updateFarmItemPending());
-//   try {
-//     const res = await putFarmItem(data, id);
-//     return dispatch(updateFarmItemSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(updateFarmItemFailed(error));
-//   }
-// };
+const updateFarmItemPending = createAction(UPDATE_FARM_ITEM.PENDING);
+const updateFarmItemSuccess = createAction(UPDATE_FARM_ITEM.SUCCESS, "items");
+const updateFarmItemFailed = createAction(UPDATE_FARM_ITEM.FAILED, "error");
+export const updateFarmItem = (data, id) => async dispatch => {
+  dispatch(updateFarmItemPending());
+  try {
+    const res = await putFarmItem(data, id);
+    return dispatch(updateFarmItemSuccess(res.data));
+  } catch (error) {
+    return dispatch(updateFarmItemFailed(error));
+  }
+};
 
 // // CART
 
@@ -217,18 +217,18 @@ export const fetchMarkets = data => async dispatch => {
 
 // // DELETE ITEM
 
-// const removeItemByIdPending = createAction(DELETE_ITEM_BY_ID.PENDING);
-// const removeItemByIdSuccess = createAction(DELETE_ITEM_BY_ID.SUCCESS, 'cart');
-// const removeItemByIdFailed = createAction(DELETE_ITEM_BY_ID.FAILED, 'error');
-// export const removeItemById = (item, farm) => async dispatch => {
-//   dispatch(removeItemByIdPending());
-//   try {
-//     const res = await deleteItemById(item, farm);
-//     return dispatch(removeItemByIdSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(removeItemByIdFailed(error));
-//   }
-// };
+const removeItemByIdPending = createAction(DELETE_ITEM_BY_ID.PENDING);
+const removeItemByIdSuccess = createAction(DELETE_ITEM_BY_ID.SUCCESS, "item");
+const removeItemByIdFailed = createAction(DELETE_ITEM_BY_ID.FAILED, "error");
+export const removeItemById = (item, farm) => async dispatch => {
+  dispatch(removeItemByIdPending());
+  try {
+    const res = await deleteItemById(item, farm);
+    return dispatch(removeItemByIdSuccess(res.data));
+  } catch (error) {
+    return dispatch(removeItemByIdFailed(error));
+  }
+};
 
 // ORDERS
 

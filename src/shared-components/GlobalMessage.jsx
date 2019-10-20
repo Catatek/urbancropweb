@@ -20,7 +20,7 @@ const MessageBox = styled.div`
 `;
 
 const MessageDiv = styled.div`
-  position: absolute;
+  position: fixed;
   right: 1.5em;
   top: 6em;
   display: flex;
