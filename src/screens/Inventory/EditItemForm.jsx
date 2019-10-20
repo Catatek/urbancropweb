@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Title, Text, Button, Label, Row, Column } from "../../theme";
+import { Text, Button, Label, Row, Column } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Formik, FieldArray, Field } from "formik";
@@ -20,7 +20,7 @@ import {
   updateFarmItem,
   removeItemById
 } from "../../store/actions/data";
-import { UPDATE_FARM_ITEM } from "../../store/types/data";
+import { UPDATE_FARM_ITEM, DELETE_ITEM_BY_ID } from "../../store/types/data";
 
 const Div = styled.div`
   width: 45%;
@@ -39,9 +39,6 @@ const Form = styled.form`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  @media (max-width: 920px) {
-    width: 100%;
-  }
 `;
 
 const StyledView = styled.div`
@@ -303,14 +300,26 @@ class EditItemForm extends Component {
     return (x / 100).toFixed(2);
   };
 
+  handleDeleteItem = () => {
+    const { removeItemById, item, history, showMessage } = this.props;
+    const farmId = item.getIn(["farm", "farmId"], "");
+    const itemName = item.getIn(["item", "itemName"], "");
+    const itemId = item.getIn(["item", "itemId"], "");
+    removeItemById(itemId, farmId).then(action => {
+      if (action.type === DELETE_ITEM_BY_ID.SUCCESS) {
+        showMessage("item", {
+          type: "MESSAGE",
+          message: ["Success", `You successfully deleted ${itemName}!`]
+        });
+        history.push("/inventory");
+      } else {
+        console.log("Error");
+      }
+    });
+  };
+
   render() {
-    const {
-      item,
-      updateFarmItem,
-      removeItemById,
-      history,
-      showMessage
-    } = this.props;
+    const { item, updateFarmItem, history, showMessage } = this.props;
     let form;
     const editValues = {
       itemName: item.getIn(["item", "itemName"], ""),
@@ -561,7 +570,6 @@ class EditItemForm extends Component {
 
               <TextField
                 id="standard-multiline-static"
-                label="Multiline"
                 multiline
                 rows="6"
                 label="Product description"
@@ -570,15 +578,19 @@ class EditItemForm extends Component {
                 helperText="Add a catchy product description!"
                 onChange={handleChange("description")}
               />
-
-              <Button
-                checkout
-                active
-                type="submit"
-                style={{ marginTop: "2em" }}
-              >
-                Save product
-              </Button>
+              <Row style={{ marginTop: "2em" }}>
+                <Button
+                  checkout
+                  active
+                  type="submit"
+                  style={{ marginRight: "1em" }}
+                >
+                  Save product
+                </Button>
+                <Button delete type="button" onClick={this.handleDeleteItem}>
+                  Delete product
+                </Button>
+              </Row>
               {/* <div
                 style={{
                   display: "flex",

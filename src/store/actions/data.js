@@ -4,7 +4,7 @@ import {
   FETCH_ITEM,
   FETCH_MARKETS,
   FETCH_FARM_ITEMS,
-  // POST_FARM_ITEM,
+  POST_FARM_ITEM,
   FETCH_CART,
   POST_ITEM_TO_CART,
   DELETE_ITEM_FROM_CART,
@@ -28,7 +28,7 @@ import {
   getItem,
   getMarkets,
   getFarmItems,
-  // postFarmItem,
+  postFarmItem,
   getCart,
   postItemToCart,
   deleteItemFromCart,
@@ -94,18 +94,18 @@ export const fetchFarmItems = data => async dispatch => {
 
 // // ADD ITEM
 
-// const addFarmItemPending = createAction(POST_FARM_ITEM.PENDING);
-// const addFarmItemSuccess = createAction(POST_FARM_ITEM.SUCCESS, 'items');
-// const addFarmItemFailed = createAction(POST_FARM_ITEM.FAILED, 'error');
-// export const addFarmItem = (data, farm) => async dispatch => {
-//   dispatch(addFarmItemPending());
-//   try {
-//     const res = await postFarmItem(data, farm);
-//     return dispatch(addFarmItemSuccess(res.data));
-//   } catch (error) {
-//     return dispatch(addFarmItemFailed(error));
-//   }
-// };
+const addFarmItemPending = createAction(POST_FARM_ITEM.PENDING);
+const addFarmItemSuccess = createAction(POST_FARM_ITEM.SUCCESS, "items");
+const addFarmItemFailed = createAction(POST_FARM_ITEM.FAILED, "error");
+export const addFarmItem = (data, farm) => async dispatch => {
+  dispatch(addFarmItemPending());
+  try {
+    const res = await postFarmItem(data, farm);
+    return dispatch(addFarmItemSuccess(res.data));
+  } catch (error) {
+    return dispatch(addFarmItemFailed(error));
+  }
+};
 
 // // UPDATE ITEM
 
@@ -218,7 +218,7 @@ export const fetchMarkets = data => async dispatch => {
 // // DELETE ITEM
 
 const removeItemByIdPending = createAction(DELETE_ITEM_BY_ID.PENDING);
-const removeItemByIdSuccess = createAction(DELETE_ITEM_BY_ID.SUCCESS, "cart");
+const removeItemByIdSuccess = createAction(DELETE_ITEM_BY_ID.SUCCESS, "item");
 const removeItemByIdFailed = createAction(DELETE_ITEM_BY_ID.FAILED, "error");
 export const removeItemById = (item, farm) => async dispatch => {
   dispatch(removeItemByIdPending());

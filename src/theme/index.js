@@ -217,12 +217,26 @@ export const Button = styled.button`
                 margin: ${props => props.margin};
                 background-color: ${props =>
                   props.orange ? "#f75d19" : "#ccc"};
-
                 &:hover {
                   background-color: ${props =>
                     props.orange ? "#f9804a" : "#ccc"};
                 }
               `}
+              ${props =>
+                props.delete &&
+                css`
+                  width: 280px;
+                  height: 48px;
+                  border-radius: 4px;
+                  margin: ${props => props.margin};
+                  background-color: #fff;
+                  border: 2px solid #ff2d3c;
+                  color: #ff2d3c;
+                  cursor: pointer;
+                  &:hover {
+                    background-color: #fff;
+                  }
+                `}
 `;
 
 export const Row = styled.div`

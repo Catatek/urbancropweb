@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Title, Text, Button, Label, Row, Column } from "../../theme";
+import { Text, Button, Label, Row, Column } from "../../theme";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Formik, FieldArray, Field } from "formik";
@@ -8,10 +8,14 @@ import styled, { css } from "styled-components";
 import { IoIosAdd } from "react-icons/io";
 import { AWSConfig, s3 } from "../../awsConfig";
 import { showMessage } from "../../redux_util";
-import { Map, List } from "immutable";
+import { Map } from "immutable";
 import { categoriesFilterData } from "../../fixtures/categorieData";
 import NumberFormat from "react-number-format";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import { POST_FARM_ITEM } from "../../store/types/data";
+import { authSelector } from "../../store/selectors/auth";
+import { connect } from "react-redux";
+import { addFarmItem } from "../../store/actions/data";
 
 const Div = styled.div`
   width: 45%;
@@ -26,13 +30,10 @@ const Div = styled.div`
 `;
 
 const Form = styled.form`
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  @media (max-width: 920px) {
-    width: 100%;
-  }
 `;
 
 const StyledView = styled.div`
@@ -79,6 +80,9 @@ const AddImageLabel = styled.label`
 
 const StyledTextInput = styled(TextField)`
   max-width: 275px;
+  @media (max-width: 920px) {
+    max-width: 350px;
+  }
   ${props =>
     props.small &&
     css`
@@ -112,6 +116,12 @@ const StyledCategoryImage = styled.img`
   width: ${props => props.imagewidth};
   height: ${props => props.imageheight};
   margin-bottom: 6px;
+`;
+
+const StyledPriceRow = styled(Row)`
+  width: 100%;
+  max-width: 450px;
+  justify-content: space-between;
 `;
 
 function Checkbox({ name, value }) {
@@ -274,7 +284,7 @@ class AddItemForm extends Component {
 
   render() {
     let form;
-
+    const { addFarmItem, showMessage, history, farmId } = this.props;
     const units = [
       { label: "pounds (lb)", value: "lb" },
       { label: "kilograms (kg)", value: "kg" },
@@ -308,7 +318,34 @@ class AddItemForm extends Component {
             // images: yup.array().min(1, "You must add atleast 1 image!")
           })}
           onSubmit={(values, { setErrors }) => {
-            console.log(values);
+            let formattedNumber = values.cost.replace(".", "");
+            let data = [
+              {
+                itemName: values.itemName,
+                cost: parseInt(formattedNumber),
+                quantity: values.quantity,
+                unit: values.unit,
+                category: values.category,
+                attributes: values.attributes,
+                images: values.images,
+                description: values.description
+              }
+            ];
+
+            addFarmItem({ items: data }, farmId).then(action => {
+              if (action.type === POST_FARM_ITEM.SUCCESS) {
+                showMessage("items", {
+                  type: "MESSAGE",
+                  message: [
+                    "Success",
+                    `You successfully added ${data.itemName}!`
+                  ]
+                });
+                history.push("/inventory");
+              } else {
+                console.log("Error");
+              }
+            });
           }}
           render={({
             handleChange,
@@ -375,13 +412,12 @@ class AddItemForm extends Component {
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Pricing
               </Label>
-              <Row width="100%" justifycontent="space-between">
+              <StyledPriceRow>
                 <StyledTextInput
                   small
                   label="Cost"
                   margin="normal"
                   value={values.cost}
-                  type="number"
                   onChange={handleChange("cost")}
                   name="cost"
                   error={touched.cost && errors.cost}
@@ -425,7 +461,7 @@ class AddItemForm extends Component {
                     )
                   }}
                 />
-              </Row>
+              </StyledPriceRow>
               <Label extrasmall style={{ marginTop: "2em" }}>
                 Category
               </Label>
@@ -485,7 +521,6 @@ class AddItemForm extends Component {
               </Label>
               <TextField
                 id="standard-multiline-static"
-                label="Multiline"
                 multiline
                 rows="4"
                 label="Product description"
@@ -521,4 +556,7 @@ class AddItemForm extends Component {
   }
 }
 
-export default AddItemForm;
+export default connect(
+  authSelector,
+  { addFarmItem, showMessage }
+)(AddItemForm);
