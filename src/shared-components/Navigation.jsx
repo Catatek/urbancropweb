@@ -180,7 +180,7 @@ function ConsumerNav({ history, firstName, lastName, avatar, basketCount }) {
 function ManagerNav({ history, firstName, lastName, avatar }) {
   return (
     <Div>
-      <Nav to="/">Explore</Nav>
+      <Nav to="/market/market-D3EC">Explore</Nav>
       <Nav to="/farms">Farms</Nav>
       <Nav to="/orders">Orders</Nav>
       <Nav to="/transactions">Transactions</Nav>
