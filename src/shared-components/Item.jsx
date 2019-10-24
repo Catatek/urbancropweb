@@ -128,12 +128,15 @@ class Item extends Component {
   };
 
   authFarmer = (farmId, userFarmId) => {
+    let role = localStorage.getItem("role") || "consumer";
     if (userFarmId) {
       if (farmId === userFarmId) {
         return true;
       } else {
         return false;
       }
+    } else if (role === "manager") {
+      return true;
     } else {
       return false;
     }
@@ -220,7 +223,7 @@ class Item extends Component {
               <Label>{`$${cost} / ${unit}`}</Label>
 
               {type !== "inventory" && isAuthed && (
-                <Text>Click to manage your listing</Text>
+                <Text>Click to manage this listing</Text>
               )}
               {type === "inventory" && (
                 <Text margin="0">{`${description.substring(0, 40)}...`}</Text>

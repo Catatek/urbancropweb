@@ -9,6 +9,7 @@ import { Layout } from "../../shared-components";
 import { Text, Column } from "../../theme";
 import FarmOrders from "./FarmOrders";
 import MyOrders from "./MyOrders";
+import MarketOrders from "./MarketOrders";
 
 const Div = styled.div`
   width: 45%;
@@ -64,8 +65,10 @@ class Orders extends Component {
     const role = localStorage.getItem("role") || "consumer";
     if (role === "farmer") {
       this.setState({ selected: "farmOrders" });
-    } else {
+    } else if (role === "consumer") {
       this.setState({ selected: "myOrders" });
+    } else {
+      this.setState({ selected: "marketOrders" });
     }
   }
 
@@ -88,6 +91,7 @@ class Orders extends Component {
         )}
         {selected === "farmOrders" && <FarmOrders />}
         {selected === "myOrders" && <MyOrders />}
+        {selected === "marketOrders" && <MarketOrders />}
       </Layout>
     );
   }

@@ -347,6 +347,7 @@ class Listing extends Component {
     const attributesArr = this.handleAttributes(
       item.getIn(["item", "attributes"], "")
     );
+    const role = localStorage.getItem("role") || "consumer";
     const lat = item.getIn(["farm", "location", "coordinates", 0]);
     const lng = item.getIn(["farm", "location", "coordinates", 1]);
 
@@ -371,7 +372,7 @@ class Listing extends Component {
               ""
             )}`}</Title>
             <Row alignitems="center">
-              <Link to={`/farm/${farmId}`}>
+              <Link to={`/farms/${farmId}`}>
                 <Row alignitems="center">
                   <Avatar
                     large
@@ -442,9 +443,22 @@ class Listing extends Component {
             history={this.props.history}
             itemName={this.props.location.state.itemName}
             itemId={item.getIn(["item", "itemId"], "")}
+            cost={item.getIn(["item", "cost"], "")}
+            unit={item.getIn(["item", "unit"], "")}
+            formatPrice={this.formatPrice}
           />
         )}
-        {!userFarmId && (
+        {role === "manager" && (
+          <FarmerBar
+            history={this.props.history}
+            itemName={this.props.location.state.itemName}
+            itemId={item.getIn(["item", "itemId"], "")}
+            cost={item.getIn(["item", "cost"], "")}
+            unit={item.getIn(["item", "unit"], "")}
+            formatPrice={this.formatPrice}
+          />
+        )}
+        {!userFarmId && role !== "manager" && (
           <PurchaseBar
             cost={item.getIn(["item", "cost"], "")}
             quantity={item.getIn(["item", "quantity"], "")}

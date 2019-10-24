@@ -108,7 +108,7 @@ class Basket extends Component {
     const { basket, active, last4, brand } = this.props;
     const {
       total,
-      tax,
+
       fee,
       expandedItemIndex,
       isLoadingItems,

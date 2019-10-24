@@ -21,7 +21,9 @@ import {
   FETCH_FARM_ORDERS,
   FULLFILL_ORDER,
   FETCH_PAST_FARM_ORDERS,
-  FETCH_FARM_BY_ID
+  FETCH_FARM_BY_ID,
+  FETCH_MARKET_ORDERS,
+  FETCH_ALL_FARMS
 } from "../types/data";
 import {
   getItems,
@@ -45,7 +47,9 @@ import {
   getFarmOrders,
   fullfillOrder,
   getPastFarmOrders,
-  getFarmById
+  getFarmById,
+  getAllMarketOrders,
+  getAllMarketFarms
 } from "../../services/api";
 
 // // GET ITEMS
@@ -269,6 +273,41 @@ export const fetchPastConsumerOrders = () => async dispatch => {
     return dispatch(fetchPastConsumerOrdersSuccess(res.data));
   } catch (error) {
     return dispatch(fetchPastConsumerOrdersFailed(error));
+  }
+};
+
+const fetchAllMarketOrdersPending = createAction(FETCH_MARKET_ORDERS.PENDING);
+const fetchAllMarketOrdersSuccess = createAction(
+  FETCH_MARKET_ORDERS.SUCCESS,
+  "marketOrders"
+);
+const fetchAllMarketOrdersFailed = createAction(
+  FETCH_MARKET_ORDERS.FAILED,
+  "error"
+);
+export const fetchAllMarketOrders = marketId => async dispatch => {
+  dispatch(fetchAllMarketOrdersPending());
+  try {
+    const res = await getAllMarketOrders(marketId);
+    return dispatch(fetchAllMarketOrdersSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchAllMarketOrdersFailed(error));
+  }
+};
+
+const fetchAllMarketFarmsPending = createAction(FETCH_ALL_FARMS.PENDING);
+const fetchAllMarketFarmsSuccess = createAction(
+  FETCH_ALL_FARMS.SUCCESS,
+  "marketFarms"
+);
+const fetchAllMarketFarmsFailed = createAction(FETCH_ALL_FARMS.FAILED, "error");
+export const fetchAllMarketFarms = marketId => async dispatch => {
+  dispatch(fetchAllMarketFarmsPending());
+  try {
+    const res = await getAllMarketFarms(marketId);
+    return dispatch(fetchAllMarketFarmsSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchAllMarketFarmsFailed(error));
   }
 };
 

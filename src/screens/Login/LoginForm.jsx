@@ -35,7 +35,7 @@ const Form = styled.form`
 
 class LoginForm extends Component {
   render() {
-    const { userLogin, history, addToBasketState } = this.props;
+    const { userLogin, history } = this.props;
     return (
       <Wrapper>
         <Formik
@@ -52,16 +52,19 @@ class LoginForm extends Component {
               .then(action => {
                 localStorage.setItem("authorization", action.authToken);
                 localStorage.setItem("role", action.role);
-                if (addToBasketState.state) {
-                  // history.push({
-                  //   pathname: `/market/${addToBasketState.state.marketId}`,
-                  //   state: {
-                  //     addToBasketState: addToBasketState.state,
-                  //     marketName: addToBasketState.state.marketName
-                  //   }
-                  // });
-                  history.push("/");
-                } else {
+                if (action.role === "manager") {
+                  history.push("/market/market-D3EC");
+                }
+                // if (addToBasketState.state) {
+                // history.push({
+                //   pathname: `/market/${addToBasketState.state.marketId}`,
+                //   state: {
+                //     addToBasketState: addToBasketState.state,
+                //     marketName: addToBasketState.state.marketName
+                //   }
+                // });
+                // history.push("/");
+                else {
                   history.push("/");
                 }
               })

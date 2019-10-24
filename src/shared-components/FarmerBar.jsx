@@ -34,12 +34,15 @@ export function FarmerBar({
   products,
   itemName,
   farmId,
-  itemId
+  itemId,
+  cost,
+  unit,
+  formatPrice
 }) {
   return (
     <Wrapper>
       <StyledRow>
-        <Text smalltitle>Product Preview</Text>
+        <Text smalltitle>{`$${formatPrice(cost)} / per ${unit}`}</Text>
 
         <Button
           onClick={() =>

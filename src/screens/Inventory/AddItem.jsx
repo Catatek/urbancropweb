@@ -6,7 +6,7 @@ class AddItem extends Component {
   render() {
     return (
       <Layout title="Add an item">
-        <AddItemForm history={this.props.history} />
+        <AddItemForm history={this.props.history} match={this.props.match} />
       </Layout>
     );
   }

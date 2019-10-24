@@ -114,7 +114,7 @@ export class OrdersCard extends Component {
       handleSubmit
     } = this.props;
 
-    const { total, tax, fee, sub } = this.state;
+    const { total, fee, sub } = this.state;
     return (
       <Wrapper boxshadow={!currentOrder}>
         {!currentOrder && (

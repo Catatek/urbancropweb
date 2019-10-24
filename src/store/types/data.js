@@ -16,6 +16,8 @@ export const FETCH_CONSUMER_ORDER = createActionType("FETCH_CONSUMER_ORDER");
 export const FETCH_PAST_CONSUMER_ORDERS = createActionType(
   "FETCH_PAST_CONSUMER_ORDERS"
 );
+export const FETCH_MARKET_ORDERS = createActionType("FETCH_MARKET_ORDERS");
+export const FETCH_ALL_FARMS = createActionType("FETCH_ALL_FARMS");
 export const POST_ORDER = createActionType("POST_ORDER");
 export const POST_FAVORITE = createActionType("POST_FAVORITE");
 export const DELETE_FAVORITE = createActionType("DELETE_FAVORITE");

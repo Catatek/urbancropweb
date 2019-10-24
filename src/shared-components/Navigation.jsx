@@ -136,6 +136,77 @@ function BasketIcon({ basketCount }) {
 //   );
 // }
 
+function FarmerNav({ history, firstName, lastName, avatar, basketCount }) {
+  return (
+    <Div>
+      <Nav to="/">Explore</Nav>
+      <Nav to="/inventory">Farm</Nav>
+      <Nav to="/favorites">Favorites</Nav>
+      <Nav to="/orders">Orders</Nav>
+      <Avatar
+        handleClick={() => history.push("/profile")}
+        firstName={firstName}
+        lastName={lastName}
+        avatar={avatar}
+      />
+      <Line />
+      <Link to="/basket">
+        <BasketIcon basketCount={basketCount} />
+      </Link>
+    </Div>
+  );
+}
+
+function ConsumerNav({ history, firstName, lastName, avatar, basketCount }) {
+  return (
+    <Div>
+      <Nav to="/">Explore</Nav>
+      <Nav to="/favorites">Favorites</Nav>
+      <Nav to="/orders">Orders</Nav>
+      <Avatar
+        handleClick={() => history.push("/profile")}
+        firstName={firstName}
+        lastName={lastName}
+        avatar={avatar}
+      />
+      <Line />
+      <Link to="/basket">
+        <BasketIcon basketCount={basketCount} />
+      </Link>
+    </Div>
+  );
+}
+
+function ManagerNav({ history, firstName, lastName, avatar }) {
+  return (
+    <Div>
+      <Nav to="/market/market-D3EC">Explore</Nav>
+      <Nav to="/farms">Farms</Nav>
+      <Nav to="/orders">Orders</Nav>
+      <Nav to="/transactions">Transactions</Nav>
+      <Nav to="/favorites">Favorites</Nav>
+      <Line />
+      <Avatar
+        handleClick={() => history.push("/profile")}
+        firstName={firstName}
+        lastName={lastName}
+        avatar={avatar}
+      />
+    </Div>
+  );
+}
+
+function SignedOutNav({ history }) {
+  return (
+    <Div>
+      <Nav to="/">Explore</Nav>
+      <Button nav onClick={() => history.push("/login")}>
+        Sign in
+      </Button>
+    </Div>
+  );
+}
+
 class Navigation extends Component {
   componentDidMount() {
     const { fetchCart, fetchProfile, fetchConsumerOrder } = this.props;
@@ -146,40 +217,6 @@ class Navigation extends Component {
     }
   }
   componentWillReceiveProps(props) {}
-
-  // onClickOption = val => {
-  //   this.props.history.push(val.link);
-  // };
-
-  // logout = val => {
-  //   this.props.history.push(val.link);
-  //   localStorage.clear();
-  // };
-
-  // getOptions = () => {
-  //   return [
-  //     {
-  //       label: "Profile",
-  //       link: "/profile",
-  //       onClick: this.onClickOption
-  //     },
-  //     {
-  //       label: "Support",
-  //       link: "/",
-  //       onClick: this.onClickOption
-  //     },
-  //     {
-  //       label: "Product Updates",
-  //       link: "/updates",
-  //       onClick: this.onClickOption
-  //     },
-  //     {
-  //       label: "Logout",
-  //       link: "/",
-  //       onClick: this.logout
-  //     }
-  //   ];
-  // };
 
   authUser = () => {
     let auth;
@@ -194,14 +231,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const {
-      basket,
-
-      history,
-      firstName,
-      lastName,
-      avatar
-    } = this.props;
+    const { basket, history, firstName, lastName, avatar } = this.props;
     const basketCount = basket.size;
     // const orderCount = consumerOrder.size;
     const isAuthed = this.authUser().auth;
@@ -210,38 +240,36 @@ class Navigation extends Component {
     return (
       <Wrapper>
         <Image src={logo} />
-        <Div>
-          <Nav to="/">Explore</Nav>
-          {role === "farmer" && <Nav to="/inventory">Farm</Nav>}
 
-          {isAuthed && <Nav to="/favorites">Favorites</Nav>}
-          <Nav to="/orders">Orders</Nav>
-          {isAuthed && (
-            <Avatar
-              handleClick={() => history.push("/profile")}
-              firstName={firstName}
-              lastName={lastName}
-              avatar={avatar}
+        {role === "farmer" && (
+          <FarmerNav
+            history={history}
+            basketCount={basketCount}
+            firstName={firstName}
+            lastName={lastName}
+            avatar={avatar}
+          />
+        )}
 
-              // onClick={() => history.push("/profile")}
-              // render={display => (
-              //   <DropdownModal options={this.getOptions()} display={display} />
-              // )}
-            />
-          )}
+        {role === "consumer" && (
+          <ConsumerNav
+            history={history}
+            basketCount={basketCount}
+            firstName={firstName}
+            lastName={lastName}
+            avatar={avatar}
+          />
+        )}
 
-          {!isAuthed && (
-            <Button nav onClick={() => history.push("/login")}>
-              Sign in
-            </Button>
-          )}
-          {isAuthed && <Line />}
-          {isAuthed && (
-            <Link to="/basket">
-              <BasketIcon basketCount={basketCount} />
-            </Link>
-          )}
-        </Div>
+        {role === "manager" && (
+          <ManagerNav
+            history={history}
+            firstName={firstName}
+            lastName={lastName}
+            avatar={avatar}
+          />
+        )}
+        {!isAuthed && <SignedOutNav history={history} />}
       </Wrapper>
     );
   }

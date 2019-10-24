@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { fetchFarmItems, fetchFarmById } from "../../store/actions/data";
 import Item from "../../shared-components/Item";
-import { Layout, Empty } from "../../shared-components";
-import Avatar from "../../shared-components/Avatar";
+import { Layout, Empty, FarmCard } from "../../shared-components";
 import Map from "../../shared-components/Map";
 import { Title, Row, Text } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
 import dog from "../../assets/dog1.png";
+import addIcon from "../../assets/addIcon.png";
+import { Link } from "react-router-dom";
 
 const Div = styled.div`
   width: 85%;
@@ -38,30 +39,23 @@ const Grid = styled.div`
   }
 `;
 
-const StyledBioDiv = styled.div`
-  width: 40%;
-  @media (max-width: 920px) {
-    width: 90%;
-  }
-  @media (max-width: 780px) {
-    width: 100%;
-    margin-top: 2em;
-  }
-`;
-
-const StyledRow = styled(Row)`
-  margin: 1em 0;
-  align-items: center;
-  @media (max-width: 780px) {
-    flex-direction: column;
-    margin: 0 0 2em 0;
-  }
-`;
-
 const MapDiv = styled.div`
   height: 225px;
   width: 100%;
   margin: 0 auto;
+`;
+
+const TitleDiv = styled.div`
+  @media (max-width: 780px) {
+    display: none;
+  }
+`;
+
+const Icon = styled.img`
+  width: 25px;
+  height: 25px;
+  margin-left: 1em;
+  margin-right: 0.5em;
 `;
 
 class Farm extends Component {
@@ -82,38 +76,32 @@ class Farm extends Component {
     return (x / 100).toFixed(2);
   };
 
+  calcQuantity = quantity => {
+    if (quantity === 1) {
+      return `${quantity} inventory item`;
+    } else {
+      return `${quantity} inventory items`;
+    }
+  };
+
   render() {
     const { inventory, farm } = this.props;
     const { isLoadingItems } = this.state;
     const farmName = farm.get("farmName", "");
     const lat = farm.getIn(["location", "coordinates", 0]);
     const lng = farm.getIn(["location", "coordinates", 1]);
+    const productCount = this.calcQuantity(inventory.size);
+
     return (
       <Layout title={farmName}>
         <Div>
-          <StyledRow>
-            <Avatar
-              square
-              type="farmer"
-              farmerAvatar={`${farm.getIn(["farmer", "avatar"], "")}`}
-              farmerFirstName={`${farm.getIn(["farmer", "firstName"], "")}`}
-              farmerLastName={`${farm.getIn(["farmer", "lastName"], "")}`}
-            />
-            <StyledBioDiv>
-              <Text margin="0" smalltitle>{`${farm.getIn(
-                ["farmer", "firstName"],
-                ""
-              )} ${farm.getIn(["farmer", "lastName"], "")}`}</Text>
-              <Text>
-                Relinda Walker is the grower at Walker Farms, a 50-acre
-                certified organic farm near Newington, Georgia. Farmer Relinda
-                grows carrots, beets, salad and bulb onions, spinach, salad
-                greens, fingerling potatoes, beans and peas, sweet corn, okra,
-                melons and many unique items. She’s been providing healthy food
-                to local customers for nine years.
-              </Text>
-            </StyledBioDiv>
-          </StyledRow>
+          <FarmCard
+            farmerAvatar={`${farm.getIn(["farmer", "avatar"], "")}`}
+            farmerFirstName={`${farm.getIn(["farmer", "firstName"], "")}`}
+            farmerLastName={`${farm.getIn(["farmer", "lastName"], "")}`}
+            type="farmView"
+          />
+
           {!isLoadingItems && (
             <Map
               googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_RzaeDKWkj0MoJn3oaNPaqOWaXAwDr5I&v=3.exp&libraries=geometry,drawing,places"
@@ -125,12 +113,22 @@ class Farm extends Component {
             />
           )}
         </Div>
-        {!isLoadingItems && inventory.size === 0 && (
-          <Empty image={dog} title="This farm does not have any products!" />
-        )}
-        {!isLoadingItems && inventory.size > 0 && (
-          <Div>
-            <Title>Inventory</Title>
+
+        <Div>
+          <TitleDiv>
+            <Row alignitems="center">
+              <Title margin="0">Inventory</Title>
+              <Icon src={addIcon} />
+              <Link to={`/inventory/add/${farm.get("farmId", "")}`}>
+                <Text orange>Add item</Text>
+              </Link>
+            </Row>
+            <Text margin=".5em 0 0 0">{productCount}</Text>
+          </TitleDiv>
+          {!isLoadingItems && inventory.size === 0 && (
+            <Empty image={dog} title="This farm does not have any products!" />
+          )}
+          {!isLoadingItems && inventory.size > 0 && (
             <Grid>
               {inventory.map((key, index) => {
                 return (
@@ -149,8 +147,8 @@ class Farm extends Component {
                 );
               })}
             </Grid>
-          </Div>
-        )}
+          )}
+        </Div>
       </Layout>
     );
   }

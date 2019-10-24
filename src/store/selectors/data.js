@@ -56,8 +56,12 @@ export const getFavorites = state => state.getIn(["data", "favorites"], List());
 
 export const getFarmOrders = state =>
   state.getIn(["data", "farmOrders"], List());
+export const getMarketOrders = state =>
+  state.getIn(["data", "marketOrders"], List());
 export const getPastFarmOrders = state =>
-  state.getIn(["data", "farmPastOrd]ers"], List());
+  state.getIn(["data", "farmPastOrders"], List());
+export const getAllMarketFarms = state =>
+  state.getIn(["data", "marketFarms"], List());
 
 // CONSUMERS
 
@@ -78,5 +82,6 @@ export const dataSelector = createStructuredSelector({
   inventory: getInventory,
   farmOrders: getFarmOrders,
   pastFarmOrders: getPastFarmOrders,
-  farm: getFarm
+  farm: getFarm,
+  marketOrders: getMarketOrders
 });
