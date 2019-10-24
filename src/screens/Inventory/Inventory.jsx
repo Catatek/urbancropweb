@@ -111,7 +111,7 @@ class Inventory extends Component {
   };
 
   render() {
-    const { inventory } = this.props;
+    const { inventory, farmId } = this.props;
     const { isLoadingItems, query } = this.state;
     const searchProducts = this.filterProducts(query);
     const productCount = this.calcQuantity(searchProducts.length);
@@ -128,7 +128,7 @@ class Inventory extends Component {
                 <Row alignitems="center">
                   <Title margin="0">Inventory</Title>
                   <Icon src={addIcon} />
-                  <Link to="/inventory/add">
+                  <Link to={`/inventory/add/${farmId}`}>
                     <Text orange>Add item</Text>
                   </Link>
                 </Row>

@@ -4,11 +4,7 @@ import { connect } from "react-redux";
 import { fetchAllMarketOrders } from "../../store/actions/data";
 import { Empty, OrdersCard } from "../../shared-components";
 import { Title } from "../../theme";
-import {
-  getFarmOrders,
-  getPastFarmOrders,
-  getMarketOrders
-} from "../../store/selectors/data";
+import { getMarketOrders } from "../../store/selectors/data";
 import { getUserFarmId } from "../../store/selectors/auth";
 import cat from "../../assets/cat1.png";
 import { createStructuredSelector } from "reselect";

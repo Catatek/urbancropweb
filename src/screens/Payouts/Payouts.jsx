@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Navigation from "../../shared-components/Navigation";
-import { HeroImage, Account, Modal } from "../../shared-components";
+import { HeroImage, Account } from "../../shared-components";
 import { Title, Text } from "../../theme";
 import {
   fetchACHDetailsAction,

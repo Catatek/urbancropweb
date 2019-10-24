@@ -282,7 +282,7 @@ class EditItemForm extends Component {
       console.log("done");
       const params = {
         Bucket: AWSConfig.bucket,
-        Key: "items" + "/" + currentFile.filename,
+        Key: `items/${currentFile.filename}`,
         Body: currentFile.picture,
         ACL: "public-read",
         ContentType: filetype
@@ -328,7 +328,7 @@ class EditItemForm extends Component {
           type: "MESSAGE",
           message: ["Success", `You successfully deleted ${itemName}!`]
         });
-        history.push("/inventory");
+        history.goBack();
       } else {
         console.log("Error");
       }
@@ -401,7 +401,7 @@ class EditItemForm extends Component {
                       `You successfully updated ${itemName}!`
                     ]
                   });
-                  history.push("/inventory");
+                  history.goBack();
                 } else {
                   console.log("Error");
                 }

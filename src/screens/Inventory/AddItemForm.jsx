@@ -266,7 +266,7 @@ class AddItemForm extends Component {
       console.log("done");
       const params = {
         Bucket: AWSConfig.bucket,
-        Key: "items" + "/" + currentFile.filename,
+        Key: `items/${currentFile.filename}`,
         Body: currentFile.picture,
         ACL: "public-read",
         ContentType: filetype
@@ -301,20 +301,11 @@ class AddItemForm extends Component {
     remove(index);
   };
 
-  handleFarmId = () => {
-    const role = localStorage.getItem("role") || "consumer";
-    if (role === "manager") {
-      return this.props.match.params.id;
-    } else {
-      return this.props.farmId;
-    }
-  };
-
   render() {
     let form;
 
-    const { addFarmItem, showMessage, history } = this.props;
-    const farmId = this.handleFarmId();
+    const { addFarmItem, showMessage, history, match } = this.props;
+    const farmId = match.params.id;
 
     const units = [
       { label: "pounds (lb)", value: "lb" },
@@ -433,7 +424,7 @@ class AddItemForm extends Component {
                           <ActivityIndicator size="small" color="#f75d19" />
                         </StyledView>
                       )} */}
-                      <AddImageLabel for="uploadData">
+                      <AddImageLabel htmlFor="uploadData">
                         <AddImageInput
                           type="file"
                           onChange={event => {

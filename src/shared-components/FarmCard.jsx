@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Text, Row, Column, Button } from "../theme";
+import { Text, Row } from "../theme";
 import Avatar from "./Avatar";
 
 const Wrapper = styled.div`
@@ -17,8 +17,14 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 85%;
-  margin: 0 auto;
+  width: ${props => (props.farmView ? "45%" : "85%")};
+  margin: ${props => (props.farmView ? "" : "0 auto")};
+  @media (max-width: 1300px) {
+    width: 90%;
+  }
+  @media (max-width: 780px) {
+    margin: 0 auto;
+  }
 `;
 
 const StyledBioDiv = styled.div`
@@ -46,12 +52,16 @@ export class FarmCard extends Component {
       farmerAvatar,
       farmerFirstName,
       farmerLastName,
-      farmId
+      farmId,
+      type
     } = this.props;
 
     return (
-      <Wrapper boxshadow onClick={() => history.push(`/farms/${farmId}`)}>
-        <Container>
+      <Wrapper
+        boxshadow={type === "allFarms"}
+        onClick={() => history.push(`/farms/${farmId}`)}
+      >
+        <Container farmView={type === "farmView"}>
           <StyledRow>
             <Avatar
               square
@@ -61,7 +71,15 @@ export class FarmCard extends Component {
               farmerLastName={farmerLastName}
             />
             <StyledBioDiv>
-              <Text smalltitle margin="0">{`${farmName} `}</Text>
+              {type === "farmView" && (
+                <Text
+                  margin="0"
+                  smalltitle
+                >{`${farmerFirstName} ${farmerLastName}`}</Text>
+              )}
+              {type === "allFarms" && (
+                <Text smalltitle margin="0">{`${farmName} `}</Text>
+              )}
               <Text>
                 Relinda Walker is the grower at Walker Farms, a 50-acre
                 certified organic farm near Newington, Georgia. Farmer Relinda
