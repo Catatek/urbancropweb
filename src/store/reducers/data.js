@@ -16,7 +16,8 @@ import {
   FETCH_FARM_BY_ID,
   POST_ORDER,
   FETCH_MARKET_ORDERS,
-  FETCH_ALL_FARMS
+  FETCH_ALL_FARMS,
+  FILTER_ITEMS
 } from "../types/data";
 
 export default (state = Map(), { type, ...action }) => {
@@ -25,6 +26,9 @@ export default (state = Map(), { type, ...action }) => {
       state = state.set("markets", fromJS(action.markets.markets));
       return state;
     case FETCH_ITEMS.SUCCESS:
+      state = state.set("items", fromJS(action.items.items));
+      return state;
+    case FILTER_ITEMS.SUCCESS:
       state = state.set("items", fromJS(action.items.items));
       return state;
     case FETCH_ITEM.SUCCESS:

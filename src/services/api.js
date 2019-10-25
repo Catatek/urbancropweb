@@ -315,3 +315,10 @@ export const getVerifyEmail = email =>
     method: "GET",
     url: `/verify/email/${email}`
   });
+
+export const filterItems = (marketId, data) =>
+  client.request({
+    method: "POST",
+    url: `filter/items/${marketId}`,
+    data
+  });

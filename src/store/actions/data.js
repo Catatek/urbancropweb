@@ -23,7 +23,8 @@ import {
   FETCH_PAST_FARM_ORDERS,
   FETCH_FARM_BY_ID,
   FETCH_MARKET_ORDERS,
-  FETCH_ALL_FARMS
+  FETCH_ALL_FARMS,
+  FILTER_ITEMS
 } from "../types/data";
 import {
   getItems,
@@ -49,7 +50,8 @@ import {
   getPastFarmOrders,
   getFarmById,
   getAllMarketOrders,
-  getAllMarketFarms
+  getAllMarketFarms,
+  filterItems
 } from "../../services/api";
 
 // // GET ITEMS
@@ -93,6 +95,19 @@ export const fetchFarmItems = data => async dispatch => {
     return dispatch(fetchFarmItemsSuccess(res.data));
   } catch (error) {
     return dispatch(fetchFarmItemsFailed(error));
+  }
+};
+
+const fetchFilteredItemsPending = createAction(FILTER_ITEMS.PENDING);
+const fetchFilteredItemsSuccess = createAction(FILTER_ITEMS.SUCCESS, "items");
+const fetchFilteredItemsFailed = createAction(FILTER_ITEMS.FAILED, "error");
+export const fetchFilteredItems = (marketId, data) => async dispatch => {
+  dispatch(fetchFilteredItemsPending());
+  try {
+    const res = await filterItems(marketId, data);
+    return dispatch(fetchFilteredItemsSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchFilteredItemsFailed(error));
   }
 };
 

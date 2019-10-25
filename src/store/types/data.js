@@ -29,3 +29,4 @@ export const FETCH_FARM_ORDERS = createActionType("FETCH_FARM_ORDERS");
 export const FETCH_PAST_FARM_ORDERS = createActionType(
   "FETCH_PAST_FARM_ORDERS"
 );
+export const FILTER_ITEMS = createActionType("FILTER_ITEMS");
