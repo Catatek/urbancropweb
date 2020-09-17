@@ -3,27 +3,29 @@ import axios from "axios";
 import store from "./store";
 import { push } from "react-router-redux";
 
+const url = `http://localhost:3001/api`;
+
 export const client = axios.create({
-  baseURL: `https://agile-beach-66113.herokuapp.com/api`
+  baseURL: url,
 });
 // Request interceptor
 client.interceptors.request.use(
-  function(config) {
+  function (config) {
     const token = localStorage.getItem("authorization") || "";
     config.headers = { authorization: token };
     return config;
   },
-  function(error) {
+  function (error) {
     return Promise.reject(error);
   }
 );
 
 // Response interceptor
 client.interceptors.response.use(
-  function(response) {
+  function (response) {
     return response;
   },
-  function(error) {
+  function (error) {
     if (error.response.status === 401) {
       localStorage.clear();
       store.dispatch(push("/"));
@@ -35,5 +37,5 @@ client.interceptors.response.use(
 export default client;
 
 export const rawClient = axios.create({
-  baseURL: `https://agile-beach-66113.herokuapp.com/api`
+  baseURL: url,
 });

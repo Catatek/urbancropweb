@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { fetchMarkets } from "../../store/actions/data";
 import { Market, SearchBar, Layout } from "../../shared-components";
 import { Title, Text } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
+import { usePosition } from "../../services/usePosition.js";
 
 const Div = styled.div`
   width: 85%;
@@ -38,21 +39,24 @@ const Grid = styled.div`
   }
 `;
 
-class Markets extends Component {
-  state = {
-    query: "",
-    isFetchingMarkets: true
-  };
+export default function Markets() {
+  const [query, setQuery] = useState("");
+  const [isFetchingMarkets, setIsFetchingMarkets] = useState(true);
+  const dispatch = useDispatch();
+  const selector = useSelector(dataSelector);
+  const { latitude, longitude, timestamp, accuracy, error } = usePosition();
+  console.log(latitude, longitude);
 
-  componentDidMount() {
-    const { fetchMarkets } = this.props;
-    const latlong = "33.7382644468085,-84.3446149148936";
-    fetchMarkets(latlong).then(() => {
-      this.setState({ isFetchingMarkets: false });
-    });
-  }
+  useEffect(() => {
+    if (latitude && longitude) {
+      const latlong = `${latitude},${longitude}`;
+      dispatch(fetchMarkets(latlong)).then(() => {
+        setIsFetchingMarkets((prevState) => !prevState);
+      });
+    }
+  }, [latitude]);
 
-  calcQuantity = quantity => {
+  const calcQuantity = (quantity) => {
     if (quantity === 1) {
       return `${quantity} market near you`;
     } else {
@@ -60,16 +64,15 @@ class Markets extends Component {
     }
   };
 
-  handleChange = query => {
-    this.setState({ query }, () => {
-      this.filterMarkets(query);
-    });
+  const handleChange = (query) => {
+    setQuery(query);
+    filterMarkets(query);
   };
 
-  filterMarkets = query => {
-    const markets = this.props.markets.toArray();
+  const filterMarkets = (query) => {
+    const markets = selector.markets.toArray();
     if (query) {
-      let filteredMarkets = markets.filter(market => {
+      let filteredMarkets = markets.filter((market) => {
         let marketName = market.get("marketName", "").toLowerCase();
         return marketName.indexOf(query.toLowerCase()) !== -1;
       });
@@ -79,7 +82,7 @@ class Markets extends Component {
     }
   };
 
-  calcDistance = (lat1, lon1, lat2, lon2) => {
+  const calcDistance = (lat1, lon1, lat2, lon2) => {
     if (lat1 === lat2 && lon1 === lon2) {
       return 0;
     } else {
@@ -101,53 +104,45 @@ class Markets extends Component {
     }
   };
 
-  render() {
-    const { query } = this.state;
-    const searchMarkets = this.filterMarkets(query);
-    const marketCount = this.calcQuantity(searchMarkets.length);
+  const searchMarkets = filterMarkets(query);
+  const marketCount = calcQuantity(searchMarkets.length);
 
-    return (
-      <Layout title="Explore Markets" icon>
-        <Div>
-          <TitleDiv>
-            <Title margin=".25em 0 0 0 ">Markets</Title>
-            <Text margin=".5em 0 0 0">{marketCount}</Text>
-          </TitleDiv>
-          <SearchBar
-            placeholder="Search Markets"
-            handleChange={this.handleChange}
-            query={query}
-          />
-        </Div>
+  return (
+    <Layout title="Explore Markets" icon>
+      <Div>
+        <TitleDiv>
+          <Title margin=".25em 0 0 0 ">Markets</Title>
+          <Text margin=".5em 0 0 0">{marketCount}</Text>
+        </TitleDiv>
+        <SearchBar
+          placeholder="Search Markets"
+          handleChange={handleChange}
+          query={query}
+        />
+      </Div>
 
-        <Grid>
-          {searchMarkets &&
-            searchMarkets.map((key, index) => {
-              return (
-                <Market
-                  key={index}
-                  id={key.get("marketId", "")}
-                  img={key.getIn(["images", 0], "")}
-                  marketName={key.get("marketName", "")}
-                  lat={key.getIn(["location", "coordinates", 0], "")}
-                  lng={key.getIn(["location", "coordinates", 1], "")}
-                  userLat={33.753796}
-                  userLng={-84.381426}
-                  calcDistance={this.calcDistance}
-                />
-              );
-            })}
-        </Grid>
-        {/* <Column margin="2em auto" alignitems="center">
+      <Grid>
+        {searchMarkets &&
+          searchMarkets.map((key, index) => {
+            return (
+              <Market
+                key={index}
+                id={key.get("marketId", "")}
+                img={key.getIn(["images", 0], "")}
+                marketName={key.get("marketName", "")}
+                lat={key.getIn(["location", "coordinates", 0], "")}
+                lng={key.getIn(["location", "coordinates", 1], "")}
+                userLat={33.753796}
+                userLng={-84.381426}
+                calcDistance={calcDistance}
+              />
+            );
+          })}
+      </Grid>
+      {/* <Column margin="2em auto" alignitems="center">
           <Text>Expand your search area to discover more markets</Text>
           <Button marketsearch>Expand Search Area</Button>
         </Column> */}
-      </Layout>
-    );
-  }
+    </Layout>
+  );
 }
-
-export default connect(
-  dataSelector,
-  { fetchMarkets }
-)(Markets);

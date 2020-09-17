@@ -9,7 +9,7 @@ import { fetchProfile } from "../store/actions/auth";
 import {
   getUserFirstName,
   getUserLastName,
-  getUserAvatar
+  getUserAvatar,
 } from "../store/selectors/auth";
 import { getBasket, getCurrentOrder } from "../store/selectors/data";
 import { Link, withRouter } from "react-router-dom";
@@ -72,7 +72,7 @@ function BasketIcon({ basketCount }) {
         position: "relative",
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
     >
       <Icon src={basketIcon} />
@@ -88,7 +88,7 @@ function BasketIcon({ basketCount }) {
             height: 20,
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>
@@ -232,7 +232,7 @@ class Navigation extends Component {
 
   render() {
     const { basket, history, firstName, lastName, avatar } = this.props;
-    const basketCount = basket.size;
+    const basketCount = basket && basket.size;
     // const orderCount = consumerOrder.size;
     const isAuthed = this.authUser().auth;
     const role = this.authUser().role;
@@ -282,7 +282,7 @@ export default withRouter(
       lastName: getUserLastName,
       avatar: getUserAvatar,
       consumerOrder: getCurrentOrder,
-      basket: getBasket
+      basket: getBasket,
     }),
     { fetchCart, fetchProfile, fetchConsumerOrder }
   )(Navigation)
