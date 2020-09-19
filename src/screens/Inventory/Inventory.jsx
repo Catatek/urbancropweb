@@ -58,11 +58,12 @@ const Icon = styled.img`
 class Inventory extends Component {
   state = {
     isLoadingItems: true,
-    query: ""
+    query: "",
   };
 
   componentDidMount() {
     const { farmId, fetchFarm, fetchFarmItems } = this.props;
+    console.log(farmId, "HERE");
     fetchFarm(farmId);
     fetchFarmItems(farmId).then(() => {
       this.setState({ isLoadingItems: false });
@@ -79,11 +80,11 @@ class Inventory extends Component {
     }
   }
 
-  formatPrice = x => {
+  formatPrice = (x) => {
     return (x / 100).toFixed(2);
   };
 
-  calcQuantity = quantity => {
+  calcQuantity = (quantity) => {
     if (quantity === 1) {
       return `${quantity} inventory item`;
     } else {
@@ -91,10 +92,10 @@ class Inventory extends Component {
     }
   };
 
-  filterProducts = query => {
+  filterProducts = (query) => {
     const inventory = this.props.inventory.toArray();
     if (query) {
-      let filteredItems = inventory.filter(item => {
+      let filteredItems = inventory.filter((item) => {
         let itemName = item.get("itemName", "").toLowerCase();
         return itemName.indexOf(query.toLowerCase()) !== -1;
       });
@@ -104,7 +105,7 @@ class Inventory extends Component {
     }
   };
 
-  handleChange = query => {
+  handleChange = (query) => {
     this.setState({ query }, () => {
       this.filterProducts(query);
     });
@@ -168,8 +169,8 @@ class Inventory extends Component {
 
 export default connect(
   createStructuredSelector({
-    farmId: state => getUserFarmId(state),
-    inventory: state => getInventory(state)
+    farmId: (state) => getUserFarmId(state),
+    inventory: (state) => getInventory(state),
   }),
   { fetchFarmItems, fetchFarm }
 )(Inventory);

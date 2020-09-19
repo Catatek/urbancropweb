@@ -23,7 +23,7 @@ import {
   FETCH_PAST_FARM_ORDERS,
   FETCH_FARM_BY_ID,
   FETCH_MARKET_ORDERS,
-  FETCH_ALL_FARMS
+  FETCH_ALL_FARMS,
 } from "../types/data";
 import {
   getItems,
@@ -49,7 +49,8 @@ import {
   getPastFarmOrders,
   getFarmById,
   getAllMarketOrders,
-  getAllMarketFarms
+  getAllMarketFarms,
+  getAllMarkets,
 } from "../../services/api";
 
 // // GET ITEMS
@@ -57,7 +58,7 @@ import {
 const fetchItemsPending = createAction(FETCH_ITEMS.PENDING);
 const fetchItemsSuccess = createAction(FETCH_ITEMS.SUCCESS, "items");
 const fetchItemsFailed = createAction(FETCH_ITEMS.FAILED, "error");
-export const fetchItems = data => async dispatch => {
+export const fetchItems = (data) => async (dispatch) => {
   dispatch(fetchItemsPending());
   try {
     const res = await getItems(data);
@@ -70,7 +71,7 @@ export const fetchItems = data => async dispatch => {
 const fetchItemPending = createAction(FETCH_ITEM.PENDING);
 const fetchItemSuccess = createAction(FETCH_ITEM.SUCCESS, "item");
 const fetchItemFailed = createAction(FETCH_ITEM.FAILED, "error");
-export const fetchItem = data => async dispatch => {
+export const fetchItem = (data) => async (dispatch) => {
   dispatch(fetchItemPending());
   try {
     const res = await getItem(data);
@@ -86,7 +87,7 @@ const fetchFarmItemsSuccess = createAction(
   "farmItems"
 );
 const fetchFarmItemsFailed = createAction(FETCH_FARM_ITEMS.FAILED, "error");
-export const fetchFarmItems = data => async dispatch => {
+export const fetchFarmItems = (data) => async (dispatch) => {
   dispatch(fetchFarmItemsPending());
   try {
     const res = await getFarmItems(data);
@@ -101,7 +102,7 @@ export const fetchFarmItems = data => async dispatch => {
 const addFarmItemPending = createAction(POST_FARM_ITEM.PENDING);
 const addFarmItemSuccess = createAction(POST_FARM_ITEM.SUCCESS, "items");
 const addFarmItemFailed = createAction(POST_FARM_ITEM.FAILED, "error");
-export const addFarmItem = (data, farm) => async dispatch => {
+export const addFarmItem = (data, farm) => async (dispatch) => {
   dispatch(addFarmItemPending());
   try {
     const res = await postFarmItem(data, farm);
@@ -116,7 +117,7 @@ export const addFarmItem = (data, farm) => async dispatch => {
 const updateFarmItemPending = createAction(UPDATE_FARM_ITEM.PENDING);
 const updateFarmItemSuccess = createAction(UPDATE_FARM_ITEM.SUCCESS, "items");
 const updateFarmItemFailed = createAction(UPDATE_FARM_ITEM.FAILED, "error");
-export const updateFarmItem = (data, id) => async dispatch => {
+export const updateFarmItem = (data, id) => async (dispatch) => {
   dispatch(updateFarmItemPending());
   try {
     const res = await putFarmItem(data, id);
@@ -131,7 +132,7 @@ export const updateFarmItem = (data, id) => async dispatch => {
 const fetchCartPending = createAction(FETCH_CART.PENDING);
 const fetchCartSuccess = createAction(FETCH_CART.SUCCESS, "cart");
 const fetchCartFailed = createAction(FETCH_CART.FAILED, "error");
-export const fetchCart = () => async dispatch => {
+export const fetchCart = () => async (dispatch) => {
   dispatch(fetchCartPending());
   try {
     const res = await getCart();
@@ -144,7 +145,7 @@ export const fetchCart = () => async dispatch => {
 const addItemToCartPending = createAction(POST_ITEM_TO_CART.PENDING);
 const addItemToCartSuccess = createAction(POST_ITEM_TO_CART.SUCCESS, "cart");
 const addItemToCartFailed = createAction(POST_ITEM_TO_CART.FAILED, "error");
-export const addItemToCart = (item, data) => async dispatch => {
+export const addItemToCart = (item, data) => async (dispatch) => {
   dispatch(addItemToCartPending());
   try {
     const res = await postItemToCart(item, data);
@@ -163,7 +164,7 @@ const updateItemInCartFailed = createAction(
   UPDATE_ITEM_IN_CART.FAILED,
   "error"
 );
-export const updateItemInCart = (item, data) => async dispatch => {
+export const updateItemInCart = (item, data) => async (dispatch) => {
   dispatch(updateItemInCartPending());
   try {
     const res = await putItemInCart(item, data);
@@ -182,7 +183,7 @@ const removeItemFromCartFailed = createAction(
   DELETE_ITEM_FROM_CART.FAILED,
   "error"
 );
-export const removeItemFromCart = item => async dispatch => {
+export const removeItemFromCart = (item) => async (dispatch) => {
   dispatch(removeItemFromCartPending());
   try {
     const res = await deleteItemFromCart(item);
@@ -195,7 +196,7 @@ export const removeItemFromCart = item => async dispatch => {
 const createOrderPending = createAction(POST_ORDER.PENDING);
 const createOrderSuccess = createAction(POST_ORDER.SUCCESS, "orders");
 const createOrderFailed = createAction(POST_ORDER.FAILED, "error");
-export const createOrder = () => async dispatch => {
+export const createOrder = () => async (dispatch) => {
   dispatch(createOrderPending());
   try {
     const res = await postOrder();
@@ -206,10 +207,24 @@ export const createOrder = () => async dispatch => {
 };
 
 // MARKETS
+
+const fetchAllMarketsPending = createAction(FETCH_MARKETS.PENDING);
+const fetchAllMarketsSuccess = createAction(FETCH_MARKETS.SUCCESS, "markets");
+const fetchAllMarketsFailed = createAction(FETCH_MARKETS.FAILED, "error");
+export const fetchAllMarkets = () => async (dispatch) => {
+  dispatch(fetchAllMarketsPending());
+  try {
+    const res = await getAllMarkets();
+    return dispatch(fetchAllMarketsSuccess(res.data));
+  } catch (error) {
+    return dispatch(fetchAllMarketsFailed(error));
+  }
+};
+
 const fetchMarketsPending = createAction(FETCH_MARKETS.PENDING);
 const fetchMarketsSuccess = createAction(FETCH_MARKETS.SUCCESS, "markets");
 const fetchMarketsFailed = createAction(FETCH_MARKETS.FAILED, "error");
-export const fetchMarkets = data => async dispatch => {
+export const fetchMarkets = (data) => async (dispatch) => {
   dispatch(fetchMarketsPending());
   try {
     const res = await getMarkets(data);
@@ -224,7 +239,7 @@ export const fetchMarkets = data => async dispatch => {
 const removeItemByIdPending = createAction(DELETE_ITEM_BY_ID.PENDING);
 const removeItemByIdSuccess = createAction(DELETE_ITEM_BY_ID.SUCCESS, "item");
 const removeItemByIdFailed = createAction(DELETE_ITEM_BY_ID.FAILED, "error");
-export const removeItemById = (item, farm) => async dispatch => {
+export const removeItemById = (item, farm) => async (dispatch) => {
   dispatch(removeItemByIdPending());
   try {
     const res = await deleteItemById(item, farm);
@@ -245,7 +260,7 @@ const fetchConsumerOrderFailed = createAction(
   FETCH_CONSUMER_ORDER.FAILED,
   "error"
 );
-export const fetchConsumerOrder = () => async dispatch => {
+export const fetchConsumerOrder = () => async (dispatch) => {
   dispatch(fetchConsumerOrderPending());
   try {
     const res = await getConsumerOrder();
@@ -266,7 +281,7 @@ const fetchPastConsumerOrdersFailed = createAction(
   FETCH_PAST_CONSUMER_ORDERS.FAILED,
   "error"
 );
-export const fetchPastConsumerOrders = () => async dispatch => {
+export const fetchPastConsumerOrders = () => async (dispatch) => {
   dispatch(fetchPastConsumerOrdersPending());
   try {
     const res = await getPastConsumerOrders();
@@ -285,7 +300,7 @@ const fetchAllMarketOrdersFailed = createAction(
   FETCH_MARKET_ORDERS.FAILED,
   "error"
 );
-export const fetchAllMarketOrders = marketId => async dispatch => {
+export const fetchAllMarketOrders = (marketId) => async (dispatch) => {
   dispatch(fetchAllMarketOrdersPending());
   try {
     const res = await getAllMarketOrders(marketId);
@@ -301,7 +316,7 @@ const fetchAllMarketFarmsSuccess = createAction(
   "marketFarms"
 );
 const fetchAllMarketFarmsFailed = createAction(FETCH_ALL_FARMS.FAILED, "error");
-export const fetchAllMarketFarms = marketId => async dispatch => {
+export const fetchAllMarketFarms = (marketId) => async (dispatch) => {
   dispatch(fetchAllMarketFarmsPending());
   try {
     const res = await getAllMarketFarms(marketId);
@@ -316,7 +331,7 @@ export const fetchAllMarketFarms = marketId => async dispatch => {
 const addFavoritePending = createAction(POST_FAVORITE.PENDING);
 const addFavoriteSuccess = createAction(POST_FAVORITE.SUCCESS, "favorites");
 const addFavoriteFailed = createAction(POST_FAVORITE.FAILED, "error");
-export const addFavorite = data => async dispatch => {
+export const addFavorite = (data) => async (dispatch) => {
   dispatch(addFavoritePending());
   try {
     const res = await postFavorite(data);
@@ -332,7 +347,7 @@ const deleteFavoriteSuccess = createAction(
   "favorites"
 );
 const deleteFavoriteFailed = createAction(DELETE_FAVORITE.FAILED, "error");
-export const deleteFavorite = data => async dispatch => {
+export const deleteFavorite = (data) => async (dispatch) => {
   dispatch(deleteFavoritePending());
   try {
     const res = await removeFavorite(data);
@@ -345,7 +360,7 @@ export const deleteFavorite = data => async dispatch => {
 const fetchFavoritePending = createAction(FETCH_FAVORITE.PENDING);
 const fetchFavoriteSuccess = createAction(FETCH_FAVORITE.SUCCESS, "favorites");
 const fetchFavoriteFailed = createAction(FETCH_FAVORITE.FAILED, "error");
-export const fetchFavorite = () => async dispatch => {
+export const fetchFavorite = () => async (dispatch) => {
   dispatch(fetchFavoritePending());
   try {
     const res = await getFavorite();
@@ -364,7 +379,7 @@ const fetchAllFavoritesFailed = createAction(
   FETCH_ALL_FAVORITES.FAILED,
   "error"
 );
-export const fetchAllFavorites = () => async dispatch => {
+export const fetchAllFavorites = () => async (dispatch) => {
   dispatch(fetchAllFavoritesPending());
   try {
     const res = await getAllFavorites();
@@ -382,7 +397,7 @@ const fetchFarmOrdersSuccess = createAction(
   "farmOrders"
 );
 const fetchFarmOrdersFailed = createAction(FETCH_FARM_ORDERS.FAILED, "error");
-export const fetchFarmOrders = farmId => async dispatch => {
+export const fetchFarmOrders = (farmId) => async (dispatch) => {
   dispatch(fetchFarmOrdersPending());
   try {
     const res = await getFarmOrders(farmId);
@@ -401,7 +416,7 @@ const fetchPastFarmOrdersFailed = createAction(
   FETCH_PAST_FARM_ORDERS.FAILED,
   "error"
 );
-export const fetchPastFarmOrders = farmId => async dispatch => {
+export const fetchPastFarmOrders = (farmId) => async (dispatch) => {
   dispatch(fetchPastFarmOrdersPending());
   try {
     const res = await getPastFarmOrders(farmId);
@@ -417,7 +432,7 @@ const postFullfillOrderSuccess = createAction(
   "fullfill"
 );
 const postFullfillOrderFailed = createAction(FULLFILL_ORDER.FAILED, "error");
-export const postFullfillOrder = (order, data) => async dispatch => {
+export const postFullfillOrder = (order, data) => async (dispatch) => {
   dispatch(postFullfillOrderPending());
   try {
     const res = await fullfillOrder(order, data);
@@ -430,7 +445,7 @@ export const postFullfillOrder = (order, data) => async dispatch => {
 const fetchFarmByIdPending = createAction(FETCH_FARM_BY_ID.PENDING);
 const fetchFarmByIdSuccess = createAction(FETCH_FARM_BY_ID.SUCCESS, "farm");
 const fetchFarmByIdFailed = createAction(FETCH_FARM_BY_ID.FAILED, "error");
-export const fetchFarmById = farmId => async dispatch => {
+export const fetchFarmById = (farmId) => async (dispatch) => {
   dispatch(fetchFarmByIdPending());
   try {
     const res = await getFarmById(farmId);

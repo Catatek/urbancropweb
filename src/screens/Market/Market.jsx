@@ -45,7 +45,7 @@ const Grid = styled.div`
 
 class Market extends Component {
   state = {
-    query: ""
+    query: "",
   };
 
   componentDidMount() {
@@ -57,7 +57,7 @@ class Market extends Component {
     });
     if (addToBasketState) {
       let data = {
-        itemQuantity: addToBasketState.count
+        itemQuantity: addToBasketState.count,
       };
       let sku = addToBasketState.itemId;
       addItemToCart(sku, data).then(() => {
@@ -66,7 +66,7 @@ class Market extends Component {
     }
   }
 
-  calcQuantity = quantity => {
+  calcQuantity = (quantity) => {
     if (quantity === 1) {
       return `${quantity} product available`;
     } else {
@@ -74,20 +74,20 @@ class Market extends Component {
     }
   };
 
-  formatPrice = x => {
+  formatPrice = (x) => {
     return (x / 100).toFixed(2);
   };
 
-  handleChange = query => {
+  handleChange = (query) => {
     this.setState({ query }, () => {
       this.filterProducts(query);
     });
   };
 
-  filterProducts = query => {
+  filterProducts = (query) => {
     const items = this.props.items.toArray();
     if (query) {
-      let filteredItems = items.filter(item => {
+      let filteredItems = items.filter((item) => {
         let itemName = item.getIn(["item", "itemName"], "").toLowerCase();
         return itemName.indexOf(query.toLowerCase()) !== -1;
       });
@@ -99,7 +99,7 @@ class Market extends Component {
 
   render() {
     const { query } = this.state;
-    const marketName = "Statesboro Farmer's Market";
+    const marketName = "Findorffmarkt";
     const marketId = this.props.match.params.id;
     const searchProducts = this.filterProducts(query);
     const productCount = this.calcQuantity(searchProducts.length);
@@ -149,7 +149,4 @@ class Market extends Component {
   }
 }
 
-export default connect(
-  dataSelector,
-  { fetchItems, addItemToCart }
-)(Market);
+export default connect(dataSelector, { fetchItems, addItemToCart })(Market);

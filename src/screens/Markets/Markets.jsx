@@ -1,7 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { fetchMarkets } from "../../store/actions/data";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllMarkets } from "../../store/actions/data";
 import { Market, SearchBar, Layout } from "../../shared-components";
 import { Title, Text } from "../../theme";
 import { dataSelector } from "../../store/selectors/data";
@@ -44,17 +44,16 @@ export default function Markets() {
   const [isFetchingMarkets, setIsFetchingMarkets] = useState(true);
   const dispatch = useDispatch();
   const selector = useSelector(dataSelector);
-  const { latitude, longitude, timestamp, accuracy, error } = usePosition();
-  console.log(latitude, longitude);
+  // const { latitude, longitude, timestamp, accuracy, error } = usePosition();
 
   useEffect(() => {
-    if (latitude && longitude) {
-      const latlong = `${latitude},${longitude}`;
-      dispatch(fetchMarkets(latlong)).then(() => {
-        setIsFetchingMarkets((prevState) => !prevState);
-      });
-    }
-  }, [latitude]);
+    // if (latitude && longitude) {
+    // const latlong = `${latitude},${longitude}`;
+    dispatch(fetchAllMarkets()).then(() => {
+      setIsFetchingMarkets((prevState) => !prevState);
+    });
+    // }
+  }, []);
 
   const calcQuantity = (quantity) => {
     if (quantity === 1) {

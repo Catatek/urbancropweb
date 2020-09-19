@@ -1,10 +1,10 @@
 import { rawClient, client } from "../ajax";
 
-export const postLogin = data =>
+export const postLogin = (data) =>
   rawClient.request({
     method: "POST",
     url: "/login",
-    data
+    data,
   });
 
 // export const postForgotPassword = data =>
@@ -24,34 +24,34 @@ export const postLogin = data =>
 export const getProfile = () =>
   client.request({
     method: "GET",
-    url: "/get/profile"
+    url: "/get/profile",
   });
 
 // // update profile data
-export const postProfile = data =>
+export const postProfile = (data) =>
   client.request({
     method: "PUT",
     url: "/update/profile",
-    data
+    data,
   });
 
 export const postFarmDetails = (farmId, data) =>
   client.request({
     method: "PUT",
     url: `update/farm/${farmId}`,
-    data
+    data,
   });
 
-export const getFarm = farmId =>
+export const getFarm = () =>
   client.request({
     method: "GET",
-    url: `get/farm`
+    url: `get/farm`,
   });
 
-export const getFarmById = farmId =>
+export const getFarmById = (farmId) =>
   client.request({
     method: "GET",
-    url: `get/farm/${farmId}`
+    url: `get/farm/${farmId}`,
   });
 
 // export const postAvatar = data =>
@@ -67,11 +67,11 @@ export const getFarmById = farmId =>
 //     url: `/email/${data}/activation`,
 //   });
 
-export const postSignup = data =>
+export const postSignup = (data) =>
   rawClient.request({
     method: "POST",
     url: "/signup",
-    data
+    data,
   });
 
 // export const postActivateuser = data =>
@@ -102,128 +102,134 @@ export const postSignup = data =>
 //     url: `/exist/${params.email}`,
 //   });
 
-export const getItems = data =>
+export const getItems = (data) =>
   client.request({
     method: "GET",
-    url: `/get/items/market/${data}`
+    url: `/get/items/market/${data}`,
   });
 
-export const getFarmItems = data =>
+export const getFarmItems = (data) =>
   client.request({
     method: "GET",
-    url: `/get/items/${data}`
+    url: `/get/items/${data}`,
   });
 
-export const getMarkets = data =>
+export const getAllMarkets = () =>
   client.request({
     method: "GET",
-    url: `/get/markets/${data}`
+    url: `/get/markets`,
   });
 
-export const getItem = data =>
+export const getMarkets = (data) =>
   client.request({
     method: "GET",
-    url: `/get/item/${data}`
+    url: `/get/markets/${data}`,
+  });
+
+export const getItem = (data) =>
+  client.request({
+    method: "GET",
+    url: `/get/item/${data}`,
   });
 
 export const postFarmItem = (data, farm) =>
   client.request({
     method: "POST",
     url: `/add/item/${farm}`,
-    data
+    data,
   });
 
 export const putFarmItem = (data, id) =>
   client.request({
     method: "PUT",
     url: `/update/item/${id}`,
-    data
+    data,
   });
 
 export const getCart = () =>
   client.request({
     method: "GET",
-    url: `/get/cart`
+    url: `/get/cart`,
   });
 
 export const postItemToCart = (item, data) =>
   client.request({
     method: "POST",
     url: `/add/cart/${item}`,
-    data
+    data,
   });
 
 export const putItemInCart = (item, data) =>
   client.request({
     method: "PUT",
     url: `/update/cart/${item}`,
-    data
+    data,
   });
 
-export const deleteItemFromCart = item =>
+export const deleteItemFromCart = (item) =>
   client.request({
     method: "DELETE",
-    url: `/delete/cart/${item}`
+    url: `/delete/cart/${item}`,
   });
 
 export const deleteItemById = (id, farm) =>
   client.request({
     method: "DELETE",
-    url: `/delete/item/${id}/${farm}`
+    url: `/delete/item/${id}/${farm}`,
   });
 
-export const postCard = data =>
+export const postCard = (data) =>
   client.request({
     method: "POST",
     url: `/add/card`,
-    data
+    data,
   });
 
 export const getCard = () =>
   client.request({
     method: "GET",
-    url: "/get/card"
+    url: "/get/card",
   });
 
-export const putCard = data =>
+export const putCard = (data) =>
   client.request({
     method: "PUT",
     url: "/update/card",
-    data
+    data,
   });
 
 export const deleteCard = () =>
   client.request({
     method: "DELETE",
-    url: "/delete/card"
+    url: "/delete/card",
   });
 
 // FAVORITES
 
-export const postFavorite = data =>
+export const postFavorite = (data) =>
   client.request({
     method: "POST",
     url: "/add/favorite",
-    data
+    data,
   });
 
 export const getFavorite = () =>
   client.request({
     method: "GET",
-    url: "/get/favorites"
+    url: "/get/favorites",
   });
 
-export const removeFavorite = data =>
+export const removeFavorite = (data) =>
   client.request({
     method: "DELETE",
     url: "/delete/favorite",
-    data
+    data,
   });
 
 export const getAllFavorites = () =>
   client.request({
     method: "GET",
-    url: "/get/favorite/items"
+    url: "/get/favorite/items",
   });
 
 // ACH
@@ -231,7 +237,7 @@ export const getAllFavorites = () =>
 export const getACHDetails = () =>
   client.request({
     method: "GET",
-    url: "/get/ach/details"
+    url: "/get/ach/details",
   });
 
 export const postACH = ({ code }) =>
@@ -239,79 +245,79 @@ export const postACH = ({ code }) =>
     method: "POST",
     url: `/add/ach/${code}`,
     data: {
-      code
-    }
+      code,
+    },
   });
 
 export const getACHBalance = () =>
   client.request({
     method: "GET",
-    url: "/get/ach/balance"
+    url: "/get/ach/balance",
   });
 
 export const putACH = () =>
   client.request({
     method: "PUT",
-    url: "/update/ach"
+    url: "/update/ach",
   });
 
 export const getACHTransactions = () =>
   client.request({
     method: "GET",
-    url: "/get/ach/transactions"
+    url: "/get/ach/transactions",
   });
 
 export const getConsumerOrder = () =>
   client.request({
     method: "GET",
-    url: `/orders/consumer/current`
+    url: `/orders/consumer/current`,
   });
 
 export const getPastConsumerOrders = () =>
   client.request({
     method: "GET",
-    url: `/orders/consumer/past`
+    url: `/orders/consumer/past`,
   });
 
-export const getAllMarketOrders = marketId =>
+export const getAllMarketOrders = (marketId) =>
   client.request({
     method: "GET",
-    url: `orders/market/${marketId}`
+    url: `orders/market/${marketId}`,
   });
 
-export const getAllMarketFarms = marketId =>
+export const getAllMarketFarms = (marketId) =>
   client.request({
     method: "GET",
-    url: `get/farms/${marketId}`
+    url: `get/farms/${marketId}`,
   });
 
 export const postOrder = () =>
   client.request({
     method: "POST",
-    url: "/create/order"
+    url: "/create/order",
   });
 
-export const getFarmOrders = farm =>
+export const getFarmOrders = (farm) =>
   client.request({
     method: "GET",
-    url: `/orders/farmer/current/${farm}`
+    url: `/orders/farmer/current/${farm}`,
   });
 
-export const getPastFarmOrders = farm =>
+export const getPastFarmOrders = (farm) =>
   client.request({
     method: "GET",
-    url: `/orders/farmer/past/${farm}`
+    url: `/orders/farmer/past/${farm}`,
   });
 
 export const fullfillOrder = (order, data) =>
   client.request({
     method: "PUT",
     url: `/update/order/status/${order}`,
-    data
+    data,
   });
 
-export const getVerifyEmail = email =>
+export const getVerifyEmail = (email) =>
   client.request({
     method: "GET",
-    url: `/verify/email/${email}`
+    url: `/verify/email/${email}`,
   });

@@ -7,8 +7,9 @@ import loginsplash from "../../assets/login_splash.png";
 const Wrapper = styled.div`
   width: 100%;
   max-height: -webkit-fill-available;
+  height: 100vh;
   min-height: -webkit-fill-available;
-  background: ${props => props.background};
+  background: ${(props) => props.background};
   display: flex;
   flex-direction: column;
   align-items: center;
